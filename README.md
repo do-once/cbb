@@ -1,2 +1,3 @@
 # cbb
-common building block
+
+通用基础模块 CBB （common building block）
