@@ -1,3 +1,3 @@
 # common
 
-公用（配置、git hooks 等）
+公用模块（项目配置、git hooks 等）
