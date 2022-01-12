@@ -3,13 +3,16 @@
 common building block(CBB)
 
 ## TOC
+
 - [`assets`](./assets)
-  - Assets,`svg`、`img`、`iconfont` etc
+  - Assets package,`svg`、`img`、`iconfont` etc
 - [`cli`](./cli)
   - Cli package build with `NodeJs`
+- [`common`](./common)
+  - Common project config `rush config`、`git-hooks` etc
 - [`components`](./components)
-  - Components build with `vue2` and `vue3` or other
+  - Components package build with `vue2` and `vue3` or other
 - [`libraries`](./libraries)
-  - Library build with `es6` or `ts`
+  - Library package build with `es6` or `ts`
 - [`run-control`](./run-control)
-  - Shared config,`.prettierrc`、`.eslintrc`、`.stylelintrc` etc
+  - Shared config package,`.prettierrc`、`.eslintrc`、`.stylelintrc` etc
