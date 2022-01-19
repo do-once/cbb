@@ -213,8 +213,8 @@
      */
     "reviewCategories": [
       // Some example categories:
-      "published", // 需要对外发布的项目
-      "internal" // 无需发布的项目
+      "public", // 需要对外发布的项目
+      "inner" // 无需发布的项目
     ],
 
     /**
