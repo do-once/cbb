@@ -260,7 +260,7 @@
      * you might configure your system's trigger to look for a special string such as "[skip-ci]"
      * in the commit message, and then customize Rush's message to contain that string.
      */
-    // "versionBumpCommitMessage": "Bump versions [skip ci]",
+    "versionBumpCommitMessage": "chore: bump versions [skip ci]",
     /**
      * The commit message to use when committing changes during 'rush version'.
      *
@@ -268,7 +268,7 @@
      * you might configure your system's trigger to look for a special string such as "[skip-ci]"
      * in the commit message, and then customize Rush's message to contain that string.
      */
-    // "changeLogUpdateCommitMessage": "Update changelogs [skip ci]"
+    "changeLogUpdateCommitMessage": "doc: update changelogs [skip ci]"
   },
 
   "repository": {
