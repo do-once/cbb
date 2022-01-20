@@ -26,6 +26,7 @@
 #	exit 1
 #fi
 
+# 新增 conventional-commit shell实现
 # A commit-msg hook to check commit messages for Conventional Commits formatting
 # reference https://github.com/compilerla/conventional-pre-commit/blob/main/conventional-pre-commit.sh
 
