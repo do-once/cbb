@@ -1,3 +1,4 @@
+// 参考：https://rushjs.io/pages/maintainer/enabling_prettier/
 // Documentation for this file: https://prettier.io/docs/en/configuration.html
 module.exports = {
   // We use a larger print width because Prettier's word-wrapping seems to be tuned
