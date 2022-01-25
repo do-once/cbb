@@ -7,6 +7,14 @@
       "allowedCategories": [ "inner" ]
     },
     {
+      "name": "@rushstack/heft",
+      "allowedCategories": [ "inner" ]
+    },
+    {
+      "name": "@rushstack/heft-node-rig",
+      "allowedCategories": [ "inner" ]
+    },
+    {
       "name": "eslint",
       "allowedCategories": [ "inner" ]
     },
