@@ -3,7 +3,15 @@
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
   "packages": [
     {
+      "name": "@rushstack/eslint-config",
+      "allowedCategories": [ "inner" ]
+    },
+    {
       "name": "eslint",
+      "allowedCategories": [ "inner" ]
+    },
+    {
+      "name": "typescript",
       "allowedCategories": [ "inner" ]
     }
   ]
