@@ -10,12 +10,14 @@ importers:
       '@rushstack/eslint-config': ~2.5.1
       '@rushstack/heft': ~0.44.2
       '@rushstack/heft-node-rig': ~1.7.1
+      '@types/node': ~17.0.12
       eslint: ~8.7.0
       typescript: ~4.5.5
     devDependencies:
       '@rushstack/eslint-config': registry.npmmirror.com/@rushstack/eslint-config/2.5.1_eslint@8.7.0+typescript@4.5.5
       '@rushstack/heft': registry.npmmirror.com/@rushstack/heft/0.44.2
       '@rushstack/heft-node-rig': registry.npmmirror.com/@rushstack/heft-node-rig/1.7.1_@rushstack+heft@0.44.2
+      '@types/node': registry.npmmirror.com/@types/node/17.0.12
       eslint: registry.npmmirror.com/eslint/8.7.0
       typescript: registry.npmmirror.com/typescript/4.5.5
 
@@ -1999,7 +2001,7 @@ packages:
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dependencies:
       '@jest/types': registry.npmmirror.com/@jest/types/27.4.2
-      '@types/node': registry.npmmirror.com/@types/node/12.20.24
+      '@types/node': registry.npmmirror.com/@types/node/17.0.12
       chalk: registry.npmmirror.com/chalk/4.1.2
       jest-message-util: registry.npmmirror.com/jest-message-util/27.4.6
       jest-util: registry.npmmirror.com/jest-util/27.4.2
@@ -2022,7 +2024,7 @@ packages:
       '@jest/test-result': registry.npmmirror.com/@jest/test-result/27.4.6
       '@jest/transform': registry.npmmirror.com/@jest/transform/27.4.6
       '@jest/types': registry.npmmirror.com/@jest/types/27.4.2
-      '@types/node': registry.npmmirror.com/@types/node/12.20.24
+      '@types/node': registry.npmmirror.com/@types/node/17.0.12
       ansi-escapes: registry.npmmirror.com/ansi-escapes/4.3.2
       chalk: registry.npmmirror.com/chalk/4.1.2
       emittery: registry.nlark.com/emittery/0.8.1
@@ -2061,7 +2063,7 @@ packages:
     dependencies:
       '@jest/fake-timers': registry.npmmirror.com/@jest/fake-timers/27.4.6
       '@jest/types': registry.npmmirror.com/@jest/types/27.4.2
-      '@types/node': registry.npmmirror.com/@types/node/12.20.24
+      '@types/node': registry.npmmirror.com/@types/node/17.0.12
       jest-mock: registry.npmmirror.com/jest-mock/27.4.6
     dev: true
 
@@ -2073,7 +2075,7 @@ packages:
     dependencies:
       '@jest/types': registry.npmmirror.com/@jest/types/27.4.2
       '@sinonjs/fake-timers': registry.npmmirror.com/@sinonjs/fake-timers/8.1.0
-      '@types/node': registry.npmmirror.com/@types/node/12.20.24
+      '@types/node': registry.npmmirror.com/@types/node/17.0.12
       jest-message-util: registry.npmmirror.com/jest-message-util/27.4.6
       jest-mock: registry.npmmirror.com/jest-mock/27.4.6
       jest-util: registry.npmmirror.com/jest-util/27.4.2
@@ -2106,7 +2108,7 @@ packages:
       '@jest/test-result': registry.npmmirror.com/@jest/test-result/27.4.6
       '@jest/transform': registry.npmmirror.com/@jest/transform/27.4.6
       '@jest/types': registry.npmmirror.com/@jest/types/27.4.2
-      '@types/node': registry.npmmirror.com/@types/node/12.20.24
+      '@types/node': registry.npmmirror.com/@types/node/17.0.12
       chalk: registry.npmmirror.com/chalk/4.1.2
       collect-v8-coverage: registry.nlark.com/collect-v8-coverage/1.0.1
       exit: registry.nlark.com/exit/0.1.2
@@ -2200,7 +2202,7 @@ packages:
     dependencies:
       '@types/istanbul-lib-coverage': registry.npmmirror.com/@types/istanbul-lib-coverage/2.0.4
       '@types/istanbul-reports': registry.npmmirror.com/@types/istanbul-reports/3.0.1
-      '@types/node': registry.npmmirror.com/@types/node/12.20.24
+      '@types/node': registry.npmmirror.com/@types/node/17.0.12
       '@types/yargs': registry.npmmirror.com/@types/yargs/16.0.4
       chalk: registry.npmmirror.com/chalk/4.1.2
     dev: true
@@ -2528,7 +2530,7 @@ packages:
     name: '@types/graceful-fs'
     version: 4.1.5
     dependencies:
-      '@types/node': registry.npmmirror.com/@types/node/12.20.24
+      '@types/node': registry.npmmirror.com/@types/node/17.0.12
     dev: true
 
   registry.npmmirror.com/@types/istanbul-lib-coverage/2.0.4:
@@ -2563,6 +2565,12 @@ packages:
     resolution: {integrity: sha512-yxDeaQIAJlMav7fH5AQqPH1u8YIuhYJXYBzxaQ4PifsU0GDO38MSdmEDeRlIxrKbC6NbEaaEHDanWb+y30U8SQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/node/download/@types/node-12.20.24.tgz}
     name: '@types/node'
     version: 12.20.24
+    dev: true
+
+  registry.npmmirror.com/@types/node/17.0.12:
+    resolution: {integrity: sha512-4YpbAsnJXWYK/fpTVFlMIcUIho2AYCi4wg5aNPrG1ng7fn/1/RZfCIpRCiBX+12RVa34RluilnvCqD+g3KiSiA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/node/download/@types/node-17.0.12.tgz}
+    name: '@types/node'
+    version: 17.0.12
     dev: true
 
   registry.npmmirror.com/@types/prettier/2.4.3:
@@ -3682,7 +3690,7 @@ packages:
       '@jest/environment': registry.npmmirror.com/@jest/environment/27.4.6
       '@jest/test-result': registry.npmmirror.com/@jest/test-result/27.4.6
       '@jest/types': registry.npmmirror.com/@jest/types/27.4.2
-      '@types/node': registry.npmmirror.com/@types/node/12.20.24
+      '@types/node': registry.npmmirror.com/@types/node/17.0.12
       chalk: registry.npmmirror.com/chalk/4.1.2
       co: registry.npmmirror.com/co/4.6.0
       dedent: registry.nlark.com/dedent/0.7.0
@@ -3785,7 +3793,7 @@ packages:
       '@jest/environment': registry.npmmirror.com/@jest/environment/27.4.6
       '@jest/fake-timers': registry.npmmirror.com/@jest/fake-timers/27.4.6
       '@jest/types': registry.npmmirror.com/@jest/types/27.4.2
-      '@types/node': registry.npmmirror.com/@types/node/12.20.24
+      '@types/node': registry.npmmirror.com/@types/node/17.0.12
       jest-mock: registry.npmmirror.com/jest-mock/27.4.6
       jest-util: registry.npmmirror.com/jest-util/27.4.2
       jsdom: registry.npmmirror.com/jsdom/16.7.0
@@ -3805,7 +3813,7 @@ packages:
       '@jest/environment': registry.npmmirror.com/@jest/environment/27.4.6
       '@jest/fake-timers': registry.npmmirror.com/@jest/fake-timers/27.4.6
       '@jest/types': registry.npmmirror.com/@jest/types/27.4.2
-      '@types/node': registry.npmmirror.com/@types/node/12.20.24
+      '@types/node': registry.npmmirror.com/@types/node/17.0.12
       jest-mock: registry.npmmirror.com/jest-mock/27.4.6
       jest-util: registry.npmmirror.com/jest-util/27.4.2
     dev: true
@@ -3825,7 +3833,7 @@ packages:
     dependencies:
       '@jest/types': registry.npmmirror.com/@jest/types/27.4.2
       '@types/graceful-fs': registry.npmmirror.com/@types/graceful-fs/4.1.5
-      '@types/node': registry.npmmirror.com/@types/node/12.20.24
+      '@types/node': registry.npmmirror.com/@types/node/17.0.12
       anymatch: registry.nlark.com/anymatch/3.1.2
       fb-watchman: registry.nlark.com/fb-watchman/2.0.1
       graceful-fs: registry.npmmirror.com/graceful-fs/4.2.9
@@ -3849,7 +3857,7 @@ packages:
       '@jest/source-map': registry.npmmirror.com/@jest/source-map/27.4.0
       '@jest/test-result': registry.npmmirror.com/@jest/test-result/27.4.6
       '@jest/types': registry.npmmirror.com/@jest/types/27.4.2
-      '@types/node': registry.npmmirror.com/@types/node/12.20.24
+      '@types/node': registry.npmmirror.com/@types/node/17.0.12
       chalk: registry.npmmirror.com/chalk/4.1.2
       co: registry.npmmirror.com/co/4.6.0
       expect: registry.npmmirror.com/expect/27.4.6
@@ -3912,7 +3920,7 @@ packages:
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dependencies:
       '@jest/types': registry.npmmirror.com/@jest/types/27.4.2
-      '@types/node': registry.npmmirror.com/@types/node/12.20.24
+      '@types/node': registry.npmmirror.com/@types/node/17.0.12
     dev: true
 
   registry.npmmirror.com/jest-pnp-resolver/1.2.2_jest-resolve@27.4.6:
@@ -3979,7 +3987,7 @@ packages:
       '@jest/test-result': registry.npmmirror.com/@jest/test-result/27.4.6
       '@jest/transform': registry.npmmirror.com/@jest/transform/27.4.6
       '@jest/types': registry.npmmirror.com/@jest/types/27.4.2
-      '@types/node': registry.npmmirror.com/@types/node/12.20.24
+      '@types/node': registry.npmmirror.com/@types/node/17.0.12
       chalk: registry.npmmirror.com/chalk/4.1.2
       emittery: registry.nlark.com/emittery/0.8.1
       exit: registry.nlark.com/exit/0.1.2
@@ -4041,7 +4049,7 @@ packages:
     version: 27.4.0
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dependencies:
-      '@types/node': registry.npmmirror.com/@types/node/12.20.24
+      '@types/node': registry.npmmirror.com/@types/node/17.0.12
       graceful-fs: registry.npmmirror.com/graceful-fs/4.2.9
     dev: true
 
@@ -4084,7 +4092,7 @@ packages:
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dependencies:
       '@jest/types': registry.npmmirror.com/@jest/types/27.4.2
-      '@types/node': registry.npmmirror.com/@types/node/12.20.24
+      '@types/node': registry.npmmirror.com/@types/node/17.0.12
       chalk: registry.npmmirror.com/chalk/4.1.2
       ci-info: registry.npmmirror.com/ci-info/3.3.0
       graceful-fs: registry.npmmirror.com/graceful-fs/4.2.9
@@ -4113,7 +4121,7 @@ packages:
     dependencies:
       '@jest/test-result': registry.npmmirror.com/@jest/test-result/27.4.6
       '@jest/types': registry.npmmirror.com/@jest/types/27.4.2
-      '@types/node': registry.npmmirror.com/@types/node/12.20.24
+      '@types/node': registry.npmmirror.com/@types/node/17.0.12
       ansi-escapes: registry.npmmirror.com/ansi-escapes/4.3.2
       chalk: registry.npmmirror.com/chalk/4.1.2
       jest-util: registry.npmmirror.com/jest-util/27.4.2
@@ -4126,7 +4134,7 @@ packages:
     version: 27.4.6
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': registry.npmmirror.com/@types/node/12.20.24
+      '@types/node': registry.npmmirror.com/@types/node/17.0.12
       merge-stream: registry.nlark.com/merge-stream/2.0.0
       supports-color: registry.npmmirror.com/supports-color/8.1.1
     dev: true
