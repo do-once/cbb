@@ -5,4 +5,4 @@
  * @description 工具链入口
  */
 
-export * from './rollup'
+export * from './build-modern'

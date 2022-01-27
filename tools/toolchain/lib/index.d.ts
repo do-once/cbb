@@ -3,5 +3,5 @@
  * @author GuangHui
  * @description 工具链入口
  */
-export * from './rollup';
+export * from './build-modern';
 //# sourceMappingURL=index.d.ts.map

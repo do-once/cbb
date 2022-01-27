@@ -1,6 +1,6 @@
 /**
  * @author GuangHui
- * @description description
+ * @description 负责输出modern版本（es2017）的esm包
  */
 
 export function start(): void {

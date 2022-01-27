@@ -2,16 +2,20 @@
   "name": "@doonce/toolchain",
   "version": "1.0.0",
   "description": "A inner build tool project used by other projects",
-  "scripts": {
-    "build": "rimraf ./lib/ && tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
   "author": {
     "name": "GuangHui",
     "email": "bryanadamss@foxmail.com",
     "url": "https://github.com/BryanAdamss"
   },
+  "scripts": {
+    "build": "rimraf ./lib/ && tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "main": "lib/index.js",
+  "bin": {
+    "build-modern": "bin/build-modern.js"
+  },
+  "keywords": [],
   "license": "MIT",
   "devDependencies": {
     "@rushstack/eslint-config": "~2.5.1",
