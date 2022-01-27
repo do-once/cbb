@@ -1,0 +1,1 @@
+{"version":3,"file":"rollup.js","sourceRoot":"","sources":["../src/rollup.ts"],"names":[],"mappings":";AAAA;;;GAGG;;;AAEH,SAAgB,KAAK;IACnB,OAAO,CAAC,GAAG,CAAC,OAAO,CAAC,CAAA;AACtB,CAAC;AAFD,sBAEC","sourcesContent":["/**\r\n * @author GuangHui\r\n * @description description\r\n */\r\n\r\nexport function start(): void {\r\n  console.log('start')\r\n}\r\n"]}

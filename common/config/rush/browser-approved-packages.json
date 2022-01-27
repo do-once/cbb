@@ -19,6 +19,10 @@
       "allowedCategories": [ "inner" ]
     },
     {
+      "name": "rimraf",
+      "allowedCategories": [ "inner" ]
+    },
+    {
       "name": "typescript",
       "allowedCategories": [ "inner" ]
     }

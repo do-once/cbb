@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../src/index.ts"],"names":[],"mappings":";;AAEA;;;GAGG;;;;;;;;;;;;AAEH,2CAAwB","sourcesContent":["#! /usr/bin/env node\r\n\r\n/**\r\n * @author GuangHui\r\n * @description 工具链入口\r\n */\r\n\r\nexport * from './rollup'\r\n"]}
