@@ -213,8 +213,8 @@
      */
     "reviewCategories": [
       // Some example categories:
-      "public", // 需要对外发布的项目
-      "inner" // 无需发布的项目
+      "published", // 需要对外发布的项目
+      "internal" // 无需发布的项目
     ],
 
     /**
@@ -449,12 +449,12 @@
     {
       "packageName": "@doonce/greeting",
       "projectFolder": "libraries/greeting",
-      "reviewCategory": "inner"
+      "reviewCategory": "internal"
     },
     {
       "packageName": "@doonce/toolchain",
       "projectFolder": "tools/toolchain",
-      "reviewCategory": "inner"
+      "reviewCategory": "internal"
     }
   ]
 }

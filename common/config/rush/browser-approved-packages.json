@@ -4,31 +4,31 @@
   "packages": [
     {
       "name": "@doonce/toolchain",
-      "allowedCategories": [ "inner" ]
+      "allowedCategories": [ "internal" ]
     },
     {
       "name": "@rushstack/eslint-config",
-      "allowedCategories": [ "inner" ]
+      "allowedCategories": [ "internal" ]
     },
     {
       "name": "@rushstack/heft",
-      "allowedCategories": [ "inner" ]
+      "allowedCategories": [ "internal" ]
     },
     {
       "name": "@rushstack/heft-node-rig",
-      "allowedCategories": [ "inner" ]
+      "allowedCategories": [ "internal" ]
     },
     {
       "name": "eslint",
-      "allowedCategories": [ "inner" ]
+      "allowedCategories": [ "internal" ]
     },
     {
       "name": "rimraf",
-      "allowedCategories": [ "inner" ]
+      "allowedCategories": [ "internal" ]
     },
     {
       "name": "typescript",
-      "allowedCategories": [ "inner" ]
+      "allowedCategories": [ "internal" ]
     }
   ]
 }
