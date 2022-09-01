@@ -3,6 +3,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
   "packages": [
     {
+      "name": "@doonce/toolchain",
+      "allowedCategories": [ "inner" ]
+    },
+    {
       "name": "@rushstack/eslint-config",
       "allowedCategories": [ "inner" ]
     },

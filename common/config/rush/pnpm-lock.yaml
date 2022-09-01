@@ -5,6 +5,12 @@ importers:
   .:
     specifiers: {}
 
+  ../../libraries/greeting:
+    specifiers:
+      '@doonce/toolchain': workspace:*
+    dependencies:
+      '@doonce/toolchain': link:../../tools/toolchain
+
   ../../tools/toolchain:
     specifiers:
       '@rushstack/eslint-config': ~2.5.1
