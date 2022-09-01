@@ -2,6 +2,7 @@
  * This is the main configuration file for Rush.
  * For full documentation, please see https://rushjs.io
  */
+/* 中文文档：https://rushjs.io/zh-cn/pages/configs/rush_json/ */
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
 
@@ -62,6 +63,7 @@
      * The default value is false to avoid legacy compatibility issues.
      * It is strongly recommended to set strictPeerDependencies=true.
      */
+    /* 设为true，进行严格同级依赖检查 */
     "strictPeerDependencies": true,
 
     /**
@@ -94,7 +96,8 @@
      *
      * The default value is false.
      */
-    // "preventManualShrinkwrapChanges": true,
+    /* 设为true后，禁止修改lock文件后，不执行rush update */
+    "preventManualShrinkwrapChanges": true,
 
     /**
      * If true, then `rush install` will use the PNPM workspaces feature to perform the
@@ -137,7 +140,8 @@
    * pre-LTS versions in preparation for supporting the first LTS version, you can use this setting
    * to disable Rush's warning.
    */
-  // "suppressNodeLtsWarning": false,
+  /* 强制使用nodejs LTS 偶数版本 */
+  "suppressNodeLtsWarning": true,
 
   /**
    * If you would like the version specifiers for your dependencies to be consistent, then
@@ -150,6 +154,7 @@
    * version. In those cases, you will need to add an entry to the "allowedAlternativeVersions"
    * section of the common-versions.json.
    */
+  /* 确保一致的依赖版本 */
   "ensureConsistentVersions": true,
 
   /**
@@ -175,6 +180,7 @@
    * To remove these restrictions, you could set projectFolderMinDepth=1
    * and set projectFolderMaxDepth to a large number.
    */
+  /* 项目文件夹深度固定为2，即分类目录下为project根目录如tools/tool-chain，tools/projectA/projectB 这种三层不被允许 */
   "projectFolderMinDepth": 2,
   "projectFolderMaxDepth": 2,
 
@@ -211,6 +217,7 @@
      * Designate categories with whatever granularity is appropriate for your review process,
      * or you could just have a single category called "default".
      */
+    /* 审查类别，如部分项目对外发布，部分只适合内部使用 */
     "reviewCategories": [
       // Some example categories:
       "published", // 需要对外发布的项目
@@ -242,6 +249,7 @@
      * IMPORTANT: Because these are regular expressions encoded as JSON string literals,
      * RegExp escapes need two backslashes, and ordinary periods should be "\\.".
      */
+    /* 对提交者邮箱格式的约束 */
     // "allowedEmailRegExps": [
     //   "[^@]+@users\\.noreply\\.github\\.com",
     //   "travis@example\\.org"
@@ -251,6 +259,7 @@
      * of a recommended email.  Make sure it conforms to one of the allowedEmailRegExps
      * expressions.
      */
+    /* 推荐的邮箱格式样板 */
     // "sampleEmail": "mrexample@users.noreply.github.com",
     /**
      * The commit message to use when committing changes during 'rush publish'.
@@ -302,10 +311,12 @@
   /**
    * Event hooks are customized script actions that Rush executes when specific events occur
    */
+  /* 事件钩子 */
   "eventHooks": {
     /**
      * The list of shell commands to run before the Rush installation starts
      */
+    /* 在rusha install前执行的脚本 */
     "preRushInstall": [
       // "common/scripts/pre-rush-install.js"
     ],
@@ -313,16 +324,19 @@
     /**
      * The list of shell commands to run after the Rush installation finishes
      */
+    /* rush install 后执行 */
     "postRushInstall": [],
 
     /**
      * The list of shell commands to run before the Rush build command starts
      */
+    /* rush build前 */
     "preRushBuild": [],
 
     /**
      * The list of shell commands to run after the Rush build command finishes
      */
+    /* rush build后 */
     "postRushBuild": []
   },
 
@@ -343,6 +357,8 @@
    *
    * For more details and instructions, see this article:  https://rushjs.io/pages/advanced/installation_variants/
    */
+  /* 同时兼容某个依赖的多个版本时，需要使用变种来解决多个版本的构建测试问题 */
+  /* https://rushjs.io/zh-cn/pages/advanced/installation_variants/ */
   "variants": [
     // {
     //   /**
@@ -365,7 +381,8 @@
    * that read these JSON files and do something with them.  These scripts are typically registered
    * in the "eventHooks" section.
    */
-  // "telemetryEnabled": false,
+  /* 本地收集数据，其会被写入common/temp中，可以关闭 */
+  "telemetryEnabled": false,
 
   /**
    * Allows creation of hotfix changes. This feature is experimental so it is disabled by default.
@@ -381,6 +398,12 @@
    * 1. Depth-first scans are expensive, particularly when tools need to repeatedly collect the list.
    * 2. On a caching CI machine, scans can accidentally pick up files left behind from a previous build.
    * 3. It's useful to have a centralized inventory of all projects and their important metadata.
+   */
+  /*
+   * Rush 不会使用通配符自动扫描项目，有以下原因：
+   * 1. 深度优先搜索开销太大，尤其是需要重复收集列表时；
+   * 2. 在带有缓存的 CI 机器上，搜索可能会遗漏掉之前构建中的文件；
+   * 3. 集中式的管理所有项目以及其重要的元数据是很有用的。
    */
   "projects": [
     // {
@@ -421,6 +444,7 @@
     //    * the Rush change and publish workflows. The default value is false.
     //    * NOTE: "versionPolicyName" and "shouldPublish" are alternatives; you cannot specify them both.
     //    */
+    /* 是否需要发布 */
     //   // "shouldPublish": false,
     //
     //   /**
