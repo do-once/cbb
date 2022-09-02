@@ -1,5 +1,5 @@
 'use strict';
-
+/* pnpm hook，可利用其在pnpm安装依赖前，调整依赖版本 */
 /**
  * When using the PNPM package manager, you can use pnpmfile.js to workaround
  * dependencies that have mistakes in their package.json file.  (This feature is

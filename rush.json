@@ -4,6 +4,7 @@
  */
 /* 中文文档：https://rushjs.io/zh-cn/pages/configs/rush_json/ */
 {
+  /* $schema中的v5和rushVersion中的major版本保持一致，否则vscode的提示可能错误 */
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
 
   /**
@@ -96,7 +97,7 @@
      *
      * The default value is false.
      */
-    /* 设为true后，禁止修改lock文件后，不执行rush update */
+    /* 设为true后，禁止修改lock文件后不执行rush update */
     "preventManualShrinkwrapChanges": true,
 
     /**

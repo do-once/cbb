@@ -6,4 +6,11 @@
 # Invoke the "rush prettier" custom command to reformat files whenever they
 # are committed. The command is defined in common/config/rush/command-line.json
 # and uses the "rush-prettier" autoinstaller.
+
+# pre-commit前自动prettier流程如下
+# 安装rush，然后运行rush prettier这个自定义命令
+# rush prettier定义在common/config/rush/command-line.json中
+# rush prettier将调用command-line.json中定义的autoinstaller来安装相关依赖，并调用shellCommand中的shell
+# autoinstaller是通过rush init-autoinstaller --name rush-prettier生成的
+# 参考：https://rushjs.io/zh-cn/pages/maintainer/enabling_prettier/#启用 Git 钩子
 node common/scripts/install-run-rush.js prettier || exit $?

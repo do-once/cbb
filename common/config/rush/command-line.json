@@ -167,7 +167,8 @@
     //   // "autoinstallerName": "my-task"
     // }
     {
-      // 参考https://rushjs.io/pages/maintainer/enabling_prettier/
+      /* 开启pre-commit时自动prettier */
+      /* 参考https://rushjs.io/pages/maintainer/enabling_prettier/ */
       "name": "prettier",
       "commandKind": "global",
       "summary": "Used by the pre-commit Git hook. This command invokes Prettier to reformat staged changes.",
