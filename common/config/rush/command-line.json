@@ -2,6 +2,7 @@
  * This configuration file defines custom commands for the "rush" command-line.
  * More documentation is available on the Rush website: https://rushjs.io
  */
+ /* 参考：https://rushjs.io/zh-cn/pages/configs/command-line_json/ */
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/command-line.schema.json",
 
@@ -20,6 +21,13 @@
     //    * according to the dependency graph (similar to how "rush build" works).
     //    * The set of projects can be restricted e.g. using the "--to" or "--from" parameters.
     //    */
+    /**
+       * （必须）用于确定自定义指令的类型。
+       * Rush 的 "bulk" 类型指令将会在每个项目中都被调用，Rush 会寻找项目 package.json 内的 "scripts" 字段中匹配该命令行的字段。
+       * 默认情况下，Rush 会根据依赖图来确定要运行的项目（与 "rush build" 的工作原理类似）。
+       * 也可以通过诸如 "--to" 或 "--from" 参数来限制项目集合。
+       * bulk类型命令是需要每个项目自行实现逻辑，自定义指令统一调用
+       */
     //   "commandKind": "bulk",
     // 
     //   /**
@@ -58,6 +66,13 @@
     //    *
     //    * In particular, this is needed for custom scripts that invoke other Rush commands.
     //    */
+    /**
+    * Rush 操作需要一个锁文件来防止同一个仓库被多个指令同时处理。（例如：同时执行 "rush install" 和
+    * "rush build" 会出错）。如果你的命令可以与其他操作同时执行，那么设定 "safeForSimultaneousRushProcesses"
+    * 为 true 来禁用这种保护。
+    *
+    * 对于调用其他 Rush 命令的脚本而言，这一点是尤为需要的。
+    */
     //   "safeForSimultaneousRushProcesses": false,
     // 
     //   /**
@@ -65,6 +80,11 @@
     //    * simultaneously for multiple projects.  Similar to "rush build", regardless of parallelism
     //    * projects will not start processing until their dependencies have completed processing.
     //    */
+    /**
+      * （必须）如果为真，那么该指令可以安全的并行执行，例如同时在多个项目内执行。
+      * 与 "rush build" 类似，无论是否开启并行，在其依赖完成前，该项目都不会
+      * 开始执行。
+      */
     //   "enableParallelism": false,
     // 
     //   /**
@@ -73,6 +93,12 @@
     //    * certain operations, for example a "clean" task that deletes output files.  In this case
     //    * you can set "ignoreDependencyOrder" to true to increase parallelism.
     //    */
+    /**
+    * 通常项目会依照依赖顺序处理，对于某个项目而言，直到其依赖处理完成后才会处理
+    * 该项目。但对于某个特定的操作而言，该限制并不适用，例如 "clean" 任务来删除
+    * 输出文件。在这种情况下，可以设定 "ignoreDependencyOrder" 为 true 来
+    * 提高并行度。
+    */
     //   "ignoreDependencyOrder": false,
     // 
     //   /**
@@ -80,6 +106,11 @@
     //    * the custom command name.  To disable this check, set "ignoreMissingScript" to true;
     //    * projects with a missing definition will be skipped.
     //    */
+    /**
+    * 通常情况下，Rush 会要求每个项目的 package.jso 文件下都有对应的 "script"
+    * 匹配自定义指令名。设定 "ignoreMissingScript" 为 true 可以禁止此检查，
+    * 缺少相应定义的项目会被跳过。
+    */
     //   "ignoreMissingScript": false,
     // 
     //   /**
@@ -102,11 +133,17 @@
     //    *
     //    * Note: The default value is false. In Rush 5.7.x and earlier, the default value was true.
     //    */
+    /**
+      * 构建时warning是否阻塞流程
+      */
     //   "allowWarningsInSuccessfulBuild": false,
     // 
     //   /**
     //    * If true then this command will be incremental like the built-in "build" command
     //    */
+    /**
+      * 该参数为 true 时，其行为类似于内置的 "build" 命令的增量构建。
+      */
     //   "incremental": false,
     // 
     //   /**
@@ -131,6 +168,10 @@
     //    * (Required) Determines the type of custom command.
     //    * Rush's "global" commands are invoked once for the entire repo.
     //    */
+    /**
+      * （必须）自定义指令的类型。
+      * Rush 的 "global" 指令会在整个项目内唤醒一次。一般需要一个使用一个shell来处理，参考rush prettier这个自定义命令；* 参考https://rushjs.io/pages/maintainer/enabling_prettier/ 
+      */
     //   "commandKind": "global",
     // 
     //   "name": "my-global-command",
@@ -144,6 +185,10 @@
     //    * the folder that contains rush.json.  If custom parameters are associated with this command, their
     //    * values will be appended to the end of this string.
     //    */
+  /**
+    * （必须）一个使用操作系统 shell 调用的脚本。工作目录是含有 rush.json 的
+    * 目录。如果自定义指令与该指令有关，那么它们的值应该被添加到字符串的尾部。
+    */
     //   "shellCommand": "node common/scripts/my-global-command.js",
     // 
     //   /**
@@ -164,11 +209,29 @@
     //    * the "common/autoinstallers/my-task/node_modules/.bin" folder would be added to the shell PATH when
     //    * invoking the "shellCommand".
     //    */
+      /**
+       * 如果你的 "shellCommand" 依赖 NPM 包，那么推荐将其写成 Rush 内的一
+       * 个项目，使得工作链可以正常构建。某些情况下该指令应该在没有首次执行
+       * "rush build" 的情况下正常工作，推荐的方式是将该项目发布到 NPM 源
+       * 上，并使用 common/scripts/install-run.js 来调用它。
+       *
+       * 自动安装功能提供了另外一种可能：在 "common/autoinstallers" 下的目
+       * 录都有一个 package.json 文件和 shrinkwrap 文件。在被调用前，Rush
+       * 会自动调用包管理器来安装这些依赖。自动下载有一个优势：即使所在的分支的  Autoinstallers have the
+       * "rush isntall" 出现了问题，它们也能正常工作，这使得该功能可以实现
+       * Git 的钩子脚本。但是该功能也有一个缺点，它们不能用于构建项目，并且会增
+       * 加仓库的安装量。
+       *
+       * "autoinstallerName" 属性不能包含路径，并必须是一个有效的 NPM 包名。
+       * 例如， "my-task" 是映射到 "common/autoinstallers/my-task/package.json"
+       * 的包名，当调用该 "shellCommand" 时，"common/autoinstallers/my-task/node_modules/.bin"
+       * 应当被添加到环境变量中。
+       */
     //   // "autoinstallerName": "my-task"
     // }
     {
       /* 开启pre-commit时自动prettier */
-      /* 参考https://rushjs.io/pages/maintainer/enabling_prettier/ */
+      /* 参考：https://rushjs.io/pages/maintainer/enabling_prettier/ */
       "name": "prettier",
       "commandKind": "global",
       "summary": "Used by the pre-commit Git hook. This command invokes Prettier to reformat staged changes.",
