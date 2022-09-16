@@ -1,6 +1,6 @@
 /**
  * @author GuangHui
- * @description rig config for node project
+ * @description rig config for web project
  * @reference
  * https://rushstack.io/pages/heft_tutorials/heft_and_rush/
  * https://github.com/microsoft/rushstack/tree/master/rigs/heft-node-rig
