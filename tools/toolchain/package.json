@@ -8,7 +8,7 @@
     "url": "https://github.com/BryanAdamss"
   },
   "scripts": {
-    "build": "rimraf ./lib/ && tsc",
+    "build": "heft build --clean --verbose",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "main": "lib/index.js",

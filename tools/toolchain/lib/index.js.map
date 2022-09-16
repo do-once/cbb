@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sourceRoot":"","sources":["../src/index.ts"],"names":[],"mappings":";;AAEA;;;GAGG;;;;;;;;;;;;AAEH,iDAA8B","sourcesContent":["#! /usr/bin/env node\r\n\r\n/**\r\n * @author GuangHui\r\n * @description 工具链入口\r\n */\r\n\r\nexport * from './build-modern'\r\n"]}
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../src/index.ts"],"names":[],"mappings":";;AAEA;;;GAGG;;;;;;;;;;;;;;;;AAEH,iDAA8B","sourcesContent":["#! /usr/bin/env node\n\n/**\n * @author GuangHui\n * @description 工具链入口\n */\n\nexport * from './build-modern'\n"]}
