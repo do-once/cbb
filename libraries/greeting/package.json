@@ -4,13 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "node_modules/.bin/build-modern",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "heft build --clean --verbose",
+    "test": "heft test --clean --verbose"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@doonce/toolchain": "workspace:*"
+  },
+  "devDependencies": {
+    "@rushstack/eslint-config": "~2.5.1",
+    "@rushstack/heft": "0.47.9",
+    "@doonce/web-rig": "workspace:*",
+    "@types/heft-jest": "1.0.3"
   }
 }

@@ -11,6 +11,10 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "@doonce/web-rig",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "@microsoft/api-extractor",
       "allowedCategories": [ "internal" ]
     },
