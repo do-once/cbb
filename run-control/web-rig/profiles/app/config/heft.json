@@ -149,8 +149,9 @@
     //   */
     //  // "options": { }
     // }
-    { "plugin": "@rushstack/heft-jest-plugin" },
-    { "plugin": "@rushstack/heft-sass-plugin" },
-    { "plugin": "@rushstack/heft-webpack5-plugin" }
+    { "plugin": "@rushstack/heft-jest-plugin" }
+    /* 考虑使用vite、tailwindcss，所以注释掉 */
+    // { "plugin": "@rushstack/heft-sass-plugin" },
+    // { "plugin": "@rushstack/heft-webpack5-plugin" }
   ]
 }
