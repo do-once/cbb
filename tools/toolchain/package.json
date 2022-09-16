@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "heft build --clean --verbose",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "heft test --clean --verbose"
   },
   "main": "lib/index.js",
   "bin": {
@@ -22,6 +22,7 @@
     "@rushstack/eslint-config": "~2.5.1",
     "@rushstack/heft": "0.47.9",
     "@types/node": "~17.0.12",
-    "rimraf": "~3.0.2"
+    "rimraf": "~3.0.2",
+    "@types/heft-jest": "1.0.3"
   }
 }
