@@ -480,6 +480,16 @@
       "packageName": "@doonce/toolchain",
       "projectFolder": "tools/toolchain",
       "reviewCategory": "internal"
+    },
+    {
+      "packageName": "@doonce/node-rig",
+      "projectFolder": "run-control/node-rig",
+      "reviewCategory": "internal"
+    },
+    {
+      "packageName": "@doonce/web-rig",
+      "projectFolder": "run-control/web-rig",
+      "reviewCategory": "internal"
     }
   ]
 }

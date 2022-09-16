@@ -7,6 +7,10 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "@microsoft/api-extractor",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "@rushstack/eslint-config",
       "allowedCategories": [ "internal" ]
     },
@@ -15,7 +19,31 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "@rushstack/heft-jest-plugin",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "@rushstack/heft-node-rig",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@rushstack/heft-sass-plugin",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@rushstack/heft-webpack5-plugin",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "autoprefixer",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "css-loader",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "css-minimizer-webpack-plugin",
       "allowedCategories": [ "internal" ]
     },
     {
@@ -23,11 +51,71 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "html-webpack-plugin",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "jest-environment-jsdom",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "jest-environment-node",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "mini-css-extract-plugin",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "postcss",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "postcss-loader",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "rimraf",
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "sass",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "sass-loader",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "source-map-loader",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "style-loader",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "terser-webpack-plugin",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "typescript",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "url-loader",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "webpack",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "webpack-bundle-analyzer",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "webpack-merge",
       "allowedCategories": [ "internal" ]
     }
   ]
