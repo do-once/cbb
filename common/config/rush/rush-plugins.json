@@ -21,5 +21,12 @@
     //    */
     //   "autoinstallerName": "plugins"
     // }
+    /* 启用rush-sort-package-json，其可以通过rush sort-package-json命令排序pkg.json的字段顺序 */
+    /* 启用plugins参考https://rushjs.io/zh-cn/pages/maintainer/using_rush_plugins/ */
+    {
+      "packageName":"rush-sort-package-json",
+      "pluginName":"rush-sort-package-json",
+      "autoinstallerName":"rush-plugins"
+    }
   ]
 }
