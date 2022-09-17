@@ -2,21 +2,21 @@
   "name": "@doonce/greeting",
   "version": "1.0.0",
   "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
   "main": "index.js",
   "scripts": {
     "build": "heft build --clean --verbose",
     "test": "heft test --clean --verbose"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@doonce/toolchain": "workspace:*"
   },
   "devDependencies": {
+    "@doonce/web-rig": "workspace:*",
     "@rushstack/eslint-config": "~2.5.1",
     "@rushstack/heft": "0.47.9",
-    "@doonce/web-rig": "workspace:*",
     "@types/heft-jest": "1.0.3"
   }
 }

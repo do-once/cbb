@@ -2,27 +2,27 @@
   "name": "@doonce/toolchain",
   "version": "1.0.0",
   "description": "A inner build tool project used by other projects",
+  "keywords": [],
+  "license": "MIT",
   "author": {
     "name": "GuangHui",
     "email": "bryanadamss@foxmail.com",
     "url": "https://github.com/BryanAdamss"
   },
-  "scripts": {
-    "build": "heft build --clean --verbose",
-    "test": "heft test --clean --verbose"
-  },
   "main": "lib/index.js",
   "bin": {
     "build-modern": "bin/build-modern.js"
   },
-  "keywords": [],
-  "license": "MIT",
+  "scripts": {
+    "build": "heft build --clean --verbose",
+    "test": "heft test --clean --verbose"
+  },
   "devDependencies": {
     "@doonce/node-rig": "workspace:*",
     "@rushstack/eslint-config": "~2.5.1",
     "@rushstack/heft": "0.47.9",
+    "@types/heft-jest": "1.0.3",
     "@types/node": "~17.0.12",
-    "rimraf": "~3.0.2",
-    "@types/heft-jest": "1.0.3"
+    "rimraf": "~3.0.2"
   }
 }
