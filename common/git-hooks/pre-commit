@@ -7,7 +7,7 @@
 # are committed. The command is defined in common/config/rush/command-line.json
 # and uses the "rush-prettier" autoinstaller.
 
-# pre-commit前自动prettier流程如下
+# pre-commit时自动prettier流程如下
 # 安装rush，然后运行rush prettier这个自定义命令
 # rush prettier定义在common/config/rush/command-line.json中
 # rush prettier将调用command-line.json中定义的autoinstaller来安装相关依赖，并调用shellCommand中的shell
