@@ -1,0 +1,27 @@
+{
+  "name": "{{packageName}}",
+  "version": "0.0.1",
+  "description": "{{description}}",
+  "keywords": [],
+  "license": "MIT",
+  "author": {
+    "name": "GuangHui",
+    "email": "bryanadamss@foxmail.com",
+    "url": "https://github.com/BryanAdamss"
+  },
+  "main": "lib/index.js",
+  "bin": {
+    "{{unscopedPackageName}}": "bin/{{unscopedPackageName}}.js"
+  },
+  "scripts": {
+    "build": "heft build --clean --verbose",
+    "test": "heft test --clean --verbose"
+  },
+  "devDependencies": {
+    "@doonce/node-rig": "workspace:*",
+    "@rushstack/eslint-config": "~2.5.1",
+    "@rushstack/heft": "0.47.9",
+    "@types/heft-jest": "1.0.3",
+    "@types/node": "~17.0.12"
+  }
+}

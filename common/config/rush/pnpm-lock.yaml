@@ -61,14 +61,12 @@ importers:
       '@rushstack/heft': 0.47.9
       '@types/heft-jest': 1.0.3
       '@types/node': ~17.0.12
-      rimraf: ~3.0.2
     devDependencies:
       '@doonce/node-rig': link:../../run-control/node-rig
       '@rushstack/eslint-config': registry.npmmirror.com/@rushstack/eslint-config/2.5.1_valmiib6gbzc7jhcbpocdsabay
       '@rushstack/heft': registry.npmmirror.com/@rushstack/heft/0.47.9
       '@types/heft-jest': registry.npmmirror.com/@types/heft-jest/1.0.3
       '@types/node': registry.npmmirror.com/@types/node/17.0.12
-      rimraf: registry.npmmirror.com/rimraf/3.0.2
 
 packages:
 

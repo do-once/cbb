@@ -1,0 +1,14 @@
+/**
+ * @author GuangHui
+ * @description rig config for node project
+ * @reference
+ * https://rushstack.io/pages/heft_tutorials/heft_and_rush/
+ * https://github.com/microsoft/rushstack/tree/master/rigs/heft-node-rig
+ * https://rushstack.io/pages/heft/rig_packages/
+ */
+
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/rig-package/rig.schema.json",
+
+  "rigPackageName": "@doonce/node-rig"
+}
