@@ -23,7 +23,7 @@ export class DelDefaultQuestion implements IPlugin {
       for (let i = 0; i < needDel.length; i++) {
         const quesName = needDel[i]
         /* 删除默认问题 */
-        // @ts-ignore: 插件运行环境支持findIndexs
+        // @ts-ignore: 插件运行环境支持findIndex
         const index = prompts.promptQueue.findIndex(it => it.name === quesName)
 
         if (index < 0) continue
