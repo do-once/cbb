@@ -22,10 +22,18 @@
     //   "autoinstallerName": "plugins"
     // }
     /* 启用rush-sort-package-json，其可以通过rush sort-package-json命令排序pkg.json的字段顺序 */
+    /* https://github.com/bytesfriends/rush-plugins/tree/main/rush-plugins/rush-sort-package-json */
     /* 启用plugins参考https://rushjs.io/zh-cn/pages/maintainer/using_rush_plugins/ */
     {
       "packageName":"rush-sort-package-json",
       "pluginName":"rush-sort-package-json",
+      "autoinstallerName":"rush-plugins"
+    },
+    /* 启用rush-init-project-plugin插件，其可以快速初始化项目 */
+    /* https://github.com/bytesfriends/rush-plugins/tree/main/rush-plugins/rush-init-project-plugin */
+    {
+      "packageName":"rush-init-project-plugin",
+      "pluginName":"rush-init-project-plugin",
       "autoinstallerName":"rush-plugins"
     }
   ]
