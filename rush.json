@@ -490,6 +490,11 @@
       "packageName": "@doonce/web-rig",
       "projectFolder": "run-control/web-rig",
       "reviewCategory": "internal"
+    },
+    {
+      "packageName": "@doonce/hello-vue3-comp",
+      "projectFolder": "components/hello-vue3-comp",
+      "reviewCategory": "published"
     }
   ]
 }

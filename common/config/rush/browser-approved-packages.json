@@ -12,7 +12,7 @@
     },
     {
       "name": "@doonce/web-rig",
-      "allowedCategories": [ "internal" ]
+      "allowedCategories": [ "internal", "published" ]
     },
     {
       "name": "@microsoft/api-extractor",
@@ -20,11 +20,11 @@
     },
     {
       "name": "@rushstack/eslint-config",
-      "allowedCategories": [ "internal" ]
+      "allowedCategories": [ "internal", "published" ]
     },
     {
       "name": "@rushstack/heft",
-      "allowedCategories": [ "internal" ]
+      "allowedCategories": [ "internal", "published" ]
     },
     {
       "name": "@rushstack/heft-jest-plugin",
@@ -41,6 +41,14 @@
     {
       "name": "@rushstack/heft-webpack5-plugin",
       "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@vitejs/plugin-vue",
+      "allowedCategories": [ "published" ]
+    },
+    {
+      "name": "@vitejs/plugin-vue-jsx",
+      "allowedCategories": [ "published" ]
     },
     {
       "name": "autoprefixer",
@@ -113,6 +121,14 @@
     {
       "name": "url-loader",
       "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "vite",
+      "allowedCategories": [ "published" ]
+    },
+    {
+      "name": "vue",
+      "allowedCategories": [ "published" ]
     },
     {
       "name": "webpack",
