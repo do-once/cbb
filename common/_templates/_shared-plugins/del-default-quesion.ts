@@ -1,3 +1,9 @@
+/**
+ * @author GuangHui
+ * @description 删除默认问题
+ * @reference https://github.com/bytesfriends/rush-plugins/blob/main/rush-plugins/rush-init-project-plugin/docs/init_project_configuration.md#how-to-develop-a-plugin
+ */
+
 import type {
   IPlugin,
   IHooks,
