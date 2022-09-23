@@ -7,6 +7,7 @@
 import type { IConfig } from '../../autoinstallers/rush-plugins/node_modules/rush-init-project-plugin'
 import { DelDefaultQuestion } from '../_shared-plugins/del-default-quesion'
 
+import { AddPascalName } from '../_shared-plugins/add-pascal-name'
 const config: IConfig = {
   /* prompts type参考 */
   /* https://github.com/SBoudrias/Inquirer.js/#prompt-types */
@@ -20,9 +21,9 @@ const config: IConfig = {
   //     }
   //   }
   // ],
-  plugins: [new DelDefaultQuestion()],
+  plugins: [new DelDefaultQuestion(), new AddPascalName()],
   defaultProjectConfiguration: {
-    reviewCategory: 'internal'
+    reviewCategory: 'published'
   }
 }
 
