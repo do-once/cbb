@@ -2,7 +2,7 @@
   "extends": "./node_modules/@doonce/web-rig/profiles/library/tsconfig-base.json",
   "compilerOptions": {
     "types": ["heft-jest", "node"],
-    /* 仅支持moderen浏览器 */
-    "target": "es2017"
+    /* 仅支持moderen浏览器，宿主自行进行降级处理 */
+    "target": "ESNext"
   }
 }

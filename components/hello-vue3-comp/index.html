@@ -4,27 +4,19 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>HelloVue3Comp Example</title>
   </head>
   <body>
     <div id="app"></div>
-    <script type="importmap">
-      {
-        "imports": {
-          "vue": "https://cdn.jsdelivr.net/npm/vue@3.2.39/dist/vue.esm-browser.prod.js"
-        }
-      }
-    </script>
 
     <script type="module">
-      import { createApp } from 'vue'
-      import HelloVue3Comp from './dist/hello-vue3-comp-es.js'
-      console.log('🚦 -> file: index.html -> line 23 -> HelloVue3Comp', HelloVue3Comp)
+      import { createApp, h } from 'vue'
+      import InstallObj from '/src/index.ts'
 
       createApp({
-        template: `<div><HelloVue3Comp/></div>`
+        template: `<HelloVue3Comp/>`
       })
-        .use(HelloVue3Comp)
+        .use(InstallObj)
         .mount('#app')
     </script>
   </body>

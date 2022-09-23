@@ -13,9 +13,11 @@ const p = /* @__PURE__ */ l({
     }, "hello vue3 comp"));
   }
 });
-function m(e, o) {
-  e.component("HelloVue3Comp", p);
-}
+const m = {
+  install(e, o) {
+    e.component("HelloVue3Comp", p);
+  }
+};
 export {
   m as default
 };

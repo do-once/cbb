@@ -55,6 +55,10 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "change-case",
+      "allowedCategories": [ "published" ]
+    },
+    {
       "name": "css-loader",
       "allowedCategories": [ "internal" ]
     },
@@ -81,6 +85,10 @@
     {
       "name": "mini-css-extract-plugin",
       "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "param-case",
+      "allowedCategories": [ "published" ]
     },
     {
       "name": "postcss",
@@ -128,6 +136,10 @@
     },
     {
       "name": "vue",
+      "allowedCategories": [ "published" ]
+    },
+    {
+      "name": "vue-tsc",
       "allowedCategories": [ "published" ]
     },
     {
