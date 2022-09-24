@@ -1,6 +1,6 @@
 /**
  * @author GuangHui
- * @description 生成PascalCase名字
+ * @description 转换answers(名称pascal化、新增answers等)
  * @reference https://github.com/bytesfriends/rush-plugins/blob/main/rush-plugins/rush-init-project-plugin/docs/init_project_configuration.md#how-to-develop-a-plugin
  */
 

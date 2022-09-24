@@ -1,6 +1,6 @@
 /**
  * @author GuangHui
- * @description 删除默认问题
+ * @description 转换question(删除question、追加validator等)
  * @reference https://github.com/bytesfriends/rush-plugins/blob/main/rush-plugins/rush-init-project-plugin/docs/init_project_configuration.md#how-to-develop-a-plugin
  */
 
