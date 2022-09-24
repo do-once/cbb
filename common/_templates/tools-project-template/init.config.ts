@@ -5,21 +5,13 @@
  */
 
 import type { IConfig } from '../../autoinstallers/rush-plugins/node_modules/rush-init-project-plugin'
-import { DelDefaultQuestion } from '../_shared-plugins/del-default-quesion'
+import { DelDefaultQuestion } from '../_shared/del-default-quesion'
 
+import { sharedPrompts } from '../_shared/promots'
 const config: IConfig = {
   /* prompts type参考 */
   /* https://github.com/SBoudrias/Inquirer.js/#prompt-types */
-  // prompts: [
-  //   {
-  //     type: 'list',
-  //     name: 't',
-  //     message: 'select t',
-  //     choices() {
-  //       return ['a', 'b']
-  //     }
-  //   }
-  // ],
+  prompts: [...sharedPrompts],
   plugins: [new DelDefaultQuestion()],
   defaultProjectConfiguration: {
     reviewCategory: 'internal'
