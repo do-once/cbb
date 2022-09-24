@@ -10,7 +10,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rig-package/rig.schema.json",
 
-  "rigPackageName": "@doonce/node-rig",
+  "rigPackageName": "@doonce/web-rig",
 
-  "rigProfile": "default"
+  "rigProfile": "library"
 }
