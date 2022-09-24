@@ -4,17 +4,16 @@
  * @reference https://github.com/bytesfriends/rush-plugins/blob/main/rush-plugins/rush-init-project-plugin/docs/init_project_configuration.md#configuration-for-initialize-project
  */
 
-import type { IConfig } from '../../autoinstallers/rush-plugins/node_modules/rush-init-project-plugin'
-import { DelDefaultQuestion } from '../_shared/del-default-quesion'
+import type { IConfig } from '../../autoinstallers/rush-plugins/node_modules/rush-init-project-plugin/lib/index'
 
-import { AddPascalName } from '../_shared/add-pascal-name'
-import { sharedPrompts } from '../_shared/promots'
+import { TransformQuestion } from '../_shared/transform-question'
+import { TransformAnswers } from '../_shared/transfrom-answers'
 
 const config: IConfig = {
   /* prompts type参考 */
   /* https://github.com/SBoudrias/Inquirer.js/#prompt-types */
-  prompts: [...sharedPrompts],
-  plugins: [new DelDefaultQuestion(), new AddPascalName()],
+  // prompts: [],
+  plugins: [new TransformQuestion(), new TransformAnswers()],
   defaultProjectConfiguration: {
     reviewCategory: 'published'
   }

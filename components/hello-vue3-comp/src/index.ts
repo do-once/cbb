@@ -1,13 +1,13 @@
 /**
  * @author GuangHui
- * @description HelloVue3Comp 入口
+ * @description DoonceHelloVue3Comp 入口
  */
 
 import type { App } from 'vue'
-import HelloVue3Comp from './HelloVue3Comp.vue'
+import DoonceHelloVue3Comp from './HelloVue3Comp.vue'
 
 export default {
   install(app: App, options: any[]) {
-    app.component('HelloVue3Comp', HelloVue3Comp)
+    app.component('DoonceHelloVue3Comp', DoonceHelloVue3Comp)
   }
 }

@@ -1,21 +1,21 @@
 <script setup lang="ts">
 /**
- * * {{pascalUnscopedPackageName}}
+ * * {{pascalPackageName}}
  */
 
 const onClick = () => {
-  alert('{{pascalUnscopedPackageName}}')
+  alert('{{pascalPackageName}}')
 }
 </script>
 
 <template>
-  <button class="c-{{pascalUnscopedPackageName}}" type="button" @click="onClick" value="hello">
+  <button class="{{scopeName}}-{{pascalUnscopedPackageName}}" type="button" @click="onClick" value="hello">
     {{ pascalUnscopedPackageName }}
   </button>
 </template>
 
 <style>
-.c-{{pascalUnscopedPackageName}} {
+.{{scopeName}}-{{pascalUnscopedPackageName}} {
   color: red;
 }
 </style>

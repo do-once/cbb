@@ -1,6 +1,6 @@
 /**
  * @author GuangHui
- * @description HelloVue3Comp 入口
+ * @description {{pascalPackageName}} 打包入口
  */
 
 import type { App } from 'vue'

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * * HelloVue3Comp
+ * * DoonceHelloVue3Comp
  */
 
 const onClick = () => {
@@ -9,11 +9,11 @@ const onClick = () => {
 </script>
 
 <template>
-  <button class="c-HelloVue3Comp" type="button" @click="onClick" value="hello">hello vue3 comp</button>
+  <button class="doonce-HelloVue3Comp" type="button" @click="onClick" value="hello">hello vue3 comp</button>
 </template>
 
 <style>
-.c-HelloVue3Comp {
+.doonce-HelloVue3Comp {
   color: red;
 }
 </style>
