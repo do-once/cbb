@@ -31,6 +31,14 @@
       "moduleKind": "commonjs",
       "outFolderName": "lib-commonjs"
     }
+    /* 部分包需要提供umd格式，配置tsc额外输出umd各式 */
+    /* 参考：https://rushstack.io/zh-cn/pages/heft_configs/typescript_json/ */
+    /* 由于tsc的umd模式，无法输出window.xxxx形式，所以弃用tsc输出umd，改为使用vite(rollup)打包 */
+    /* https://github.com/microsoft/TypeScript/issues/8436 */
+    // {
+    //   "moduleKind": "umd",
+    //   "outFolderName": "lib-umd"
+    // }
   ],
 
   /**
