@@ -1,6 +1,7 @@
 {
-  "extends": "./node_modules/@doonce/web-rig/profiles/library/tsconfig-base.json",
-  "compilerOptions": {
-    "types": ["heft-jest"]
-  }
+  "extends": "./node_modules/@doonce/web-rig/profiles/library/tsconfig-base.json"
+  /* 考虑使用vitetesta代替 */
+  // "compilerOptions": {
+  //   "types": ["heft-jest"]
+  // }
 }

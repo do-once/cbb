@@ -2,7 +2,8 @@
   "$schema": "http://json.schemastore.org/tsconfig",
 
   "compilerOptions": {
-    "outDir": "../../../../../lib",
+    /* 统一输出目录为dist */
+    "outDir": "../../../../../dist",
     "rootDir": "../../../../../src",
     "rootDirs": ["../../../../../src", "../../../../../temp/sass-ts"],
 

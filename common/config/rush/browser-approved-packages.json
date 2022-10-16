@@ -135,6 +135,14 @@
       "allowedCategories": [ "internal", "published" ]
     },
     {
+      "name": "vite-dts",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "vite-plugin-dts",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "vue",
       "allowedCategories": [ "published" ]
     },

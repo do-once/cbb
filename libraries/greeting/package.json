@@ -1,22 +1,33 @@
 {
   "name": "@doonce/greeting",
-  "version": "1.0.0",
-  "description": "",
-  "keywords": [],
-  "license": "ISC",
-  "author": "",
-  "main": "index.js",
-  "scripts": {
-    "build": "heft build --clean --verbose",
-    "test": "heft test --clean --verbose"
+  "version": "0.0.1",
+  "description": "A example library",
+  "keywords": [
+    "library"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "GuangHui",
+    "email": "bryanadamss@foxmail.com",
+    "url": "https://github.com/BryanAdamss"
   },
-  "dependencies": {
-    "@doonce/toolchain": "workspace:*"
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js"
+    }
+  },
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.es.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build"
   },
   "devDependencies": {
     "@doonce/web-rig": "workspace:*",
     "@rushstack/eslint-config": "~2.5.1",
-    "@rushstack/heft": "0.47.9",
-    "@types/heft-jest": "1.0.3"
+    "vite": "~3.1.3"
   }
 }

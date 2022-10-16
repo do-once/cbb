@@ -3,7 +3,7 @@
  * @description vite 配置
  */
 
-import { createLibraryViteConfigFor } from '@doonce/web-rig/profiles/library/vite-config-base.js'
-console.log('🚦 -> file: vite.config.ts -> line 7 -> createLibraryViteConfigFor', createLibraryViteConfigFor)
+import { createViteConfigForVue } from '@doonce/web-rig/profiles/library/vite-config-base.js'
+console.log('🚦 -> file: vite.config.ts -> line 7 -> createViteConfigForVue', createViteConfigForVue)
 
-export default createLibraryViteConfigFor({ UMDGlobalName: 'DoonceHelloVue3Comp' })
+export default createViteConfigForVue({ UMDGlobalName: 'DoonceHelloVue3Comp' })

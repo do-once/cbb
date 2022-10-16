@@ -13,8 +13,8 @@
 /* 2. 若三方包依然想用esm格式，则项目 和 三方包同时在package.json中声明type="module" ,并在import时指定后缀名 */
 
 const { resolve } = require('path')
-const vue = require('@vitejs/plugin-vue')
 const { pascalCase } = require('change-case')
+const vue = require('@vitejs/plugin-vue')
 
 /* 不需要打包的dep */
 const genExternal = pkgJson => Object.keys(pkgJson?.peerDependencies ?? [])
@@ -26,13 +26,12 @@ const genGlobals = external =>
     return acc
   }, {})
 
-function createViteConfig({ UMDGlobalName = '' } = {}) {
+function createViteConfig({ UMDGlobalName = '', type = 'vue', debug = false } = {}) {
   if (!UMDGlobalName) throw new Error('UMDGlobalName is required')
 
-  const external = genExternal(resolve(process.cwd(), 'package.json'))
-  console.log('🚦 -> file: vite-config-base.ts -> line 63 -> createBaseViteConfig -> external', external)
+  const external = genExternal(require(resolve(process.cwd(), 'package.json')))
 
-  return {
+  let conf = {
     resolve: {
       alias: {
         /* vite启动本地服务时使用的index.html，其中使用了template语法，所以无法使用runtime版本 */
@@ -41,7 +40,7 @@ function createViteConfig({ UMDGlobalName = '' } = {}) {
     },
     build: {
       lib: {
-        entry: resolve(__dirname, 'src/index.ts'),
+        entry: resolve(process.cwd(), 'src/index.ts'),
         name: UMDGlobalName,
         // the proper extensions will be added
         fileName: format => {
@@ -57,10 +56,31 @@ function createViteConfig({ UMDGlobalName = '' } = {}) {
         }
       }
     },
-    plugins: [vue()]
+    plugins: []
   }
+
+  if (type === 'vue') conf.plugins.push(vue())
+
+  debug && console.log('🚦 -> file: vite-config-base.js -> line 83 -> createViteConfig -> conf', conf)
+  return conf
+}
+
+function createViteConfigForVue(opts) {
+  return createViteConfig({
+    ...opts,
+    type: 'vue'
+  })
+}
+
+function createViteConfigForLibrary(opts) {
+  return createViteConfig({
+    ...opts,
+    type: 'library'
+  })
 }
 
 module.exports = {
-  createViteConfig
+  createViteConfig,
+  createViteConfigForVue,
+  createViteConfigForLibrary
 }

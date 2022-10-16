@@ -4,7 +4,7 @@
  */
 
 
-import { createLibraryViteConfigFor } from '@doonce/web-rig/profiles/library/vite-config-base'
-console.log('🚦 -> file: vite.config.ts -> line 7 -> createLibraryViteConfigFor', createLibraryViteConfigFor)
+import { createViteConfigForVue } from '@doonce/web-rig/profiles/library/vite-config-base'
+console.log('🚦 -> file: vite.config.ts -> line 7 -> createViteConfigForVue', createViteConfigForVue)
 
-export default createLibraryViteConfigFor({ UMDGlobalName: '{{pascalPackageName}}' })
+export default createViteConfigForVue({ UMDGlobalName: '{{pascalPackageName}}' })
