@@ -25,3 +25,6 @@ common building block(CBB)
 - [`tools`](./tools)
   - A NodeJS build tool used to compile the other projects
   - `internal`
+- [`apps`](./apps)
+  - A application build with `vue3` and `vite`
+  - `internal`
