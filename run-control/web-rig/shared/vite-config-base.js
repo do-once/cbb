@@ -35,7 +35,7 @@ function createViteConfig({ UMDGlobalName = '' } = {}) {
   return {
     resolve: {
       alias: {
-        /* example中使用了template语法，所以无法使用runtime版本 */
+        /* vite启动本地服务时使用的index.html，其中使用了template语法，所以无法使用runtime版本 */
         vue: 'vue/dist/vue.esm-bundler.js'
       }
     },
