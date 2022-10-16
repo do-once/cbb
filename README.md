@@ -32,3 +32,6 @@ common building block(CBB)
 
 ## How to add a new project?
 - Just run `rush init-project` to make it happen.
+
+## TODO
+- [] add library template
