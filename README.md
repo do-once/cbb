@@ -28,3 +28,7 @@ common building block(CBB)
 - [`apps`](./apps)
   - A application build with `vue3` and `vite`
   - `internal`
+
+
+## How to add a new project?
+- Just run `rush init-project` to make it happen.
