@@ -1,6 +1,6 @@
 {
   "extends": "./node_modules/@doonce/web-rig/profiles/library/tsconfig-base.json"
-  /* 考虑使用vitetesta代替 */
+  /* 考虑使用vitetest代替 */
   // "compilerOptions": {
   //   "types": ["heft-jest"]
   // }
