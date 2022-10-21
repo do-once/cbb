@@ -34,8 +34,7 @@ common building block(CBB)
 - Just run `rush init-project` to make it happen.
 
 ## TODO
-- [x] use `vite` to bundle component
-- [x] use `vite` to bundle library
+- [x] use `vite` to bundle component and library
 - [ ] use `vite` output `.d.ts`
 - [x] add `tools` template
 - [x] add `components` template
