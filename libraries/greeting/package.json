@@ -23,7 +23,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "vite build"
+    "build": "vite build",
+    "dev": "vite"
   },
   "devDependencies": {
     "@doonce/web-rig": "workspace:*",
