@@ -45,7 +45,8 @@ function createViteConfig({ UMDGlobalName = '', type = 'vue', debug = false } = 
         // the proper extensions will be added
         fileName: format => {
           return `index.${format}.js`
-        }
+        },
+        formats: ['es', 'umd']
       },
       rollupOptions: {
         // 确保外部化处理那些你不想打包进库的依赖
