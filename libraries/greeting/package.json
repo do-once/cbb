@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@doonce/web-rig": "workspace:*",
-    "@rushstack/eslint-config": "~2.5.1",
-    "vite": "~3.1.3"
+    "@rushstack/eslint-config": "3.1.0",
+    "vite": "3.1.8"
   }
 }
