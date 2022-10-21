@@ -38,5 +38,5 @@ common building block(CBB)
 - [ ] use `vite` output `.d.ts`
 - [x] add `tools` template
 - [x] add `components` template
-- [ ] add `libraries` template
+- [x] add `libraries` template
 - [x] use `vitest` replace `@heft/jest`
