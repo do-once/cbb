@@ -24,11 +24,13 @@
   ],
   "scripts": {
     "build": "vite build",
-    "dev": "vite"
+    "dev": "vite",
+    "test": "vitest"
   },
   "devDependencies": {
     "@doonce/web-rig": "workspace:*",
     "@rushstack/eslint-config": "3.1.0",
-    "vite": "3.1.8"
+    "vite": "3.1.8",
+    "vitest": "0.24.3"
   }
 }

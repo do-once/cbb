@@ -143,6 +143,10 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "vitest",
+      "allowedCategories": [ "internal", "published" ]
+    },
+    {
       "name": "vue",
       "allowedCategories": [ "published" ]
     },
