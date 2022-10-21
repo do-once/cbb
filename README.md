@@ -40,3 +40,4 @@ common building block(CBB)
 - [x] add `tools` template
 - [x] add `components` template
 - [ ] add `libraries` template
+- [x] use `vitest` replace `@heft/jest`
