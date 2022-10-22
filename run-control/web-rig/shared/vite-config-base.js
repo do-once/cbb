@@ -15,6 +15,7 @@
 const { resolve } = require('path')
 const { pascalCase } = require('change-case')
 const vue = require('@vitejs/plugin-vue')
+const dts = require('vite-plugin-dts')
 
 /* 不需要打包的dep */
 const genExternal = pkgJson => Object.keys(pkgJson?.peerDependencies ?? [])
@@ -57,7 +58,42 @@ function createViteConfig({ UMDGlobalName = '', type = 'vue', debug = false } = 
         }
       }
     },
-    plugins: []
+    plugins: [
+      /* 生成声明文件 */
+      /* package.json中声明文件声明最佳实践 */
+      /*   
+      "types": "./dist/index.d.ts", # 回退
+      "typesVersions": { # 优先根据这个查询
+        "*": {
+          "*": [
+            "./dist/*"
+          ]
+        }
+      }, 
+      */
+      /* 参考： */
+      /* https://www.typescriptlang.org/docs/handbook/declaration-files/publishing.html#version-selection-with-typesversions */
+      /* https://github.com/microsoft/TypeScript/issues/33079#issuecomment-702617758 */
+      dts({
+        /* 显示声明include，否则会读取到rig中ts配置的include，出现无法生成声明文件的问题 */
+        include: ['src/**/*.(ts|vue)'],
+        /* 开启log */
+        skipDiagnostics: false,
+        logDiagnostics: true,
+        afterDiagnostic(diagnostics) {
+          console.log(
+            '🚦 -> file: vite-config-base.js -> line 67 -> afterDiagnostic -> diagnostics',
+            diagnostics
+          )
+        },
+        beforeWriteFile(filePath, content) {
+          console.log('🚦 -> file: vite-config-base.js -> line 67 -> beforeWriteFile -> filePath', filePath)
+        },
+        afterBuild() {
+          console.log('🚦 -> file: vite-config-base.js -> line 75 -> afterBuild')
+        }
+      })
+    ]
   }
 
   if (type === 'vue') conf.plugins.push(vue())

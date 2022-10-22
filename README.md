@@ -35,7 +35,7 @@ common building block(CBB)
 
 ## TODO
 - [x] use `vite` to bundle component and library
-- [ ] use `vite` output `.d.ts`
+- [x] use `vite` output `.d.ts`
 - [x] add `tools` template
 - [x] add `components` template
 - [x] add `libraries` template
