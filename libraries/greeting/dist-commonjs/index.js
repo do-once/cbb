@@ -1,8 +1,10 @@
+'use strict'
 /**
  * @author GuangHui
  * @description 异步测试方法
  */
-
+Object.defineProperty(exports, '__esModule', { value: true })
+exports.greeting = void 0
 /**
  * 测试方法
  *
@@ -11,6 +13,8 @@
  * @public
  * @return {*}  {Promise<string>}
  */
-export async function greeting(): Promise<string> {
+async function greeting() {
   return Promise.resolve('Hello wrold!')
 }
+exports.greeting = greeting
+//# sourceMappingURL=index.js.map

@@ -1,4 +1,7 @@
 {
   "cacheVersion": "8.7.0_196c4a369b8732a21c061282569bc31cde91019d",
-  "fileVersions": [["index.test.ts", ""]]
+  "fileVersions": [
+    ["index.test.ts", ""],
+    ["index.ts", ""]
+  ]
 }

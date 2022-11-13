@@ -10,5 +10,7 @@
  * @public
  * @return {*}  {Promise<string>}
  */
-export declare function greeting(): Promise<string>;
-//# sourceMappingURL=index.d.ts.map
+export async function greeting() {
+    return Promise.resolve('Hello wrold!');
+}
+//# sourceMappingURL=index.js.map

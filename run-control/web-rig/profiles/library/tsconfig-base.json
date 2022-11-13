@@ -29,7 +29,8 @@
     "target": "ESNext",
     "lib": ["es5", "scripthost", "es2015.collection", "es2015.promise", "es2015.iterable", "dom"]
   },
-  "include": ["../../../../../src/**/*.ts", "../../../../../src/**/*.tsx"],
+  "include": ["../../../../../src/**/*.ts", "../../../../../src/**/*.tsx"]
   /* 排除单测文件 */
-  "exclude": ["../../../../../src/**/*.test.ts"]
+  /* 2022-1113排除单测文件，会导致heft test报错，所以又注视掉相关排除逻辑 */
+  // "exclude": ["../../../../../src/**/*.test.ts"]
 }

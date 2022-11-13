@@ -18,6 +18,7 @@ common building block(CBB)
   - `published`
 - [`libraries`](./libraries)
   - Library package build with `es6` or `ts`
+  - Only output `esm` format and do not any degrade，so you need transform it to other format and polyfill for other browser
   - `published`
 - [`run-control`](./run-control)
   - Shared config package,`.prettierrc`、`.eslintrc`、`.stylelintrc` etc
@@ -34,8 +35,9 @@ common building block(CBB)
 - Just run `rush init-project` to make it happen.
 
 ## TODO
-- [x] use `vite` to bundle component and library
-- [x] use `vite` output `.d.ts`
+- [x] use `vite` to bundle `components` and `libraries`
+  - 2022-1113 now `build` and `test` script use `heft`,`vite` just use as development server for `libraries` .`components` no adjustment.
+- [x] use `vite` output `.d.ts` for `components`
 - [x] add `tools` template
 - [x] add `components` template
 - [x] add `libraries` template

@@ -13,12 +13,11 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/index.es.js",
-      "require": "./dist/index.umd.js"
+      "import": "./dist/index.js"
     }
   },
-  "main": "./dist/index.umd.js",
-  "module": "./dist/index.es.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
@@ -31,14 +30,16 @@
     "dist"
   ],
   "scripts": {
-    "build": "vite build",
+    "build": "heft build --verbose --clean",
     "dev": "vite",
-    "test": "vitest"
+    "test": "heft test --clean --verbose"
   },
   "devDependencies": {
     "@doonce/web-rig": "workspace:*",
     "@rushstack/eslint-config": "3.1.0",
+    "@rushstack/heft": "0.48.0",
+    "@types/heft-jest": "1.0.3",
     "vite": "3.1.8",
-    "vitest": "0.24.3"
+    "vue": "3.2.45"
   }
 }

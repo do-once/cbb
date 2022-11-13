@@ -272,7 +272,8 @@
     /**
      * (REQUIRED) Whether to generate the .d.ts rollup file.
      */
-    "enabled": true,
+    /* 2022-1113将.d.ts进行bundle的意义不明，暂时不启用 */
+    "enabled": false,
 
     /**
      * Specifies the output path for a .d.ts rollup file to be generated without any trimming.

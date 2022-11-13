@@ -148,7 +148,7 @@
     },
     {
       "name": "vue",
-      "allowedCategories": [ "published" ]
+      "allowedCategories": [ "internal", "published" ]
     },
     {
       "name": "vue-tsc",
