@@ -29,12 +29,15 @@
 
     {
       "moduleKind": "commonjs",
-      "outFolderName": "lib-commonjs"
+      // "outFolderName": "lib-commonjs"
+      /* 和统一输出目录dist保持一致 */
+      "outFolderName": "dist-commonjs"
     }
     /* 部分包需要提供umd格式，配置tsc额外输出umd各式 */
     /* 参考：https://rushstack.io/zh-cn/pages/heft_configs/typescript_json/ */
-    /* 由于tsc的umd模式，无法输出window.xxxx形式，所以弃用tsc输出umd，改为使用vite(rollup)打包 */
+    /* 2022-1011由于tsc的umd模式，无法输出window.xxxx形式，所以弃用tsc输出umd，改为使用vite(rollup)打包 */
     /* https://github.com/microsoft/TypeScript/issues/8436 */
+    /* 2022-1113由于heft提供了api-extractor的无缝集成，library考虑重新切换为heft(tsc)打包，并且输出esm和commonjs两种包 */
     // {
     //   "moduleKind": "umd",
     //   "outFolderName": "lib-umd"
@@ -57,7 +60,7 @@
    *
    * The default value is "lib".
    */
-  "emitFolderNameForTests": "lib-commonjs",
+  "emitFolderNameForTests": "dist-commonjs",
 
   /**
    * If set to "true", the TSlint task will not be invoked.
