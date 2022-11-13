@@ -15,6 +15,7 @@ common building block(CBB)
   - `inner`
 - [`components`](./components)
   - Components package build with `vue2` and `vue3` or other
+  - Output `esm` and `umd` format
   - `published`
 - [`libraries`](./libraries)
   - Library package build with `es6` or `ts`
