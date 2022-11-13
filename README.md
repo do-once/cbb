@@ -43,3 +43,4 @@ common building block(CBB)
 - [x] add `components` template
 - [x] add `libraries` template
 - [x] use `vitest` replace `@heft/jest`
+  - 2022-1113 switch back to `@heft/jest` in `libraries` project
