@@ -142,7 +142,7 @@
    * to disable Rush's warning.
    */
   /* 强制使用nodejs LTS 偶数版本 */
-  "suppressNodeLtsWarning": true,
+  "suppressNodeLtsWarning": false,
 
   /**
    * If you would like the version specifiers for your dependencies to be consistent, then
