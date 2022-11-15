@@ -1,36 +1,63 @@
 # cbb
 
-common building block(CBB)
+Common building block(CBB) powered by [`RushStack`](https://rushstack.io/)
 
-## TOC
+
+## monorepo principle with RushStack
+- minimizing "boilerplate" files. In other words, consolidating files and settings that would otherwise get copy+pasted into every single project folder in the monorepo. Boilerplate is a nuisance because it's difficult to keep in sync. When a fix is needed, if you have hundreds of projects, you would need to reapply the same fix hundreds of times.
+  - 尽量减少 "模板 "文件。换句话说，合并那些在 `monorepo` 中需要复制粘贴到每个项目下的配置文件。让模板保持同步是个麻烦事。一旦需要变动，如果你有百个项目，你需要数百次重复操作。
+- principle of project isolation: Each project should build independently and should not become entangled with other projects (for example, by referencing files using relative paths like ../../other-project). This discipline facilitates Rush features like subset builds and incremental builds. It also makes it very easy to move Rush project folders around, to migrate projects between monorepos, and even to stop using Rush later if you change your mind. For this reason, we discourage practices such as putting a centralized .eslintrc.js file in the root of the monorepo and invoking ESLint globally for all projects.
+  - 项目隔离原则。每个项目都应该独立构建，而不应该与其他项目纠缠在一起（例如，通过使用诸如 `.../.../other-project` 的相对路径引用文件）。这条原则有助于实现 `Rush` 的子集构建和增量构建功能，甚至当你不想使用 `Rush` 后，它也可以非常轻易地在 `monorepo` 间迁移项目。出于这个原因，我们不鼓励在 `monorepo` 仓库的根目录下放一个 `.eslintrc.js` 文件并让所有项目都借此调用 `ESLint`.
+
+
+## Directory Structure
+
+### Organizational Principles
+
+- organized with two level, like `Categary/Project`
+```bash
+# good
+.
+├── rush.json
+├── Categary1
+│   ├── ProjectA
+│   └── ProjectB
+├── Categary2
+│   └── ProjectC
+├── Categary3
+│   ├── ProjectD
+│   └── ProjectE
+```
+
+### Categary
 
 - [`assets`](./assets)
   - Assets package,`svg`、`img`、`iconfont` etc
-  - `published`
+  - reviewCategories:`published`
 - [`cli`](./cli)
   - Cli package build with `NodeJs`
-  - `published`
 - [`common`](./common)
   - Common project config `rush config`、`git-hooks` etc
-  - `inner`
 - [`components`](./components)
   - Components package build with `vue2` and `vue3` or other
   - Output `esm` and `umd` format
-  - `published`
 - [`libraries`](./libraries)
   - Library package build with `es6` or `ts`
   - Only output `esm` format and do not any degrade，so you need transform it to other format and polyfill for other browser
-  - `published`
 - [`run-control`](./run-control)
   - Shared config package,`.prettierrc`、`.eslintrc`、`.stylelintrc` etc
-  - `published`
 - [`tools`](./tools)
   - A NodeJS build tool used to compile the other projects
-  - `internal`
 - [`apps`](./apps)
   - A application build with `vue3` and `vite`
-  - `internal`
 
+### Review Categories
+- `production`
+  - need deploy to production environment
+- `published`
+  - need published to npm registry
+- `internal`
+  - no need to publish,just use in internal
 
 ## How to add a new project?
 - Just run `rush init-project` to make it happen.

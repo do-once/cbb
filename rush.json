@@ -221,6 +221,7 @@
     /* 审查类别，如部分项目对外发布，部分只适合内部使用 */
     "reviewCategories": [
       // Some example categories:
+      "production", // 需要部署上线的应用
       "published", // 需要对外发布的项目
       "internal" // 无需发布的项目
     ],
