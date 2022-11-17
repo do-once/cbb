@@ -475,7 +475,8 @@
     {
       "packageName": "@doonce/greeting",
       "projectFolder": "libraries/greeting",
-      "reviewCategory": "internal"
+      "reviewCategory": "published",
+      "shouldPublish": true
     },
     {
       "packageName": "@doonce/toolchain",
@@ -485,17 +486,20 @@
     {
       "packageName": "@doonce/node-rig",
       "projectFolder": "run-control/node-rig",
-      "reviewCategory": "internal"
+      "reviewCategory": "internal",
+      "shouldPublish": false
     },
     {
       "packageName": "@doonce/web-rig",
       "projectFolder": "run-control/web-rig",
-      "reviewCategory": "internal"
+      "reviewCategory": "internal",
+      "shouldPublish": false
     },
     {
       "packageName": "@doonce/hello-vue3-comp",
       "projectFolder": "components/hello-vue3-comp",
-      "reviewCategory": "published"
+      "reviewCategory": "published",
+      "shouldPublish": true
     }
   ]
 }
