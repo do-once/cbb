@@ -476,12 +476,14 @@
       "packageName": "@doonce/greeting",
       "projectFolder": "libraries/greeting",
       "reviewCategory": "published",
-      "shouldPublish": true
+      "shouldPublish": true,
+      "versionPolicyName": "individualVersionWithLockedMajorOne"
     },
     {
       "packageName": "@doonce/toolchain",
       "projectFolder": "tools/toolchain",
-      "reviewCategory": "internal"
+      "reviewCategory": "internal",
+      "shouldPublish": false
     },
     {
       "packageName": "@doonce/node-rig",
@@ -499,7 +501,8 @@
       "packageName": "@doonce/hello-vue3-comp",
       "projectFolder": "components/hello-vue3-comp",
       "reviewCategory": "published",
-      "shouldPublish": true
+      "shouldPublish": true,
+      "versionPolicyName": "individualVersionWithLockedMajorOne"
     }
   ]
 }
