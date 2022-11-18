@@ -476,8 +476,7 @@
       "packageName": "@doonce/greeting",
       "projectFolder": "libraries/greeting",
       "reviewCategory": "published",
-      "shouldPublish": true,
-      "versionPolicyName": "individualVersionWithLockedMajorOne"
+      "shouldPublish": true
     },
     {
       "packageName": "@doonce/toolchain",
@@ -501,8 +500,7 @@
       "packageName": "@doonce/hello-vue3-comp",
       "projectFolder": "components/hello-vue3-comp",
       "reviewCategory": "published",
-      "shouldPublish": true,
-      "versionPolicyName": "individualVersionWithLockedMajorOne"
+      "shouldPublish": true
     }
   ]
 }

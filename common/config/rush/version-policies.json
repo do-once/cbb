@@ -122,9 +122,13 @@
    /* 是否在CHANGELOG.md中包含邮箱 */
   //   // "includeEmailInChangeFile": true
   // }
-  {
-    "policyName":"individualVersionWithLockedMajorOne",
-    "definitionName":"individualVersion",
-    "lockedMajor":1
-  }
+  /* rush.json中未配置versionPolicyName的默认individualVersion版本 */
+  /* 一般只需要配置需要共同升版本lockStepVersion的策略 */
+ /*  {
+    "policyName":"test",
+    "definitionName":"lockStepVersion",
+    "version":"0.0.1",
+    "nextBump":"patch",
+    "majorProject":"@doonce/test"
+  } */
 ]
