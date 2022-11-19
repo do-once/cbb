@@ -1,6 +1,6 @@
 /**
- * This configuration file manages Rush's build cache feature.
- * More documentation is available on the Rush website: https://rushjs.io
+ * 该配置项用于管理 Rush 的构建缓存功能。
+ * 更多信息可以参考 https://rushjs.io/zh-cn/pages/configs/build-cache_json/
  */
  {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/build-cache.schema.json",
@@ -10,6 +10,12 @@
    *
    * See https://rushjs.io/pages/maintainer/build_cache/ for details about this experimental feature.
    */
+  /**
+   * （必须）实验性 - 设定该值为 true 来开启构建缓存功能。构建缓存是phased builds的基础
+   * phased builds 参考 https://rushjs.io/zh-cn/pages/maintainer/phased_builds/
+   * 
+   * 参考 https://rushjs.io/pages/maintainer/build_cache/ 来获取该实验性功能的更多细节。
+   */
   "buildCacheEnabled": false,
 
   /**
@@ -17,11 +23,18 @@
    *
    * Possible values: "local-only", "azure-blob-storage", "amazon-s3"
    */
+   /* 缓存支持保存在本地或云端(本地只能在当前环境、分支使用；云端可以多环境复用) */
+   /* 可能值"local-only", "azure-blob-storage", "amazon-s3"，后两个是云端 */
   "cacheProvider": "local-only",
 
   /**
    * Setting this property overrides the cache entry ID.  If this property is set, it must contain
    * a [hash] token. It may also contain a [projectName] or a [projectName:normalize] token.
+   */
+  /**
+   * 设定该值覆盖缓存入口 ID.
+   * 如果设定该值，那么它必须包含一个 [hash] 占位符，
+   * 它也可以包含 [projectName], [projectName:normalize], [phaseName], [phaseName:normalize], [phaseName:trimPrefix]
    */
   // "cacheEntryNamePattern": "[projectName:normalize]-[hash]"
 

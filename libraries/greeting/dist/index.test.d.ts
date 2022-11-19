@@ -1,5 +1,5 @@
 /**
  * @author GuangHui
- * @description 单测文件
+ * @description 单元测试
  */
 //# sourceMappingURL=index.test.d.ts.map

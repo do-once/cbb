@@ -6,6 +6,60 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/command-line.schema.json",
 
+  /* 开启phase_build特性 */
+  /* https://rushjs.io/zh-cn/pages/maintainer/phased_builds */
+  /* 开启phase_build步骤 */
+  /* 1. 在common/config/rush/experiments.json中启用phase_build*/
+  /* 2. 在common/config/build-cache.json中开启buildCacheEnabled */
+  /* 3. 在common/config/command-line.json中定义phase */
+  /* 4. 在common/config/command-line.json中重定义build、test命令 */
+  /* 6. 在common/config/command-line.json中关联parameters到phase阶段 */
+  /* 6. 在每个使用rush、heft构建的项目中添加_phase:脚本 */
+  /* 7. 在每个项目的config/rush-project.json中定义每个phase的输出目录名（如果使用了rig可统一在rig中定义） */
+
+  /* 1. 定义phase */
+  "phases": [
+    {
+      /**
+       * The name of the phase. Note that this value must start with the \"_phase:\" prefix.
+       */
+       /* phase名，必须_phase:开头 */
+      "name": "_phase:build",
+
+      /**
+       * The dependencies of this phase.
+       */
+       /* 此phase的依赖 */
+      "dependencies": {
+        /* _phase:build依赖上游项目的_phase:build执行完成 */
+        "upstream": ["_phase:build"]
+      },
+
+      /**
+       * Normally Rush requires that each project's package.json has a \"scripts\" entry matching the phase name. To disable this check, set \"ignoreMissingScript\" to true.
+       */
+       /* 正常情况，rush会检查运行的脚本script是否存在，设置此字段为true可跳过此检查 */
+      "ignoreMissingScript": true,
+
+      /**
+       * By default, Rush returns a nonzero exit code if errors or warnings occur during a command. If this option is set to \"true\", Rush will return a zero exit code if warnings occur during the execution of this phase.
+       */
+       /* 默认，出现错误或警告时，rush会抛出非0退出码，进而中断执行 */
+       /* 设置此项为true时，有警告时，会抛出0，并不会中段 */
+      "allowWarningsOnSuccess": false
+    },
+    {
+      "name": "_phase:test",
+       /* 此phase的依赖 */
+       "dependencies": {
+        /* _phase:build依赖自身的_phase:build执行完成 */
+        "self": ["_phase:build"]
+      },
+      "ignoreMissingScript": true,
+      "allowWarningsOnSuccess": false
+    }
+  ],
+
   /**
    * Custom "commands" introduce new verbs for the command-line.  To see the help for these
    * example commands, try "rush --help", "rush my-bulk-command --help", or
@@ -241,6 +295,40 @@
 
       // This will invoke common/autoinstallers/rush-prettier/node_modules/.bin/pretty-quick
       "shellCommand": "pretty-quick --staged"
+    },
+
+     /* 2. 重定义build、test命令 */
+    /* https://rushjs.io/zh-cn/pages/maintainer/phased_builds/#redefine-the-build-and-test-commands */
+    {
+      "commandKind": "phased",
+      "name": "build",
+      "phases": ["_phase:build"],
+      "enableParallelism": true,
+      "incremental": true,
+      "summary": "Build all project."
+    },
+    /* 无需定义rebuild，默认rebuild和build类似，只是关闭了incremental */
+    // No need to define "rebuild", by default, it is the same as build
+    // but with incremental=false.
+    /* 2. 重定义build、test命令 */
+    /* https://rushjs.io/zh-cn/pages/maintainer/phased_builds/#redefine-the-build-and-test-commands */
+    {
+      "commandKind": "phased",
+      "name": "test",
+      "summary": "Build and test all projects.",
+      "phases": ["_phase:build", "_phase:test"],
+      "enableParallelism": true,
+      "incremental": true
+    },
+    /* 2. 重定义build、test命令 */
+    /* https://rushjs.io/zh-cn/pages/maintainer/phased_builds/#redefine-the-build-and-test-commands */
+    {
+      "commandKind": "phased",
+      "name": "retest",
+      "summary": "Build and test all projects.",
+      "phases": ["_phase:build", "_phase:test"],
+      "enableParallelism": true,
+      "incremental": true
     }
   ],
 
@@ -254,10 +342,14 @@
     //    * (Required) Determines the type of custom parameter.
     //    * A "flag" is a custom command-line parameter whose presence acts as an on/off switch.
     //    */
+    /* 类型 choise flag string true false */
     //   "parameterKind": "flag",
     // 
     //   /**
     //    * (Required) The long name of the parameter.  It must be lower-case and use dash delimiters.
+    //    */
+    //   /**
+    //    * （必须）参数的全名。必须是小写并使用破折号分割。
     //    */
     //   "longName": "--my-flag",
     // 
@@ -270,6 +362,14 @@
     //    * The alphabet letters run out quickly, and are difficult to memorize, so *only* use
     //    * a short name if you expect the parameter to be needed very often in everyday operations.
     //    */
+     //   /**
+    //    * 该参数的缩写，该属性可选。它必须是在破折号后跟有一个
+    //    * 大小写敏感的字母，
+    //    *
+    //    * 注意：推荐使用全名来增加可读性。缩写仅仅是为了方便。
+    //    * 字母表很容易被占用完，并且不方便记忆，所以*仅仅*当
+    //    * 遇到非常频繁的操作时才使用简写。
+    //    */   
     //   "shortName": "-m",
     // 
     //   /**
@@ -278,11 +378,19 @@
     //    * Whenever you introduce commands/parameters, taking a little time to write meaningful
     //    * documentation can make a big difference for the developer experience in your repo.
     //    */
+    //   /**
+    //    * （必须） 在命令帮助中显示的描述信息。
+    //    *
+    //    * 无论何时引入指令或参数，花些时间来写一些有意义的文档会给开发体验带来巨大提升。
+    //    */
     //   "description": "A custom flag parameter that is passed to the scripts that are invoked when building projects",
     // 
     //   /**
     //    * (Required) A list of custom commands and/or built-in Rush commands that this parameter may
     //    * be used with.  The parameter will be appended to the shell command that Rush invokes.
+    //    */
+    //   /**
+    //    * （必须）该列表内存储了这个参数可被哪些自定义指令或内置指令使用。
     //    */
     //   "associatedCommands": ["build", "rebuild"]
     // },
@@ -305,10 +413,20 @@
     //    * then the command-line help would display "--count NUMBER".  The argument name must
     //    * be comprised of upper-case letters, numbers, and underscores.  It should be kept short.
     //    */
+    //   /**
+    //    * 参数名，在命令帮助中将被显示。
+    //    *
+    //    * 例如，参数名一个 "--count", 其类型为 "NUMBER", 那么命令行
+    //    * 帮助信息应该展示 "--count NUMBER". 该参数必须由大写字母、数字
+    //    * 下划线组成，应该尽可能的短。
+    //    */ 
     //   "argumentName": "SOME_TEXT",
     // 
     //   /**
     //    * If true, this parameter must be included with the command.  The default is false.
+    //    */
+    //   /**
+    //    * 当该属性为 true 时，参数必须包含在命令中。默认为 false.
     //    */
     //   "required": false
     // },
@@ -336,16 +454,29 @@
     //    * is defined, the parameter will always be passed to the shell command, and will use the
     //    * default value if unspecified.  The value must be one of the defined alternatives.
     //    */
+    //   /**
+    //    * 正常情况下若某个参数被省略掉，那么它将不会被传到 shell 中。
+    //    * 该属性用于插入一个默认值，若 "defaultValue" 定义后，参数永远会被
+    //    * 传入到 shell 中，若未指定则使用默认值。该值必须是定义在可选列表中
+    //    * 的一个。
+    //    */
     //   "defaultValue": "vanilla",
     // 
     //   /**
     //    * (Required) A list of alternative argument values that can be chosen for this parameter.
+    //    */
+    //   /**
+    //    * （必须）一系列用于选择的可选参数。
     //    */
     //   "alternatives": [
     //     {
     //       /**
     //        * A token that is one of the alternatives that can be used with the choice parameter,
     //        * e.g. "vanilla" in "--flavor vanilla".
+    //        */
+    //       /**
+    //        * 用于选择参数的一个可选值。
+    //        * 例如，在 "--flavor vanilla" 使用了 "vanilla".
     //        */
     //       "name": "vanilla",
     // 
@@ -354,6 +485,13 @@
     //        *
     //        * Whenever you introduce commands/parameters, taking a little time to write meaningful
     //        * documentation can make a big difference for the developer experience in your repo.
+    //        */
+    //       /**
+    //        *
+    //        * 在命令行帮助中显示的可选参数的详细描述。
+    //        *
+    //        * 无论何时引入指令或参数，花些时间来写一些有意义的文档会给开发体验带来巨大提升。
+    //        *
     //        */
     //       "description": "Use the vanilla flavor (the default)"
     //     },
@@ -369,7 +507,21 @@
     //     }
     //   ]
     // }
-
-   
+    /* 3. 关联parameters到phase阶段 */
+    /* https://rushjs.io/zh-cn/pages/maintainer/phased_builds/#assign-parameters-to-phases */
+    {
+      "longName": "--production",
+      "parameterKind": "flag",
+      "description": "Perform a production build, including minification and localization steps",
+      "associatedCommands": ["build", "rebuild", "test", "retest"],
+      "associatedPhases": ["_phase:build"]
+    },
+    {
+      "longName": "--update-snapshots",
+      "parameterKind": "flag",
+      "description": "Update unit test snapshots for all projects",
+      "associatedCommands": ["test", "retest"],
+      "associatedPhases": ["_phase:test"]
+    }
   ]
 }

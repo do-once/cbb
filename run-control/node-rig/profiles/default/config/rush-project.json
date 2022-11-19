@@ -2,11 +2,15 @@
   "operationSettings": [
     {
       "operationName": "_phase:build",
-      "outputFolderNames": ["dist", "lib", "lib-commonjs", "temp"]
+      "outputFolderNames": ["dist", "dist-commonjs", "lib", "lib-commonjs", "temp"]
     },
     {
       "operationName": "build",
-      "outputFolderNames": ["dist", "lib", "lib-commonjs", "temp"]
+      "outputFolderNames": ["dist", "dist-commonjs", "lib", "lib-commonjs", "temp"]
+    },
+    {
+      "operationName": "_phase:test",
+      "outputFolderNames": ["temp/coverage", "temp/jest-reports"]
     }
   ]
 }

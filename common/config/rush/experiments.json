@@ -5,6 +5,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/experiments.schema.json",
 
+    /**
+   * If true, the phased commands feature is enabled. To use this feature, create a "phased" command
+   * in common/config/rush/command-line.json.
+   */
+   "phasedCommands": true
+
   /**
    * By default, 'rush install' passes --no-prefer-frozen-lockfile to 'pnpm install'.
    * Set this option to true to pass '--frozen-lockfile' instead for faster installs.

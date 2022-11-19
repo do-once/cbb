@@ -2,11 +2,15 @@
   "operationSettings": [
     {
       "operationName": "_phase:build",
-      "outputFolderNames": ["dist", "lib", "lib-amd", "lib-commonjs", "lib-es6", "temp"]
+      "outputFolderNames": ["dist", "dist-commonjs", "lib", "lib-amd", "lib-commonjs", "lib-es6", "temp"]
     },
     {
       "operationName": "build",
-      "outputFolderNames": ["dist", "lib", "lib-amd", "lib-commonjs", "lib-es6", "temp"]
+      "outputFolderNames": ["dist", "dist-commonjs", "lib", "lib-amd", "lib-commonjs", "lib-es6", "temp"]
+    },
+    {
+      "operationName": "_phase:test",
+      "outputFolderNames": ["temp/coverage", "temp/jest-reports"]
     }
   ]
 }
