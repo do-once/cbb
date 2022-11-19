@@ -2,6 +2,10 @@
  * This configuration file allows repo maintainers to enable and disable experimental
  * Rush features.  More documentation is available on the Rush website: https://rushjs.io
  */
+/**
+ * 该配置文件允许仓库开启或禁止某些实验性的功能。
+ * 更多信息可以参考 Rush 官网： https://rushjs.io
+ */
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/experiments.schema.json",
 
@@ -9,17 +13,26 @@
    * If true, the phased commands feature is enabled. To use this feature, create a "phased" command
    * in common/config/rush/command-line.json.
    */
+   /* 是否启用phase_build */
    "phasedCommands": true
 
   /**
    * By default, 'rush install' passes --no-prefer-frozen-lockfile to 'pnpm install'.
    * Set this option to true to pass '--frozen-lockfile' instead for faster installs.
    */
+  /**
+   * 默认情况下，'rush install' 传给 "pnpm install" 带有 --no-prefer-frozen-lockfile 参数。
+   * 设定该值为 true 会传入 '--frozen-lockfile' 进而实现更快的下载。
+   */
   // "usePnpmFrozenLockfileForRushInstall": true,
 
   /**
    * By default, 'rush update' passes --no-prefer-frozen-lockfile to 'pnpm install'.
    * Set this option to true to pass '--prefer-frozen-lockfile' instead to minimize shrinkwrap changes.
+   */
+  /**
+   * 默认情况下， 'rush update' 传给 "pnpm install" 带有 --no-prefer-frozen-lockfile 参数
+   * 设定该值为 true 会传入  '--prefer-frozen-lockfile' 来替换最小 shrinkwrap 变动。
    */
   // "usePnpmPreferFrozenLockfileForRushUpdate": true,
 
@@ -28,11 +41,19 @@
    * Used to allow links between workspace projects or the addition/removal of references to existing dependency versions to not
    * cause hash changes.
    */
+  /**
+   * 使用 'preventManualShrinkwrapChanges' 选项限制哈希值，使其只包括对外部依赖。
+   * 该参数用于允许项目之间的增加/删除已经存在的依赖版本引用不会导致哈希变化。
+   */
   // "omitImportersFromPreventManualShrinkwrapChanges": true,
 
   /**
    * If true, the chmod field in temporary project tar headers will not be normalized.
    * This normalization can help ensure consistent tarball integrity across platforms.
+   */
+  /**
+   * 若该值为 true, 临时项目的压缩文件的头信息的 chmod 字段不会被规范化。
+   * 规范化可以帮助压缩文件在不同平躺上保持一致。
    */
   // "noChmodFieldInTarHeaderNormalization": true,
 
