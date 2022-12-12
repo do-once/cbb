@@ -501,6 +501,12 @@
       "projectFolder": "components/hello-vue3-comp",
       "reviewCategory": "published",
       "shouldPublish": true
+    },
+    {
+      "packageName": "@doonce/add-vue-suffix",
+      "projectFolder": "cli/add-vue-suffix",
+      "reviewCategory": "published",
+      "shouldPublish": true
     }
   ]
 }

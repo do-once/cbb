@@ -1,0 +1,203 @@
+/**
+ * @author GuangHui
+ * @description 转换
+ */
+
+const parse = require('@babel/parser').parse
+const traverse = require('@babel/traverse').default
+const generate = require('@babel/generator').default
+const t = require('@babel/types')
+
+const { warn, err, info } = require('./log')
+const { normalizePath } = require('./normalize')
+const { createMyResolver } = require('./resolver')
+
+module.exports = class Transformer {
+  static MODULE_REG =
+    /(?:(?:(?:im|ex)port[\s{}\w,\-*]*?from\s*?(?<SQUOTE>['"]+?)(?<SMODULE>[^'"\s]+)\k<SQUOTE>)|(?:import\s*?\(\s*?(?:\/\*[^*/]*?\*\/)?\s*?(?<DQUOTE>['"])(?<DMODULE>[^'"\s]+)\k<DQUOTE>\s*?\);?));??/g
+
+  constructor(vueFiles = [], resolveConfig = {}) {
+    this.resolveConfig = resolveConfig
+    this.vueFiles = vueFiles
+    this.resolver = createMyResolver(this.resolveConfig)
+  }
+
+  /**
+   * 路径是否命中
+   * @param {string} p 待检测路径
+   * @returns {boolean} 是否命中
+   */
+  isHitted(p) {
+    return this.vueFiles.includes(p)
+  }
+
+  transform({ code, fileDir, withAST = false, debug = false }) {
+    return withAST
+      ? this.transformWithAST(code)
+      : this.transformWithReg(code, fileDir, debug)
+  }
+
+  transformWithAST(
+    code,
+    options = {
+      sourceType: 'module',
+      plugins: [
+        // enable jsx
+        'jsx',
+      ],
+    }
+  ) {
+    // const testCode = `export * from 'test'; // ExportAllDeclaration
+    // import "test.css"; // ImportDeclaration
+    // import Test from 'test'; // ImportDeclaration
+    // export { aa } from 'test2'; // ExportNamedDeclaration
+    // export * as TT from 'test3'; // ExportNamedDeclaration
+    // import(
+    //     /* webpackChunkName:'AiClassReport' */ 'Views/AiClassReport/AiClassReport'
+    //   ); // 动态导入
+    // export default {test:3}; // ExportDefaultDeclaration，无source
+    // `
+
+    const ast = parse(code, options)
+
+    traverse(ast, {
+      enter: function (path, state) {
+        // 动态导入import('xxx')
+        if (
+          t.isImport(path.node) &&
+          path.parentPath &&
+          path.parentPath.node &&
+          path.parentPath.node.arguments &&
+          path.parentPath.node.arguments.length
+        ) {
+          if (
+            path.parentPath.node.arguments[0] &&
+            typeof path.parentPath.node.arguments[0].vaule === 'string' &&
+            path.parentPath.node.arguments[0].vaule.indexOf('.vue') < 0
+          ) {
+            try {
+              const resolvedModulePath = this.resolver(
+                process.cwd(),
+                path.parentPath.node.arguments[0].value
+              )
+              const normalizedPath = normalizePath(resolvedModulePath)
+
+              if (this.isHitted(normalizedPath)) {
+                path.node.source.value += '.vue'
+              }
+            } catch (error) {}
+          }
+        }
+
+        // 覆盖ExportAllDeclaration、ExportNamedDeclaration、ImportDeclaration
+        if (
+          t.isExportAllDeclaration(path.node) ||
+          t.isExportNamedDeclaration(path.node) ||
+          t.isImportDeclaration(path.node)
+        ) {
+          if (
+            path.node &&
+            path.node.source &&
+            path.node.source.value &&
+            path.node.source.value.indexOf('.vue') < 0
+          ) {
+            try {
+              const resolvedModulePath = this.resolver(
+                process.cwd(),
+                path.node.source.value
+              )
+
+              const normalizedPath = normalizePath(resolvedModulePath)
+
+              if (this.isHitted(normalizedPath)) {
+                path.node.source.value += '.vue'
+              }
+            } catch (error) {}
+          }
+        }
+      },
+    })
+
+    return generate(ast, { retainLines: true, comments: true }, code).code
+  }
+
+  transformWithReg(code, fileDir, debug) {
+    if (typeof code !== 'string') return
+
+    return code.replace(Transformer.MODULE_REG, (...args) => {
+      const { SMODULE, DMODULE } = args[7]
+      const input = args[0]
+
+      const modulePath = SMODULE || DMODULE || ''
+      if (!modulePath) {
+        debug && warn('modulePath did not matched')
+        return input
+      }
+
+      // 已经添加了.vue，则不替换
+      if (/\.vue$/.test(modulePath)) {
+        debug && warn(`Skip: ${modulePath}, cause already has \`.vue\` suffix`)
+        return input
+      }
+
+      try {
+        const resolvedModulePath = this.resolver(
+          /^\./.test(modulePath) ? fileDir : process.cwd(), // 相对路径，需要基于文件路径解析
+          modulePath
+        )
+
+        const normalizedPath = normalizePath(resolvedModulePath)
+
+        debug &&
+          info(
+            `this.isHitted(${normalizedPath})`,
+            this.isHitted(normalizedPath)
+          )
+
+        if (!this.isHitted(normalizedPath)) return input
+
+        const output = this.normalizeTransPath(
+          input,
+          normalizedPath,
+          modulePath,
+          debug
+        )
+
+        debug && info('Transformed ESModule expression', output)
+
+        return output
+      } catch (error) {
+        debug && err(error)
+        return input
+      }
+    })
+  }
+
+  normalizeTransPath(input, normalizedPath, modulePath, debug) {
+    // 单独处理/Dir这种会被解释为/Dir/index.vue的路径
+    const { mainFiles } = this.resolveConfig
+
+    // /Dir被解析成/Dir/index.js还是/Dir/main.js，取决于mainFiles
+    const mainFilesStr =
+      mainFiles && mainFiles.length ? mainFiles.join('|') : 'index'
+
+    const reg = new RegExp(`\/((?:${mainFilesStr}).vue)$`)
+
+    const matched = reg.exec(normalizedPath)
+
+    debug && info(`Filename matched:`, JSON.stringify(matched))
+
+    // 解析出来的不是/Dir/index.vue路径(/Dir/test)，直接在其后添加.vue即可
+    if (!matched) return input.replace(modulePath, modulePath + '.vue')
+
+    const fileName = matched[1]
+    return input.replace(
+      modulePath,
+      /\/$/.test(modulePath) // ./Test/
+        ? modulePath + fileName
+        : new RegExp(`\/${mainFilesStr}$`).test(modulePath) // ./Test/index
+        ? modulePath + '.vue'
+        : modulePath + '/' + fileName // ./Test
+    )
+  }
+}
