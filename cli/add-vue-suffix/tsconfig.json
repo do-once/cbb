@@ -1,0 +1,7 @@
+{
+  "extends": "./node_modules/@doonce/node-rig/profiles/default/tsconfig-base.json",
+  "compilerOptions": {
+    "types": ["heft-jest", "node", "yargs", "babel__generator", "babel__traverse", "./types/file-save"]
+  },
+  "esModuleInterop": true
+}

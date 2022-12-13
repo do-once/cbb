@@ -3,20 +3,33 @@
  * @description 转换
  */
 
-const parse = require('@babel/parser').parse
-const traverse = require('@babel/traverse').default
-const generate = require('@babel/generator').default
-const t = require('@babel/types')
+import t from '@babel/types'
 
-const { warn, err, info } = require('./log')
-const { normalizePath } = require('./normalize')
-const { createMyResolver } = require('./resolver')
+import { parse } from '@babel/parser'
+import type { ParserOptions } from '@babel/parser'
 
-module.exports = class Transformer {
+import traverse from '@babel/traverse'
+import generate from '@babel/generator'
+
+import { warn, err, info } from './log'
+
+import { normalizePath } from './normalize'
+import { createMyResolver } from './resolver'
+import { create } from 'enhanced-resolve'
+
+export default class Transformer {
   static MODULE_REG =
     /(?:(?:(?:im|ex)port[\s{}\w,\-*]*?from\s*?(?<SQUOTE>['"]+?)(?<SMODULE>[^'"\s]+)\k<SQUOTE>)|(?:import\s*?\(\s*?(?:\/\*[^*/]*?\*\/)?\s*?(?<DQUOTE>['"])(?<DMODULE>[^'"\s]+)\k<DQUOTE>\s*?\);?));??/g
 
-  constructor(vueFiles = [], resolveConfig = {}) {
+  resolveConfig: {
+    resolve?: unknown
+    mainFiles?: string[]
+    [k: string]: unknown
+  }
+  vueFiles: string[]
+  resolver: ReturnType<typeof create.sync>
+
+  constructor(vueFiles: string[] = [], resolveConfig: any = {}) {
     this.resolveConfig = resolveConfig
     this.vueFiles = vueFiles
     this.resolver = createMyResolver(this.resolveConfig)
@@ -27,24 +40,32 @@ module.exports = class Transformer {
    * @param {string} p 待检测路径
    * @returns {boolean} 是否命中
    */
-  isHitted(p) {
+  isHitted(p: string) {
     return this.vueFiles.includes(p)
   }
 
-  transform({ code, fileDir, withAST = false, debug = false }) {
-    return withAST
-      ? this.transformWithAST(code)
-      : this.transformWithReg(code, fileDir, debug)
+  transform({
+    code,
+    fileDir,
+    withAST = false,
+    debug = false
+  }: {
+    code: string
+    fileDir: string
+    withAST: boolean
+    debug: boolean
+  }) {
+    return withAST ? this.transformWithAST(code) : this.transformWithReg(code, fileDir, debug)
   }
 
   transformWithAST(
-    code,
-    options = {
+    code: string,
+    options: ParserOptions = {
       sourceType: 'module',
       plugins: [
         // enable jsx
-        'jsx',
-      ],
+        'jsx'
+      ]
     }
   ) {
     // const testCode = `export * from 'test'; // ExportAllDeclaration
@@ -60,6 +81,7 @@ module.exports = class Transformer {
 
     const ast = parse(code, options)
 
+    const that = this
     traverse(ast, {
       enter: function (path, state) {
         // 动态导入import('xxx')
@@ -67,22 +89,26 @@ module.exports = class Transformer {
           t.isImport(path.node) &&
           path.parentPath &&
           path.parentPath.node &&
+          // @ts-ignore
           path.parentPath.node.arguments &&
+          // @ts-ignore
           path.parentPath.node.arguments.length
         ) {
           if (
+            // @ts-ignore
             path.parentPath.node.arguments[0] &&
+            // @ts-ignore
             typeof path.parentPath.node.arguments[0].vaule === 'string' &&
+            // @ts-ignore
             path.parentPath.node.arguments[0].vaule.indexOf('.vue') < 0
           ) {
             try {
-              const resolvedModulePath = this.resolver(
-                process.cwd(),
-                path.parentPath.node.arguments[0].value
-              )
-              const normalizedPath = normalizePath(resolvedModulePath)
+              // @ts-ignore
+              const resolvedModulePath = that.resolver(process.cwd(), path.parentPath.node.arguments[0].value)
+              const normalizedPath = normalizePath(resolvedModulePath as string)
 
-              if (this.isHitted(normalizedPath)) {
+              if (that.isHitted(normalizedPath)) {
+                // @ts-ignore
                 path.node.source.value += '.vue'
               }
             } catch (error) {}
@@ -102,26 +128,23 @@ module.exports = class Transformer {
             path.node.source.value.indexOf('.vue') < 0
           ) {
             try {
-              const resolvedModulePath = this.resolver(
-                process.cwd(),
-                path.node.source.value
-              )
+              const resolvedModulePath = that.resolver(process.cwd(), path.node.source.value)
 
-              const normalizedPath = normalizePath(resolvedModulePath)
+              const normalizedPath = normalizePath(resolvedModulePath as string)
 
-              if (this.isHitted(normalizedPath)) {
+              if (that.isHitted(normalizedPath)) {
                 path.node.source.value += '.vue'
               }
             } catch (error) {}
           }
         }
-      },
+      }
     })
 
     return generate(ast, { retainLines: true, comments: true }, code).code
   }
 
-  transformWithReg(code, fileDir, debug) {
+  transformWithReg(code: string, fileDir: string, debug: boolean) {
     if (typeof code !== 'string') return
 
     return code.replace(Transformer.MODULE_REG, (...args) => {
@@ -146,22 +169,13 @@ module.exports = class Transformer {
           modulePath
         )
 
-        const normalizedPath = normalizePath(resolvedModulePath)
+        const normalizedPath = normalizePath(resolvedModulePath as string)
 
-        debug &&
-          info(
-            `this.isHitted(${normalizedPath})`,
-            this.isHitted(normalizedPath)
-          )
+        debug && info(`this.isHitted(${normalizedPath})`, this.isHitted(normalizedPath))
 
         if (!this.isHitted(normalizedPath)) return input
 
-        const output = this.normalizeTransPath(
-          input,
-          normalizedPath,
-          modulePath,
-          debug
-        )
+        const output = this.normalizeTransPath(input, normalizedPath, modulePath, debug)
 
         debug && info('Transformed ESModule expression', output)
 
@@ -173,13 +187,12 @@ module.exports = class Transformer {
     })
   }
 
-  normalizeTransPath(input, normalizedPath, modulePath, debug) {
+  normalizeTransPath(input: string, normalizedPath: string, modulePath: string, debug: boolean) {
     // 单独处理/Dir这种会被解释为/Dir/index.vue的路径
     const { mainFiles } = this.resolveConfig
 
     // /Dir被解析成/Dir/index.js还是/Dir/main.js，取决于mainFiles
-    const mainFilesStr =
-      mainFiles && mainFiles.length ? mainFiles.join('|') : 'index'
+    const mainFilesStr = mainFiles && mainFiles.length ? mainFiles.join('|') : 'index'
 
     const reg = new RegExp(`\/((?:${mainFilesStr}).vue)$`)
 

@@ -4,16 +4,16 @@
   "description": "🔨Give some vue files ,find reference and add `.vue` suffix",
   "keywords": [
     "vue",
-    "vue3",
-    "vite"
+    "vue3"
   ],
-  "homepage": "https://github.com/BryanAdamss/add-vue-suffix#readme",
+  "homepage": "https://github.com/do-once/cbb/tree/main/cli/add-vue-suffix",
   "bugs": {
-    "url": "https://github.com/BryanAdamss/add-vue-suffix/issues"
+    "url": "https://github.com/do-once/cbb/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BryanAdamss/add-vue-suffix.git"
+    "url": "git+https://github.com/do-once/cbb.git",
+    "directory": "cli/add-vue-suffix"
   },
   "license": "MIT",
   "author": {
@@ -21,30 +21,53 @@
     "email": "bryanadamss@foxmail.com",
     "url": "https://github.com/BryanAdamss"
   },
-  "main": "./lib/index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*"
+      ]
+    }
+  },
   "bin": {
-    "add-vue-suffix": "bin/www"
+    "add-vue-suffix": "bin/add-vue-suffix.js"
   },
   "files": [
-    "lib"
+    "dist"
   ],
   "scripts": {
-    "pub": "git push --follow-tags origin main && npm publish --access public",
-    "release": "standard-version",
-    "release:first": "yarn release --first-release"
+    "_phase:build": "heft build --clean --verbose",
+    "_phase:test": "heft test --no-build",
+    "build": "heft build --clean --verbose",
+    "test": "heft test --clean --verbose"
   },
   "dependencies": {
-    "@babel/generator": "^7.14.8",
-    "@babel/parser": "^7.14.8",
-    "@babel/traverse": "^7.14.8",
-    "@babel/types": "^7.14.8",
-    "chalk": "^4.1.1",
-    "enhanced-resolve": "^5.8.2",
-    "file-save": "^0.2.0",
-    "globby": "^11.0.4",
-    "yargs": "^17.0.1"
+    "@babel/generator": "7.14.8",
+    "@babel/parser": "7.14.8",
+    "@babel/traverse": "7.14.8",
+    "@babel/types": "7.14.8",
+    "chalk": "4.1.1",
+    "enhanced-resolve": "5.8.2",
+    "file-save": "0.2.0",
+    "globby": "11.0.4",
+    "yargs": "17.0.1"
   },
   "devDependencies": {
-    "standard-version": "^9.3.1"
+    "@doonce/node-rig": "workspace:*",
+    "@rushstack/eslint-config": "3.1.0",
+    "@rushstack/heft": "0.48.0",
+    "@types/babel__generator": "7.6.4",
+    "@types/babel__traverse": "7.18.3",
+    "@types/heft-jest": "1.0.3",
+    "@types/node": "18.11.3",
+    "@types/yargs": "17.0.17"
   }
 }

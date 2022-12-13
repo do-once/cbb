@@ -1,0 +1,475 @@
+/**
+ * Config file for API Extractor.  For more info, please visit: https://api-extractor.com
+ */
+/* https://api-extractor.com/pages/configs/api-extractor_json/ */
+/* https://rushstack.io/zh-cn/pages/heft_tasks/api-extractor/#配置 */
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
+
+  /**
+   * Optionally specifies another JSON config file that this file extends from.  This provides a way for
+   * standard settings to be shared across multiple projects.
+   *
+   * If the path starts with "./" or "../", the path is resolved relative to the folder of the file that contains
+   * the "extends" field.  Otherwise, the first path segment is interpreted as an NPM package name, and will be
+   * resolved using NodeJS require().
+   *
+   * SUPPORTED TOKENS: none
+   * DEFAULT VALUE: ""
+   */
+  /* 继承配置 */
+  // "extends": "./shared/api-extractor-base.json"
+  // "extends": "my-package/include/api-extractor-base.json"
+
+  /**
+   * Determines the "<projectFolder>" token that can be used with other config file settings.  The project folder
+   * typically contains the tsconfig.json and package.json config files, but the path is user-defined.
+   *
+   * The path is resolved relative to the folder of the config file that contains the setting.
+   *
+   * The default value for "projectFolder" is the token "<lookup>", which means the folder is determined by traversing
+   * parent folders, starting from the folder containing api-extractor.json, and stopping at the first folder
+   * that contains a tsconfig.json file.  If a tsconfig.json file cannot be found in this way, then an error
+   * will be reported.
+   *
+   * SUPPORTED TOKENS: <lookup>
+   * DEFAULT VALUE: "<lookup>"
+   */
+  /* 项目目录 */
+  /* 若设置为<lookup>，会向上递归查找包含tsconfig.json的目录做为项目目录 */
+  /* 默认<lookup> */
+  // "projectFolder": "..",
+
+  /**
+   * (REQUIRED) Specifies the .d.ts file to be used as the starting point for analysis.  API Extractor
+   * analyzes the symbols exported by this module.
+   *
+   * The file extension must be ".d.ts" and not ".ts".
+   *
+   * The path is resolved relative to the folder of the config file that contains the setting; to change this,
+   * prepend a folder token such as "<projectFolder>".
+   *
+   * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
+   */
+  /* 声明文件主入口 */
+  /* 必须为.d.ts */
+  "mainEntryPointFilePath": "<projectFolder>/dist/index.d.ts",
+
+  /**
+   * A list of NPM package names whose exports should be treated as part of this package.
+   *
+   * For example, suppose that Webpack is used to generate a distributed bundle for the project "library1",
+   * and another NPM package "library2" is embedded in this bundle.  Some types from library2 may become part
+   * of the exported API for library1, but by default API Extractor would generate a .d.ts rollup that explicitly
+   * imports library2.  To avoid this, we can specify:
+   *
+   *   "bundledPackages": [ "library2" ],
+   *
+   * This would direct API Extractor to embed those types directly in the .d.ts rollup, as if they had been
+   * local files for library1.
+   */
+  /* 需要内嵌到最终声明文件的包 */
+  /* 默认，三方包声明，api-extractor会通过import形式导入 */
+  /* 如果不希望这种行为，可以设置此值，直接内嵌 */
+  "bundledPackages": [],
+
+  /**
+   * Specifies what type of newlines API Extractor should use when writing output files.  By default, the output files
+   * will be written with Windows-style newlines.  To use POSIX-style newlines, specify "lf" instead.
+   * To use the OS's default newline kind, specify "os".
+   *
+   * DEFAULT VALUE: "crlf"
+   */
+  /* 换行类型，默认使用windows的crlf */
+  // "newlineKind": "crlf",
+
+  /**
+   * Set to true when invoking API Extractor's test harness. When `testMode` is true, the `toolVersion` field in the
+   * .api.json file is assigned an empty string to prevent spurious diffs in output files tracked for tests.
+   *
+   * DEFAULT VALUE: "false"
+   */
+  /* 测试模式 */
+  // "testMode": false,
+
+  /**
+   * Specifies how API Extractor sorts members of an enum when generating the .api.json file. By default, the output
+   * files will be sorted alphabetically, which is "by-name". To keep the ordering in the source code, specify
+   * "preserve".
+   *
+   * DEFAULT VALUE: "by-name"
+   */
+  /* 枚举字段排序，默认按字母表重新排序，即by-name */
+  /* 若要保留原始顺序，可相设置为preserve */
+  // "enumMemberOrder": "by-name",
+
+  /**
+   * Determines how the TypeScript compiler engine will be invoked by API Extractor.
+   */
+  /* 定义ts编译器属性 */
+  "compiler": {
+    /**
+     * Specifies the path to the tsconfig.json file to be used by API Extractor when analyzing the project.
+     *
+     * The path is resolved relative to the folder of the config file that contains the setting; to change this,
+     * prepend a folder token such as "<projectFolder>".
+     *
+     * Note: This setting will be ignored if "overrideTsconfig" is used.
+     *
+     * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
+     * DEFAULT VALUE: "<projectFolder>/tsconfig.json"
+     */
+    /* 指定tsconfig.json位置 */
+    // "tsconfigFilePath": "<projectFolder>/tsconfig.json",
+    /**
+     * Provides a compiler configuration that will be used instead of reading the tsconfig.json file from disk.
+     * The object must conform to the TypeScript tsconfig schema:
+     *
+     * http://json.schemastore.org/tsconfig
+     *
+     * If omitted, then the tsconfig.json file will be read from the "projectFolder".
+     *
+     * DEFAULT VALUE: no overrideTsconfig section
+     */
+    /* 覆盖tsconfig.json配置 */
+    // "overrideTsconfig": {
+    //   . . .
+    // }
+    /**
+     * This option causes the compiler to be invoked with the --skipLibCheck option. This option is not recommended
+     * and may cause API Extractor to produce incomplete or incorrect declarations, but it may be required when
+     * dependencies contain declarations that are incompatible with the TypeScript engine that API Extractor uses
+     * for its analysis.  Where possible, the underlying issue should be fixed rather than relying on skipLibCheck.
+     *
+     * DEFAULT VALUE: false
+     */
+    /* 跳过类型检查 */
+    // "skipLibCheck": true,
+  },
+
+  /**
+   * Configures how the API report file (*.api.md) will be generated.
+   */
+  /* 配置生成api报告*.api.md行为 */
+  "apiReport": {
+    /**
+     * (REQUIRED) Whether to generate an API report.
+     */
+    "enabled": true,
+
+    /**
+     * The filename for the API report files.  It will be combined with "reportFolder" or "reportTempFolder" to produce
+     * a full file path.
+     *
+     * The file extension should be ".api.md", and the string should not contain a path separator such as "\" or "/".
+     *
+     * SUPPORTED TOKENS: <packageName>, <unscopedPackageName>
+     * DEFAULT VALUE: "<unscopedPackageName>.api.md"
+     */
+    /* 生成的文件名 */
+    "reportFileName": "<unscopedPackageName>.api.md",
+
+    /**
+     * Specifies the folder where the API report file is written.  The file name portion is determined by
+     * the "reportFileName" setting.
+     *
+     * The API report file is normally tracked by Git.  Changes to it can be used to trigger a branch policy,
+     * e.g. for an API review.
+     *
+     * The path is resolved relative to the folder of the config file that contains the setting; to change this,
+     * prepend a folder token such as "<projectFolder>".
+     *
+     * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
+     * DEFAULT VALUE: "<projectFolder>/temp/"
+     */
+    /* 文件保存目录，默认为<projectFolder>/temp/ */
+    "reportFolder": "<projectFolder>/doc-meta/",
+
+    /**
+     * Specifies the folder where the temporary report file is written.  The file name portion is determined by
+     * the "reportFileName" setting.
+     *
+     * After the temporary file is written to disk, it is compared with the file in the "reportFolder".
+     * If they are different, a production build will fail.
+     *
+     * The path is resolved relative to the folder of the config file that contains the setting; to change this,
+     * prepend a folder token such as "<projectFolder>".
+     *
+     * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
+     * DEFAULT VALUE: "<projectFolder>/temp/"
+     */
+    /* 报告临时存放目录，其要同reportFolder目录进行一些对比*/
+    "reportTempFolder": "<projectFolder>/temp/"
+
+    /**
+     * Whether "forgotten exports" should be included in the API report file. Forgotten exports are declarations
+     * flagged with `ae-forgotten-export` warnings. See https://api-extractor.com/pages/messages/ae-forgotten-export/ to
+     * learn more.
+     *
+     * DEFAULT VALUE: "false"
+     */
+    /* 输出文件中是否包含未显示声明export的类型 */
+    // "includeForgottenExports": false
+  },
+
+  /**
+   * Configures how the doc model file (*.api.json) will be generated.
+   */
+  /* 配置生成*.api.json行为，其可被https://github.com/microsoft/rushstack/tree/main/apps/api-documenter消费 */
+  "docModel": {
+    /**
+     * (REQUIRED) Whether to generate a doc model file.
+     */
+    "enabled": true,
+
+    /**
+     * The output path for the doc model file.  The file extension should be ".api.json".
+     *
+     * The path is resolved relative to the folder of the config file that contains the setting; to change this,
+     * prepend a folder token such as "<projectFolder>".
+     *
+     * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
+     * DEFAULT VALUE: "<projectFolder>/temp/<unscopedPackageName>.api.json"
+     */
+    /* 输出目录 */
+    "apiJsonFilePath": "<projectFolder>/doc-meta/<unscopedPackageName>.api.json"
+
+    /**
+     * Whether "forgotten exports" should be included in the doc model file. Forgotten exports are declarations
+     * flagged with `ae-forgotten-export` warnings. See https://api-extractor.com/pages/messages/ae-forgotten-export/ to
+     * learn more.
+     *
+     * DEFAULT VALUE: "false"
+     */
+    /* 输出文件中是否包含未显示声明export的类型 */
+    // "includeForgottenExports": false,
+
+    /**
+     * The base URL where the project's source code can be viewed on a website such as GitHub or
+     * Azure DevOps. This URL path corresponds to the `<projectFolder>` path on disk.
+     *
+     * This URL is concatenated with the file paths serialized to the doc model to produce URL file paths to individual API items.
+     * For example, if the `projectFolderUrl` is "https://github.com/microsoft/rushstack/tree/main/apps/api-extractor" and an API
+     * item's file path is "api/ExtractorConfig.ts", the full URL file path would be
+     * "https://github.com/microsoft/rushstack/tree/main/apps/api-extractor/api/ExtractorConfig.js".
+     *
+     * Can be omitted if you don't need source code links in your API documentation reference.
+     *
+     * SUPPORTED TOKENS: none
+     * DEFAULT VALUE: ""
+     */
+    /* 部署到生产环境时，链接的baseURL */
+    // "projectFolderUrl": "http://github.com/path/to/your/projectFolder"
+  },
+
+  /**
+   * Configures how the .d.ts rollup file will be generated.
+   */
+  /* 配置打包.d.ts行为 */
+  /* api-extractor可以将多个.d.ts声明文件打包为一个，类似webpack将多个js打包成一个 */
+  /* why? see this https://api-extractor.com/pages/overview/demo_rollup/ */
+  "dtsRollup": {
+    /**
+     * (REQUIRED) Whether to generate the .d.ts rollup file.
+     */
+    /* 2022-1113将.d.ts进行bundle的意义不明，暂时不启用 */
+    "enabled": false,
+
+    /**
+     * Specifies the output path for a .d.ts rollup file to be generated without any trimming.
+     * This file will include all declarations that are exported by the main entry point.
+     *
+     * If the path is an empty string, then this file will not be written.
+     *
+     * The path is resolved relative to the folder of the config file that contains the setting; to change this,
+     * prepend a folder token such as "<projectFolder>".
+     *
+     * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
+     * DEFAULT VALUE: "<projectFolder>/dist/<unscopedPackageName>.d.ts"
+     */
+    /* 未裁剪的.d.ts文件保存路径，默认<projectFolder>/dist/<unscopedPackageName>.d.ts */
+    "untrimmedFilePath": "<projectFolder>/dist/<unscopedPackageName>.d.ts"
+
+    /**
+     * Specifies the output path for a .d.ts rollup file to be generated with trimming for an "alpha" release.
+     * This file will include only declarations that are marked as "@public", "@beta", or "@alpha".
+     *
+     * The path is resolved relative to the folder of the config file that contains the setting; to change this,
+     * prepend a folder token such as "<projectFolder>".
+     *
+     * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
+     * DEFAULT VALUE: ""
+     */
+    /* alpha阶段且裁剪后的.d.ts文件保存路径，此文件主要包含标记了@public、@beta、@alpha的声明，默认空值 */
+    /* 一般版本发布为alpha->beta->rc版本（Release Candidate（候选版本））->stable稳定版本 */
+    // "alphaTrimmedFilePath": "<projectFolder>/dist/<unscopedPackageName>-alpha.d.ts",
+
+    /**
+     * Specifies the output path for a .d.ts rollup file to be generated with trimming for a "beta" release.
+     * This file will include only declarations that are marked as "@public" or "@beta".
+     *
+     * The path is resolved relative to the folder of the config file that contains the setting; to change this,
+     * prepend a folder token such as "<projectFolder>".
+     *
+     * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
+     * DEFAULT VALUE: ""
+     */
+    /* beta阶段且裁剪后的.d.ts文件保存路径，此文件主要包含标记了@public、@beta的声明，默认空值 */
+    // "betaTrimmedFilePath": "<projectFolder>/dist/<unscopedPackageName>-beta.d.ts",
+
+    /**
+     * Specifies the output path for a .d.ts rollup file to be generated with trimming for a "public" release.
+     * This file will include only declarations that are marked as "@public".
+     *
+     * If the path is an empty string, then this file will not be written.
+     *
+     * The path is resolved relative to the folder of the config file that contains the setting; to change this,
+     * prepend a folder token such as "<projectFolder>".
+     *
+     * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
+     * DEFAULT VALUE: ""
+     */
+    /* public阶段且裁剪后的.d.ts文件保存路径，此文件只包含标记了@public的声明，默认空值 */
+    // "publicTrimmedFilePath": "<projectFolder>/dist/<unscopedPackageName>-public.d.ts"
+
+    /**
+     * When a declaration is trimmed, by default it will be replaced by a code comment such as
+     * "Excluded from this release type: exampleMember".  Set "omitTrimmingComments" to true to remove the
+     * declaration completely.
+     *
+     * DEFAULT VALUE: false
+     */
+    /* 默认情况，当声明被裁剪后，其会被一个注释替代，设置此项为true，将完全删除此声明 */
+    // "omitTrimmingComments": true
+  },
+
+  /**
+   * Configures how the tsdoc-metadata.json file will be generated.
+   */
+  /* 配置tsdoc-metadata.json的生成行为，主要被TSDoc库消费 */
+  "tsdocMetadata": {
+    /**
+     * Whether to generate the tsdoc-metadata.json file.
+     *
+     * DEFAULT VALUE: true
+     */
+    // "enabled": true,
+    /**
+     * Specifies where the TSDoc metadata file should be written.
+     *
+     * The path is resolved relative to the folder of the config file that contains the setting; to change this,
+     * prepend a folder token such as "<projectFolder>".
+     *
+     * The default value is "<lookup>", which causes the path to be automatically inferred from the "tsdocMetadata",
+     * "typings" or "main" fields of the project's package.json.  If none of these fields are set, the lookup
+     * falls back to "tsdoc-metadata.json" in the package folder.
+     *
+     * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
+     * DEFAULT VALUE: "<lookup>"
+     */
+    /* tsdoc-metadata.json存放路径，默认根据package.json中的tsdocMetadata、typings、main入口开始寻找，找不到则使用package.json所在目录 */
+    // "tsdocMetadataFilePath": "<projectFolder>/dist/tsdoc-metadata.json"
+  },
+
+  /**
+   * Configures how API Extractor reports error and warning messages produced during analysis.
+   *
+   * There are three sources of messages:  compiler messages, API Extractor messages, and TSDoc messages.
+   */
+  /* 配置api-extracotr分析过程中的错误和警告行为，主要来源compiler messages, API Extractor messages, and TSDoc messages */
+  "messages": {
+    /**
+     * Configures handling of diagnostic messages reported by the TypeScript compiler engine while analyzing
+     * the input .d.ts files.
+     *
+     * TypeScript message identifiers start with "TS" followed by an integer.  For example: "TS2551"
+     *
+     * DEFAULT VALUE:  A single "default" entry with logLevel=warning.
+     */
+    /* 配置compiler阶段错误、警告行为 */
+    "compilerMessageReporting": {
+      /**
+       * Configures the default routing for messages that don't match an explicit rule in this table.
+       */
+      /* 配置默认行为 */
+      "default": {
+        /**
+         * Specifies whether the message should be written to the the tool's output log.  Note that
+         * the "addToApiReportFile" property may supersede this option.
+         *
+         * Possible values: "error", "warning", "none"
+         *
+         * Errors cause the build to fail and return a nonzero exit code.  Warnings cause a production build fail
+         * and return a nonzero exit code.  For a non-production build (e.g. when "api-extractor run" includes
+         * the "--local" option), the warning is displayed but the build will not fail.
+         *
+         * DEFAULT VALUE: "warning"
+         */
+        /* log等级，"error", "warning", "none" */
+        "logLevel": "warning"
+
+        /**
+         * When addToApiReportFile is true:  If API Extractor is configured to write an API report file (.api.md),
+         * then the message will be written inside that file; otherwise, the message is instead logged according to
+         * the "logLevel" option.
+         *
+         * DEFAULT VALUE: false
+         */
+        /* 是否将错误信息输出到apiReport中 */
+        // "addToApiReportFile": false
+      }
+
+      // "TS2551": {
+      //   "logLevel": "warning",
+      //   "addToApiReportFile": true
+      // },
+      //
+      // . . .
+    },
+
+    /**
+     * Configures handling of messages reported by API Extractor during its analysis.
+     *
+     * API Extractor message identifiers start with "ae-".  For example: "ae-extra-release-tag"
+     *
+     * DEFAULT VALUE: See api-extractor-defaults.json for the complete table of extractorMessageReporting mappings
+     */
+    /* 配置extrac阶段错误、警告行为 */
+    "extractorMessageReporting": {
+      /* 可在api-extractor-defaults.json中看到所有配置项 */
+      "default": {
+        "logLevel": "warning"
+        // "addToApiReportFile": false
+      }
+
+      // "ae-extra-release-tag": {
+      //   "logLevel": "warning",
+      //   "addToApiReportFile": true
+      // },
+      //
+      // . . .
+    },
+
+    /**
+     * Configures handling of messages reported by the TSDoc parser when analyzing code comments.
+     *
+     * TSDoc message identifiers start with "tsdoc-".  For example: "tsdoc-link-tag-unescaped-text"
+     *
+     * DEFAULT VALUE:  A single "default" entry with logLevel=warning.
+     */
+    /* 配置tsdoc阶段错误、警告行为 */
+    "tsdocMessageReporting": {
+      "default": {
+        "logLevel": "warning"
+        // "addToApiReportFile": false
+      }
+
+      // "tsdoc-link-tag-unescaped-text": {
+      //   "logLevel": "warning",
+      //   "addToApiReportFile": true
+      // },
+      //
+      // . . .
+    }
+  }
+}

@@ -32,7 +32,7 @@
   "scripts": {
     "_phase:build": "heft build --clean --verbose",
     "_phase:test": "heft test --no-build",
-    "build": "heft build --clean verbose",
+    "build": "heft build --clean --verbose",
     "dev": "vite",
     "test": "heft test --clean --verbose"
   },

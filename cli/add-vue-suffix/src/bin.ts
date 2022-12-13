@@ -2,13 +2,17 @@
  * @author GuangHui
  * @description bin
  */
-const path = require('path')
-const { argv } = require('./arg')
-const { err } = require('./log')
+
+import path from 'path'
+
+import { argv } from './arg'
+import { err } from './log'
+import { run } from './index'
 
 let resolveConfig = {}
 
 try {
+  // @ts-ignore
   const { resolve } = require(path.join(process.cwd(), argv.resolveConfig))
 
   resolveConfig = resolve
@@ -16,9 +20,12 @@ try {
   err('get an error when try to resolve resolveConfig', error)
 }
 
-require('./index')({
+run({
   resolveConfig,
+  // @ts-ignore
   patterns: argv.patterns,
+  // @ts-ignore
   debug: argv.debug,
-  withAST: argv.withAST,
+  // @ts-ignore
+  withAST: argv.withAST
 })

@@ -1,17 +1,17 @@
-# add-vue-suffix
+# @doonce/add-vue-suffix
 
 🔨 找出所有引用`vue`组件的地方，并给其加上`.vue`后缀；适用于需要从`webpack`迁移到`vite`的老项目
 
-中文 | [English](https://github.com/BryanAdamss/add-vue-suffix/blob/master/README.md)
+中文 | [English](https://github.com/do-once/cbb/blob/main/cli/add-vue-suffix/README.md)
 
 ## 安装
 
 ```sh
-npm i -D add-vue-suffix
+npm i -D @doonce/add-vue-suffix
 
 or
 
-yarn add add-vue-suffix -D
+yarn add @doonce/add-vue-suffix -D
 ```
 
 ## 使用
@@ -19,7 +19,7 @@ yarn add add-vue-suffix -D
 ### cli
 
 ```bash
-npx add-vue-suffix --resolveConifg ./path/to/resolve-config.js
+npx @doonce/add-vue-suffix --resolveConifg ./path/to/resolve-config.js
 ```
 
 or
@@ -72,7 +72,7 @@ module.exports={
 ### 使用 function
 
 ```js
-import addVueSuffix from 'add-vue-suffix'
+import addVueSuffix from '@doonce/add-vue-suffix'
 
 addVueSuffix({
   withAST = false, // 是否使用AST进行转换

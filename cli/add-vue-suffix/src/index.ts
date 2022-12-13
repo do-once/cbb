@@ -3,25 +3,27 @@
  * @description 入口
  */
 
-const fs = require('fs')
-const path = require('path')
-const globby = require('globby')
-const Transformer = require('./transformer')
-const { normalizePath } = require('./normalize')
-const fileSave = require('file-save')
+import fs from 'fs'
+import path from 'path'
+
+import globby from 'globby'
+
+import Transformer from './transformer'
+import { normalizePath } from './normalize'
+import fileSave from 'file-save'
 const { log, warn, succ, err } = require('./log')
 
 const defaultGlobbyOptions = {
   absolute: true,
-  ignore: ['**/node_modules/**'],
+  ignore: ['**/node_modules/**']
 }
 
-module.exports = function start({
+export function run({
   withAST = false, // 是否使用AST进行转换
   patterns = ['src/**/*.vue', 'src/**/*.js'], // 默认搜索src下面的vue和js文件
   globbyOptions = {}, // 自定义globby的选项，会覆盖默认的选项
   resolveConfig = {}, // https://www.npmjs.com/package/enhanced-resolve；和webpack.resolve一致；https://webpack.js.org/configuration/resolve/#resolve
-  debug = false, // 设为true，则不会世界写文件
+  debug = false // 设为true，则不会世界写文件
 }) {
   const _startTime = new Date().getTime()
   let _rewriteCount = 0
@@ -35,21 +37,15 @@ module.exports = function start({
   const normalizedPaths = maybeImportVue.map(normalizePath)
   log('maybeImportVue', normalizedPaths)
 
-  const vueFiles = normalizedPaths.filter(p => /.vue$/.test(p))
+  const vueFiles = normalizedPaths.filter((p: string) => /.vue$/.test(p))
 
   if (!resolveConfig || JSON.stringify(resolveConfig) === '{}') {
-    warn(
-      '💢The `resolveConfig` config is empty, the alias path will be ignored!'
-    )
+    warn('💢The `resolveConfig` config is empty, the alias path will be ignored!')
   }
 
   const myTransformer = new Transformer(vueFiles, resolveConfig || {})
 
-  for (
-    let i = 0, cont = null, filePath = null;
-    i < normalizedPaths.length;
-    i++
-  ) {
+  for (let i = 0, cont = null, filePath = null; i < normalizedPaths.length; i++) {
     try {
       filePath = normalizedPaths[i]
       debug && log(`Processing: ${filePath}`)
@@ -58,8 +54,7 @@ module.exports = function start({
 
       // 不包含需要替换的模块语法，直接跳过
       if (!Transformer.MODULE_REG.test(cont)) {
-        debug &&
-          warn(`Skip: ${filePath},cause not inculde need replace ESModule code`)
+        debug && warn(`Skip: ${filePath},cause not inculde need replace ESModule code`)
         continue
       }
 
@@ -67,7 +62,7 @@ module.exports = function start({
         code: cont,
         fileDir: path.dirname(filePath),
         withAST,
-        debug,
+        debug
       })
 
       if (!debug && output && output !== cont) {

@@ -3,7 +3,9 @@
  * @description 参数
  */
 
-module.exports = require('yargs')
+import yargs from 'yargs'
+
+export const argv = yargs
   .boolean('withAST')
   .default('withAST', false)
   .array('patterns')

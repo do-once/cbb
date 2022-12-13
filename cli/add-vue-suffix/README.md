@@ -2,16 +2,16 @@
 
 🔨Give some vue files ,find reference and add `.vue` suffix;(Useful for some project migrate to `vite` from `webpack`)
 
-English | [中文](https://github.com/BryanAdamss/add-vue-suffix/blob/master/README.zh-CN.md)
+English | [中文](https://github.com/BryanAdamss/add-vue-suffix/blob/main/README.zh-CN.md)
 
 ## Install
 
 ```sh
-npm i -D add-vue-suffix
+npm i -D @doonce/add-vue-suffix
 
 or
 
-yarn add add-vue-suffix -D
+yarn add @doonce/add-vue-suffix -D
 ```
 
 ## Usage
@@ -19,7 +19,7 @@ yarn add add-vue-suffix -D
 ### with cli
 
 ```bash
-npx add-vue-suffix --resolveConifg ./path/to/resolve-config.js
+npx @doonce/add-vue-suffix --resolveConifg ./path/to/resolve-config.js
 ```
 
 or
@@ -72,7 +72,7 @@ module.exports={
 ### with function
 
 ```js
-import addVueSuffix from 'add-vue-suffix'
+import addVueSuffix from '@doonce/add-vue-suffix'
 
 addVueSuffix({
   withAST = false, // add-vue-suffix use regexp to replace import/export/import() by default;If you got some error,set this to true,it will use babel to replace import/export/import();

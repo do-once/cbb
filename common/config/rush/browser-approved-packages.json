@@ -3,8 +3,24 @@
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
   "packages": [
     {
+      "name": "@babel/generator",
+      "allowedCategories": [ "published" ]
+    },
+    {
+      "name": "@babel/parser",
+      "allowedCategories": [ "published" ]
+    },
+    {
+      "name": "@babel/traverse",
+      "allowedCategories": [ "published" ]
+    },
+    {
+      "name": "@babel/types",
+      "allowedCategories": [ "published" ]
+    },
+    {
       "name": "@doonce/node-rig",
-      "allowedCategories": [ "internal" ]
+      "allowedCategories": [ "internal", "published" ]
     },
     {
       "name": "@doonce/toolchain",
@@ -55,6 +71,10 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "chalk",
+      "allowedCategories": [ "published" ]
+    },
+    {
       "name": "change-case",
       "allowedCategories": [ "internal", "published" ]
     },
@@ -67,8 +87,20 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "enhanced-resolve",
+      "allowedCategories": [ "published" ]
+    },
+    {
       "name": "eslint",
       "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "file-save",
+      "allowedCategories": [ "published" ]
+    },
+    {
+      "name": "globby",
+      "allowedCategories": [ "published" ]
     },
     {
       "name": "html-webpack-plugin",
@@ -165,6 +197,10 @@
     {
       "name": "webpack-merge",
       "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "yargs",
+      "allowedCategories": [ "published" ]
     }
   ]
 }
