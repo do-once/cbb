@@ -74,3 +74,13 @@ Common building block(CBB) powered by [`RushStack`](https://rushstack.io/)
 - [x] enable [`phase_build`](https://rushjs.io/zh-cn/pages/maintainer/phased_builds/)
 - [ ] make project treat `js` as `esm` instead of `cjs`
   - [ ] add `"type":"module"` in `package.json`
+
+
+## How to publish a package
+
+- `rush change`
+- `rush publish --apply --publish --include-all --target-branch main --add-commit-details --set-access-level public`
+- Reference
+  - https://rushjs.io/zh-cn/pages/commands/rush_publish/
+  - https://rushjs.io/zh-cn/pages/maintainer/publishing/
+  - https://github.com/microsoft/rushstack/issues/3617#issuecomment-1244117024
