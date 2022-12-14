@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/hello-vue3-comp",
+      "comment": "add README",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@doonce/hello-vue3-comp"
+}
