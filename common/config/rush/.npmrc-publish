@@ -20,4 +20,4 @@
 #
 
 # 发布源
-registry=https://registry.npmjs.org/
+registry=//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
