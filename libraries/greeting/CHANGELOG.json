@@ -1,0 +1,17 @@
+{
+  "name": "@doonce/greeting",
+  "entries": [
+    {
+      "version": "0.0.2",
+      "tag": "@doonce/greeting_v0.0.2",
+      "date": "Wed, 14 Dec 2022 06:41:07 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "更新了模版"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "@doonce/hello-vue3-comp",
+  "entries": [
+    {
+      "version": "0.0.1",
+      "tag": "@doonce/hello-vue3-comp_v0.0.1",
+      "date": "Wed, 14 Dec 2022 06:41:07 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "新增了LICENSE"
+          }
+        ]
+      }
+    }
+  ]
+}

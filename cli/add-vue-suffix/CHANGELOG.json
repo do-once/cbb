@@ -1,0 +1,17 @@
+{
+  "name": "@doonce/add-vue-suffix",
+  "entries": [
+    {
+      "version": "1.1.1",
+      "tag": "@doonce/add-vue-suffix_v1.1.1",
+      "date": "Wed, 14 Dec 2022 06:41:07 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "更新了README中中文文档链接地址"
+          }
+        ]
+      }
+    }
+  ]
+}

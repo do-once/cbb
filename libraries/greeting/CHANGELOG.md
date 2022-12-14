@@ -1,9 +1,11 @@
-# Change Log - @doonce/add-vue-suffix
+# Change Log - @doonce/greeting
 
 This log was last generated on Wed, 14 Dec 2022 06:41:07 GMT and should not be manually modified.
 
-## 1.1.1
+## 0.0.2
 Wed, 14 Dec 2022 06:41:07 GMT
 
-_Initial release_
+### Patches
+
+- 更新了模版
 
