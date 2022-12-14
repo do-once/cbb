@@ -2,7 +2,7 @@
 
 🔨Give some vue files ,find reference and add `.vue` suffix;(Useful for some project migrate to `vite` from `webpack`)
 
-English | [中文](https://github.com/BryanAdamss/add-vue-suffix/blob/main/README.zh-CN.md)
+English | [中文](https://github.com/do-once/cbb/blob/main/cli/add-vue-suffix/README.zh-CN.md)
 
 ## Install
 
