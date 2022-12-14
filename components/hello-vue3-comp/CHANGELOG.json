@@ -2,6 +2,18 @@
   "name": "@doonce/hello-vue3-comp",
   "entries": [
     {
+      "version": "0.0.2",
+      "tag": "@doonce/hello-vue3-comp_v0.0.2",
+      "date": "Wed, 14 Dec 2022 14:00:16 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "add README"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.0.1",
       "tag": "@doonce/hello-vue3-comp_v0.0.1",
       "date": "Wed, 14 Dec 2022 06:41:07 GMT",
