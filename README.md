@@ -79,7 +79,10 @@ Common building block(CBB) powered by [`RushStack`](https://rushstack.io/)
 ## How to publish a package
 
 - `rush change`
-- `rush publish --apply --publish --include-all --target-branch main --add-commit-details --set-access-level public`
+- first publish
+  - `rush publish --apply --publish --include-all --target-branch main --add-commit-details --set-access-level public`
+- other publish
+  - `rush publish --apply --target-branch main --publish`
 - Reference
   - https://rushjs.io/zh-cn/pages/commands/rush_publish/
   - https://rushjs.io/zh-cn/pages/maintainer/publishing/
