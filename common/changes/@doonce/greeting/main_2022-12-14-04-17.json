@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/greeting",
+      "comment": "更新了模版",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@doonce/greeting"
+}
