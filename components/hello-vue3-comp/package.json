@@ -6,6 +6,15 @@
     "vue3",
     "component"
   ],
+  "homepage": "https://github.com/do-once/cbb/tree/main/components/hello-vue3-comp",
+  "bugs": {
+    "url": "https://github.com/do-once/cbb/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/do-once/cbb.git",
+    "directory": "components/hello-vue3-comp"
+  },
   "license": "MIT",
   "author": {
     "name": "GuangHui",

@@ -174,12 +174,12 @@
       "members": [
         {
           "kind": "Function",
-          "canonicalReference": "@doonce/add-vue-suffix!run:function(1)",
+          "canonicalReference": "@doonce/add-vue-suffix!start:function(1)",
           "docComment": "/**\n * @author GuangHui  @description 入口\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare function run({ withAST, // 是否使用AST进行转换\npatterns, // 默认搜索src下面的vue和js文件\nglobbyOptions, // 自定义globby的选项，会覆盖默认的选项\nresolveConfig, // https://www.npmjs.com/package/enhanced-resolve；和webpack.resolve一致；https://webpack.js.org/configuration/resolve/#resolve\ndebug }: "
+              "text": "export declare function start({ withAST, // 是否使用AST进行转换\npatterns, // 默认搜索src下面的vue和js文件\nglobbyOptions, // 自定义globby的选项，会覆盖默认的选项\nresolveConfig, // https://www.npmjs.com/package/enhanced-resolve；和webpack.resolve一致；https://webpack.js.org/configuration/resolve/#resolve\ndebug }: "
             },
             {
               "kind": "Content",
@@ -215,7 +215,7 @@
               "isOptional": false
             }
           ],
-          "name": "run"
+          "name": "start"
         }
       ]
     }

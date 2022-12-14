@@ -1,1 +1,0 @@
-{"version":3,"file":"build-modern.js","sourceRoot":"","sources":["../src/build-modern.ts"],"names":[],"mappings":";AAAA;;;GAGG;;;AAEH,SAAgB,KAAK;IACnB,OAAO,CAAC,GAAG,CAAC,OAAO,CAAC,CAAA;AACtB,CAAC;AAFD,sBAEC","sourcesContent":["/**\n * @author GuangHui\n * @description 负责输出modern版本（es2017）的esm包\n */\n\nexport function start(): void {\n  console.log('start')\n}\n"]}

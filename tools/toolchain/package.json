@@ -2,7 +2,18 @@
   "name": "@doonce/toolchain",
   "version": "1.0.0",
   "description": "A inner build tool project used by other projects",
-  "keywords": [],
+  "keywords": [
+    "tools"
+  ],
+  "homepage": "https://github.com/do-once/cbb/tree/main/tools/toolchain",
+  "bugs": {
+    "url": "https://github.com/do-once/cbb/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/do-once/cbb.git",
+    "directory": "tools/toolchain"
+  },
   "license": "MIT",
   "author": {
     "name": "GuangHui",
@@ -11,9 +22,11 @@
   },
   "main": "lib/index.js",
   "bin": {
-    "build-modern": "bin/build-modern.js"
+    "tool-chain": "bin/tool-chain.js"
   },
   "scripts": {
+    "_phase:build": "heft build --clean --verbose",
+    "_phase:test": "heft test --no-build",
     "build": "heft build --clean --verbose",
     "test": "heft test --clean --verbose"
   },

@@ -1,2 +1,3 @@
 #! /usr/bin/env node
-require('../dist/bin')
+
+import '../dist/bin.js'

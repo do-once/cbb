@@ -18,7 +18,7 @@ const defaultGlobbyOptions = {
   ignore: ['**/node_modules/**']
 }
 
-export function run({
+export function start({
   withAST = false, // 是否使用AST进行转换
   patterns = ['src/**/*.vue', 'src/**/*.js'], // 默认搜索src下面的vue和js文件
   globbyOptions = {}, // 自定义globby的选项，会覆盖默认的选项

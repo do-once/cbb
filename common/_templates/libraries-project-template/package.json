@@ -5,6 +5,15 @@
   "keywords": [
     "library"
   ],
+  "homepage": "https://github.com/do-once/cbb/tree/main/libraries/{{unscopedPackageName}}",
+  "bugs": {
+    "url": "https://github.com/do-once/cbb/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/do-once/cbb.git",
+    "directory": "libraries/{{unscopedPackageName}}"
+  },
   "license": "MIT",
   "author": {
     "name": "GuangHui",

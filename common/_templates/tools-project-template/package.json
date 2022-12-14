@@ -2,21 +2,44 @@
   "name": "{{packageName}}",
   "version": "0.0.1",
   "description": "{{description}}",
-  "keywords": [],
+  "keywords": ["tools"],
+  "homepage": "https://github.com/do-once/cbb/tree/main/tools/{{unscopedPackageName}}",
+  "bugs": {
+    "url": "https://github.com/do-once/cbb/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/do-once/cbb.git",
+    "directory": "tools/{{unscopedPackageName}}"
+  },
   "license": "MIT",
   "author": {
     "name": "GuangHui",
     "email": "bryanadamss@foxmail.com",
     "url": "https://github.com/BryanAdamss"
   },
-  "main": "lib/index.js",
-  "bin": {
-    "{{unscopedPackageName}}": "bin/{{unscopedPackageName}}.js"
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*"
+      ]
+    }
   },
   "scripts": {
+    "_phase:build": "heft build --clean --verbose",
+    "_phase:test": "heft test --no-build",
     "build": "heft build --clean --verbose",
     "test": "heft test --clean --verbose"
   },
+  "dependencies": {},
   "devDependencies": {
     "@doonce/node-rig": "workspace:*",
     "@rushstack/eslint-config": "3.1.0",

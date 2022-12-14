@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/add-vue-suffix",
+      "comment": "更新了README中中文文档链接地址",
+      "type": "none"
+    }
+  ],
+  "packageName": "@doonce/add-vue-suffix"
+}

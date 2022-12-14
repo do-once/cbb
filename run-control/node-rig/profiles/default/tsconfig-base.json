@@ -21,9 +21,17 @@
 
     "types": [],
 
-    "module": "commonjs",
-    "target": "es2017",
-    "lib": ["es2017"]
+    /* 使用esm替代cjs */
+    // "module": "commonjs",
+    "module": "esnext",
+    // "target": "es2017",
+    /* 面向未来环境 */
+    "target": "ESNext",
+    // "lib": ["es2017"]
+    /* 面向未来环境 */
+    "lib": ["ESNext"],
+    /* 面向未来环境 */
+    "moduleResolution": "nodenext"
   },
   "include": ["../../../../../src/**/*.ts", "../../../../../src/**/*.tsx"]
 }

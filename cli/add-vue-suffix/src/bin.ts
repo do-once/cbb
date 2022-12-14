@@ -7,7 +7,7 @@ import path from 'path'
 
 import { argv } from './arg'
 import { err } from './log'
-import { run } from './index'
+import { start } from './index'
 
 let resolveConfig = {}
 
@@ -20,7 +20,7 @@ try {
   err('get an error when try to resolve resolveConfig', error)
 }
 
-run({
+start({
   resolveConfig,
   // @ts-ignore
   patterns: argv.patterns,

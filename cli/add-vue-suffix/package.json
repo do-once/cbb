@@ -21,7 +21,6 @@
     "email": "bryanadamss@foxmail.com",
     "url": "https://github.com/BryanAdamss"
   },
-  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/index.js"
