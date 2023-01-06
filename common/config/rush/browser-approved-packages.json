@@ -95,12 +95,24 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "@vitejs/plugin-legacy",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "@vitejs/plugin-vue",
       "allowedCategories": [ "internal", "published" ]
     },
     {
       "name": "@vitejs/plugin-vue-jsx",
       "allowedCategories": [ "published" ]
+    },
+    {
+      "name": "@vitejs/plugin-vue2",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@vitejs/plugin-vue2-jsx",
+      "allowedCategories": [ "internal" ]
     },
     {
       "name": "@vue/cli-plugin-babel",
@@ -372,6 +384,10 @@
     },
     {
       "name": "svgo-loader",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "terser",
       "allowedCategories": [ "internal" ]
     },
     {
