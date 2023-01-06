@@ -509,6 +509,12 @@
       "shouldPublish": true
     },
     {
+      "packageName": "@doonce/wujie-main-vue3",
+      "projectFolder": "apps/wujie-main-vue3",
+      "reviewCategory": "internal",
+      "shouldPublish": false
+    },
+    {
       "packageName": "@doonce/wujie-sub-vue2",
       "projectFolder": "apps/wujie-sub-vue2",
       "reviewCategory": "internal",
