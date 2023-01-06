@@ -11,12 +11,40 @@
       "allowedCategories": [ "published" ]
     },
     {
+      "name": "@babel/plugin-proposal-nullish-coalescing-operator",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@babel/plugin-proposal-optional-chaining",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "@babel/traverse",
       "allowedCategories": [ "published" ]
     },
     {
       "name": "@babel/types",
       "allowedCategories": [ "published" ]
+    },
+    {
+      "name": "@bryanadamss/drawing-board",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@bryanadamss/generate-file",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@bryanadamss/num2chn",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@commitlint/cli",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@commitlint/config-conventional",
+      "allowedCategories": [ "internal" ]
     },
     {
       "name": "@doonce/node-rig",
@@ -29,6 +57,14 @@
     {
       "name": "@doonce/web-rig",
       "allowedCategories": [ "internal", "published" ]
+    },
+    {
+      "name": "@ghchu/color-palette",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@ls-lint/ls-lint",
+      "allowedCategories": [ "internal" ]
     },
     {
       "name": "@microsoft/api-extractor",
@@ -67,7 +103,71 @@
       "allowedCategories": [ "published" ]
     },
     {
+      "name": "@vue/cli-plugin-babel",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@vue/cli-plugin-e2e-cypress",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@vue/cli-plugin-eslint",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@vue/cli-plugin-pwa",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@vue/cli-plugin-router",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@vue/cli-plugin-unit-jest",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@vue/cli-plugin-vuex",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@vue/cli-service",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@vue/eslint-config-prettier",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@vue/eslint-config-standard",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@vue/test-utils",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "all-contributors-cli",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "ant-color-converter",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "autoprefixer",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "axios",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "babel-eslint",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "better-scroll",
       "allowedCategories": [ "internal" ]
     },
     {
@@ -79,11 +179,39 @@
       "allowedCategories": [ "internal", "published" ]
     },
     {
+      "name": "commitizen",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "compression-webpack-plugin",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "core-js",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "css-loader",
       "allowedCategories": [ "internal" ]
     },
     {
       "name": "css-minimizer-webpack-plugin",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "css-vars-ponyfill",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "cz-conventional-changelog",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "driver.js",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "element-ui",
       "allowedCategories": [ "internal" ]
     },
     {
@@ -95,15 +223,47 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "eslint-plugin-import",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "eslint-plugin-node",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "eslint-plugin-prettier",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "eslint-plugin-promise",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "eslint-plugin-simple-import-sort",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "eslint-plugin-standard",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "eslint-plugin-vue",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "file-save",
-      "allowedCategories": [ "published" ]
+      "allowedCategories": [ "internal", "published" ]
     },
     {
       "name": "globby",
-      "allowedCategories": [ "published" ]
+      "allowedCategories": [ "internal", "published" ]
     },
     {
       "name": "html-webpack-plugin",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "husky",
       "allowedCategories": [ "internal" ]
     },
     {
@@ -115,7 +275,23 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "json-templater",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "lint-staged",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "mathjs",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "mini-css-extract-plugin",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "mutationobserver-shim",
       "allowedCategories": [ "internal" ]
     },
     {
@@ -123,11 +299,23 @@
       "allowedCategories": [ "published" ]
     },
     {
+      "name": "pdfjs-dist",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "postcss",
       "allowedCategories": [ "internal" ]
     },
     {
       "name": "postcss-loader",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "prettier",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "register-service-worker",
       "allowedCategories": [ "internal" ]
     },
     {
@@ -147,7 +335,43 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "standard-version",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "style-loader",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "style-resources-loader",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "stylelint",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "stylelint-config-rational-order",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "stylelint-order",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "stylelint-selector-bem-pattern",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "svg-sprite-loader",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "svgo",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "svgo-loader",
       "allowedCategories": [ "internal" ]
     },
     {
@@ -160,6 +384,14 @@
     },
     {
       "name": "url-loader",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "vconsole",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "velocity-animate",
       "allowedCategories": [ "internal" ]
     },
     {
@@ -183,8 +415,32 @@
       "allowedCategories": [ "internal", "published" ]
     },
     {
+      "name": "vue-cli-plugin-auto-alias",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "vue-cli-plugin-style-resources-loader",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "vue-lazyload",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "vue-router",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "vue-template-compiler",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "vue-tsc",
       "allowedCategories": [ "published" ]
+    },
+    {
+      "name": "vuex",
+      "allowedCategories": [ "internal" ]
     },
     {
       "name": "webpack",
@@ -195,7 +451,15 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "webpack-cdn-plugin",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "webpack-merge",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "wujie-vue3",
       "allowedCategories": [ "internal" ]
     },
     {

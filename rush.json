@@ -507,6 +507,12 @@
       "projectFolder": "cli/add-vue-suffix",
       "reviewCategory": "published",
       "shouldPublish": true
+    },
+    {
+      "packageName": "@doonce/wujie-main-vue3",
+      "projectFolder": "apps/wujie-main-vue3",
+      "reviewCategory": "internal",
+      "shouldPublish": false
     }
   ]
 }
