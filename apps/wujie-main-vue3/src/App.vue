@@ -1,20 +1,32 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import SideBar from './components/SideBar.vue'
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="c-Container">
+    <div class="c-Container-side">
+      <SideBar></SideBar>
+    </div>
+    <div class="c-Container-main">
+      <router-view></router-view>
+    </div>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
 <style scoped>
+.c-Container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.c-Container-side {
+  flex: 0 0 auto;
+  width: 10vw;
+}
+
+.c-Container-main {
+  flex: 1 1 auto;
+}
 .logo {
   height: 6em;
   padding: 1.5em;

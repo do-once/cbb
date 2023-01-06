@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "dev": "vite",
+    "dev": "vite --port 5173",
     "preview": "vite preview"
   },
   "dependencies": {
     "vue": "3.2.45",
+    "vue-router": "4.1.6",
     "wujie-vue3": "1.0.4"
   },
   "devDependencies": {

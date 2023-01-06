@@ -2,8 +2,8 @@
   "name": "@doonce/wujie-sub-vue2",
   "version": "0.0.1",
   "scripts": {
-    "dev": "vite",
     "build": "vite build",
+    "dev": "vite --port 5174",
     "preview": "vite preview --port 4173"
   },
   "dependencies": {

@@ -5,6 +5,21 @@ importers:
   .:
     specifiers: {}
 
+  ../../apps/wujie-main-vue3:
+    specifiers:
+      '@vitejs/plugin-vue': 3.1.2
+      vite: 3.1.8
+      vue: 3.2.45
+      vue-router: 4.1.6
+      wujie-vue3: 1.0.4
+    dependencies:
+      vue: registry.npmmirror.com/vue/3.2.45
+      vue-router: registry.npmmirror.com/vue-router/4.1.6_vue@3.2.45
+      wujie-vue3: registry.npmmirror.com/wujie-vue3/1.0.4_vue@3.2.45
+    devDependencies:
+      '@vitejs/plugin-vue': registry.npmmirror.com/@vitejs/plugin-vue/3.1.2_vite@3.1.8+vue@3.2.45
+      vite: registry.npmmirror.com/vite/3.1.8
+
   ../../apps/wujie-sub-vue2:
     specifiers:
       '@vitejs/plugin-legacy': 2.0.0
@@ -620,6 +635,15 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  registry.npmmirror.com/@babel/runtime/7.20.7:
+    resolution: {integrity: sha512-UF0tvkUtxwAgZ5W/KrkHf0Rn0fdnLDU9ScxBrEVNUprE/MzirjK4MJUX1/BVDv00Sv8cljtukVK1aky++X1SjQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@babel/runtime/-/runtime-7.20.7.tgz}
+    name: '@babel/runtime'
+    version: 7.20.7
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: registry.npmmirror.com/regenerator-runtime/0.13.11
+    dev: false
 
   registry.npmmirror.com/@babel/standalone/7.20.12:
     resolution: {integrity: sha512-hK/X+m1il3w1tYS4H8LDaGCEdiT47SVqEXY8RiEAgou26BystipSU8ZL6EvBR6t5l7lTv0ilBiChXWblKJ5iUA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@babel/standalone/-/standalone-7.20.12.tgz}
@@ -1828,6 +1852,20 @@ packages:
       vite: registry.npmmirror.com/vite/3.1.8_terser@5.14.2
     dev: true
 
+  registry.npmmirror.com/@vitejs/plugin-vue/3.1.2_vite@3.1.8+vue@3.2.45:
+    resolution: {integrity: sha512-3zxKNlvA3oNaKDYX0NBclgxTQ1xaFdL7PzwF6zj9tGFziKwmBa3Q/6XcJQxudlT81WxDjEhHmevvIC4Orc1LhQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@vitejs/plugin-vue/-/plugin-vue-3.1.2.tgz}
+    id: registry.npmmirror.com/@vitejs/plugin-vue/3.1.2
+    name: '@vitejs/plugin-vue'
+    version: 3.1.2
+    engines: {node: ^14.18.0 || >=16.0.0}
+    peerDependencies:
+      vite: ^3.0.0
+      vue: ^3.2.25
+    dependencies:
+      vite: registry.npmmirror.com/vite/3.1.8
+      vue: registry.npmmirror.com/vue/3.2.45
+    dev: true
+
   registry.npmmirror.com/@vitejs/plugin-vue/3.1.2_vite@3.2.5+vue@3.2.45:
     resolution: {integrity: sha512-3zxKNlvA3oNaKDYX0NBclgxTQ1xaFdL7PzwF6zj9tGFziKwmBa3Q/6XcJQxudlT81WxDjEhHmevvIC4Orc1LhQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@vitejs/plugin-vue/-/plugin-vue-3.1.2.tgz}
     id: registry.npmmirror.com/@vitejs/plugin-vue/3.1.2
@@ -2099,6 +2137,12 @@ packages:
     dependencies:
       '@vue/compiler-dom': registry.npmmirror.com/@vue/compiler-dom/3.2.45
       '@vue/shared': registry.npmmirror.com/@vue/shared/3.2.45
+
+  registry.npmmirror.com/@vue/devtools-api/6.4.5:
+    resolution: {integrity: sha512-JD5fcdIuFxU4fQyXUu3w2KpAJHzTVdN+p4iOX2lMWSHMOoQdMAcpFLZzm9Z/2nmsoZ1a96QEhZ26e50xLBsgOQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@vue/devtools-api/-/devtools-api-6.4.5.tgz}
+    name: '@vue/devtools-api'
+    version: 6.4.5
+    dev: false
 
   registry.npmmirror.com/@vue/reactivity-transform/3.2.41:
     resolution: {integrity: sha512-mK5+BNMsL4hHi+IR3Ft/ho6Za+L3FA5j8WvreJ7XzHrqkPq8jtF/SMo7tuc9gHjLDwKZX1nP1JQOKo9IEAn54A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@vue/reactivity-transform/-/reactivity-transform-3.2.41.tgz}
@@ -5885,7 +5929,6 @@ packages:
     resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz}
     name: regenerator-runtime
     version: 0.13.11
-    dev: true
 
   registry.npmmirror.com/regexp.prototype.flags/1.4.3:
     resolution: {integrity: sha512-fjggEOO3slI6Wvgjwflkc4NFRCTZAu5CnNfBd5qOMYhWdn67nJBBu34/TkD++eeFmd8C9r9jfXJ27+nSiRkSUA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/regexp.prototype.flags/-/regexp.prototype.flags-1.4.3.tgz}
@@ -6811,6 +6854,18 @@ packages:
     version: 3.5.4
     dev: false
 
+  registry.npmmirror.com/vue-router/4.1.6_vue@3.2.45:
+    resolution: {integrity: sha512-DYWYwsG6xNPmLq/FmZn8Ip+qrhFEzA14EI12MsMgVxvHFDYvlr4NXpVF5hrRH1wVcDP8fGi5F4rxuJSl8/r+EQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vue-router/-/vue-router-4.1.6.tgz}
+    id: registry.npmmirror.com/vue-router/4.1.6
+    name: vue-router
+    version: 4.1.6
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      '@vue/devtools-api': registry.npmmirror.com/@vue/devtools-api/6.4.5
+      vue: registry.npmmirror.com/vue/3.2.45
+    dev: false
+
   registry.npmmirror.com/vue/2.7.7:
     resolution: {integrity: sha512-osfkncsGCWqtch+YWYxbqTNQ9hl/UQ6TFRkdmK/VqAjuMpxzr5QotFsYpmJ1AB1ez2LJeIKXDmtMkXUotMOTsA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vue/-/vue-2.7.7.tgz}
     name: vue
@@ -6987,6 +7042,26 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
+    dev: false
+
+  registry.npmmirror.com/wujie-vue3/1.0.4_vue@3.2.45:
+    resolution: {integrity: sha512-fCabgyOz/DUYAVjwkVEnulXR+gAAQiyzLAxEt2fW6dhLbAcwbOmstTtURO8IoXUrbMaNkLQK/SvvM7LCVkXzwg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/wujie-vue3/-/wujie-vue3-1.0.4.tgz}
+    id: registry.npmmirror.com/wujie-vue3/1.0.4
+    name: wujie-vue3
+    version: 1.0.4
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      vue: registry.npmmirror.com/vue/3.2.45
+      wujie: registry.npmmirror.com/wujie/1.0.4
+    dev: false
+
+  registry.npmmirror.com/wujie/1.0.4:
+    resolution: {integrity: sha512-konXS5e8ehZNFZf3Nl4jw97Bl2HTdhhBgZ9UNx1NCFdMb+ic5HfZsDBK5IKf2JXp6AjCgukfiuXPJyH7InLhLg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/wujie/-/wujie-1.0.4.tgz}
+    name: wujie
+    version: 1.0.4
+    dependencies:
+      '@babel/runtime': registry.npmmirror.com/@babel/runtime/7.20.7
     dev: false
 
   registry.npmmirror.com/xml-name-validator/3.0.0:
