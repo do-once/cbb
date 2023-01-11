@@ -82,7 +82,7 @@ Common building block(CBB) powered by [`RushStack`](https://rushstack.io/)
 - first publish
   - `rush publish --apply --publish --include-all --target-branch main --add-commit-details --set-access-level public`
 - other publish
-  - `rush publish --apply --target-branch main --publish`
+  - `rush publish --apply --target-branch main --publish --set-access-level public`
 - Reference
   - https://rushjs.io/zh-cn/pages/commands/rush_publish/
   - https://rushjs.io/zh-cn/pages/maintainer/publishing/
