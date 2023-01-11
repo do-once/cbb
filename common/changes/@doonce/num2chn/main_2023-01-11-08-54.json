@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/num2chn",
+      "comment": "add keywords",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@doonce/num2chn"
+}
