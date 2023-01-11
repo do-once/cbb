@@ -1,0 +1,17 @@
+{
+  "name": "@doonce/num2chn",
+  "entries": [
+    {
+      "version": "0.0.1",
+      "tag": "@doonce/num2chn_v0.0.1",
+      "date": "Wed, 11 Jan 2023 08:52:21 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "新增@doonce/num2chn 库"
+          }
+        ]
+      }
+    }
+  ]
+}
