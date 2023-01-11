@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "Convert a number to chinese",
   "keywords": [
-    "library"
+    "library",
+    "convert",
+    "number"
   ],
   "homepage": "https://github.com/do-once/cbb/tree/main/libraries/num2chn",
   "bugs": {
