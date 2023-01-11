@@ -1,18 +1,18 @@
 {
-  "name": "{{packageName}}",
+  "name": "@doonce/num2chn",
   "version": "0.0.1",
-  "description": "{{description}}",
+  "description": "Convert a number to chinese",
   "keywords": [
     "library"
   ],
-  "homepage": "https://github.com/do-once/cbb/tree/main/libraries/{{unscopedPackageName}}",
+  "homepage": "https://github.com/do-once/cbb/tree/main/libraries/num2chn",
   "bugs": {
     "url": "https://github.com/do-once/cbb/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/do-once/cbb.git",
-    "directory": "libraries/{{unscopedPackageName}}"
+    "directory": "libraries/num2chn"
   },
   "license": "MIT",
   "author": {

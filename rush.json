@@ -519,6 +519,12 @@
       "projectFolder": "apps/wujie-sub-vue2",
       "reviewCategory": "internal",
       "shouldPublish": false
+    },
+    {
+      "packageName": "@doonce/num2chn",
+      "projectFolder": "libraries/num2chn",
+      "reviewCategory": "published",
+      "shouldPublish": true
     }
   ]
 }

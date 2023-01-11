@@ -111,6 +111,22 @@ importers:
       vite: registry.npmmirror.com/vite/3.1.8
       vue: registry.npmmirror.com/vue/3.2.45
 
+  ../../libraries/num2chn:
+    specifiers:
+      '@doonce/web-rig': workspace:*
+      '@rushstack/eslint-config': 3.1.0
+      '@rushstack/heft': 0.48.0
+      '@types/heft-jest': 1.0.3
+      vite: 3.1.8
+      vue: 3.2.45
+    devDependencies:
+      '@doonce/web-rig': link:../../run-control/web-rig
+      '@rushstack/eslint-config': registry.npmmirror.com/@rushstack/eslint-config/3.1.0_iukboom6ndih5an6iafl45j2fe
+      '@rushstack/heft': registry.npmmirror.com/@rushstack/heft/0.48.0
+      '@types/heft-jest': registry.npmmirror.com/@types/heft-jest/1.0.3
+      vite: registry.npmmirror.com/vite/3.1.8
+      vue: registry.npmmirror.com/vue/3.2.45
+
   ../../run-control/node-rig:
     specifiers:
       '@microsoft/api-extractor': 7.33.4

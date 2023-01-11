@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DoonceNum2chn Example</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script type="module">
+      import { createApp } from 'vue'
+      import Num2Chn, { isSafeNumber, padStr, getNumParts } from './src/index.ts'
+
+      const app = {
+        template: `<div>
+          <h1>DoonceNum2chn Example</h1>
+          <pre>
+            import Num2Chn from '@doonce/num2ch'
+
+            const instance = new Num2Chn()
+
+            instance.transform(123) // {{instance.transform(123)}}
+            instance.transform(0) // {{instance.transform(0)}}
+            instance.transform(0.0) // {{instance.transform(0.0)}}
+            instance.transform(-0.3) // {{instance.transform(-0.3)}}
+            instance.transform(0.3) // {{instance.transform(0.3)}}
+            instance.transform(0.3333333333333333333) // {{instance.transform(0.3333333333333333333)}}
+            instance.transform(1) // {{instance.transform(1)}}
+            instance.transform(2) // {{instance.transform(2)}}
+            instance.transform(10) // {{instance.transform(10)}}
+            instance.transform(11) // {{instance.transform(11)}}
+            instance.transform(20) // {{instance.transform(20)}}
+            instance.transform(23) // {{instance.transform(23)}}
+            instance.transform(301) // {{instance.transform(301)}}
+            instance.transform(123456) // {{instance.transform(123456)}}
+            instance.transform(123.456789) // {{instance.transform(123.456789)}}
+            instance.transform(-123.456789) // {{instance.transform(-123.456789)}}
+            instance.transform(123456789.987654321) // {{instance.transform(123456789.987654321)}}
+            instance.transform(1000) // {{instance.transform(1000)}}
+            instance.transform(10000) // {{instance.transform(10000)}}
+            instance.transform(100000) // {{instance.transform(100000)}}
+            instance.transform(1000000) // {{instance.transform(1000000)}}
+            instance.transform(10000000) // {{instance.transform(10000000)}}
+            instance.transform(100000000) // {{instance.transform(100000000)}}
+            instance.transform(1000000000) // {{instance.transform(1000000000)}}
+            instance.transform(10000000000) // {{instance.transform(10000000000)}}
+            instance.transform(100000000000) // {{instance.transform(100000000000)}}
+            instance.transform(1000000000000) // {{instance.transform(1000000000000)}}
+            instance.transform(10000000000000) // {{instance.transform(10000000000000)}}
+            instance.transform(100000000000000) // {{instance.transform(100000000000000)}}
+            instance.transform(1000000000000000) // {{instance.transform(1000000000000000)}}
+            instance.transform(-1000000000000000) // {{instance.transform(-1000000000000000)}}
+            instance.transform(-1000000000000000.123123) // {{instance.transform(-1000000000000000.123123)}}
+            instance.transform(10000000000000000) // {{instance.transform(10000000000000000)}}
+          </pre>
+          </div>`,
+        data() {
+          return {
+            instance: null
+          }
+        },
+        created() {
+          this.instance = new Num2Chn()
+        },
+        mounted() {}
+      }
+
+      createApp(app).mount('#app')
+    </script>
+  </body>
+</html>
