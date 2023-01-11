@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/num2chn",
+      "comment": "新增@doonce/num2chn 库",
+      "type": "none"
+    }
+  ],
+  "packageName": "@doonce/num2chn"
+}
