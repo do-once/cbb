@@ -1,6 +1,6 @@
 {
   "name": "@doonce/num2chn",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Convert a number to chinese",
   "keywords": [
     "library",
