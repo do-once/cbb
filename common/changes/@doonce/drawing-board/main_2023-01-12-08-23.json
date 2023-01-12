@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/drawing-board",
+      "comment": "add @doonce/drawing-board",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@doonce/drawing-board"
+}
