@@ -1,0 +1,17 @@
+{
+  "name": "@doonce/drawing-board",
+  "entries": [
+    {
+      "version": "0.1.0",
+      "tag": "@doonce/drawing-board_v0.1.0",
+      "date": "Thu, 12 Jan 2023 08:29:04 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "add @doonce/drawing-board"
+          }
+        ]
+      }
+    }
+  ]
+}
