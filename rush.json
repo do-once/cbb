@@ -525,6 +525,12 @@
       "projectFolder": "libraries/num2chn",
       "reviewCategory": "published",
       "shouldPublish": true
+    },
+    {
+      "packageName": "@doonce/drawing-board",
+      "projectFolder": "libraries/drawing-board",
+      "reviewCategory": "published",
+      "shouldPublish": true
     }
   ]
 }

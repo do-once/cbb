@@ -1,0 +1,62 @@
+{
+  "name": "@doonce/drawing-board",
+  "version": "0.0.1",
+  "description": "Javascript drawing board based on canvas",
+  "keywords": [
+    "library",
+    "drawing",
+    "board",
+    "canvas"
+  ],
+  "homepage": "https://github.com/do-once/cbb/tree/main/libraries/drawing-board",
+  "bugs": {
+    "url": "https://github.com/do-once/cbb/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/do-once/cbb.git",
+    "directory": "libraries/drawing-board"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "GuangHui",
+    "email": "bryanadamss@foxmail.com",
+    "url": "https://github.com/BryanAdamss"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "_phase:build": "heft build --clean --verbose",
+    "_phase:test": "heft test --no-build",
+    "build": "heft build --verbose --clean",
+    "dev": "vite",
+    "test": "heft test --clean --verbose"
+  },
+  "dependencies": {
+    "mathjs": "8.1.1"
+  },
+  "devDependencies": {
+    "@doonce/web-rig": "workspace:*",
+    "@rushstack/eslint-config": "3.1.0",
+    "@rushstack/heft": "0.48.0",
+    "@types/heft-jest": "1.0.3",
+    "vite": "3.1.8",
+    "vue": "3.2.45"
+  }
+}

@@ -296,7 +296,7 @@
     },
     {
       "name": "mathjs",
-      "allowedCategories": [ "internal" ]
+      "allowedCategories": [ "internal", "published" ]
     },
     {
       "name": "mini-css-extract-plugin",
