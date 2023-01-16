@@ -14,6 +14,16 @@
       <li class="c-SideBar-item">
         <router-link class="c-SideBar-item" to="/wujie-sub-vue2">Vue2 + Vite</router-link>
       </li>
+      <li class="c-SideBar-item">
+        <router-link class="c-SideBar-item" to="/wujie-sub-react18">React18</router-link>
+      </li>
     </ul>
   </div>
 </template>
+
+<style>
+.c-SideBar {
+  border-right: 1px solid #ccc;
+  height: 100vh;
+}
+</style>

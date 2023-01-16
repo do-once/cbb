@@ -6,6 +6,6 @@
 
 <template>
   <div class="c-WuJieSubVue2">
-    <WujieVue width="100%" height="100%" url="//localhost:5174"></WujieVue>
+    <WujieVue width="100%" height="100%" name="wujie-sub-vue2"></WujieVue>
   </div>
 </template>

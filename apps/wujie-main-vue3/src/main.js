@@ -9,6 +9,7 @@ const { bus, setupApp, preloadApp, destroyApp } = WujieVue
 
 const app = createApp(App)
 
-// setupApp({ name: 'wujie-sub-vue2', url: '//localhost:5174' })
+setupApp({ name: 'wujie-sub-vue2', url: '//localhost:5174', alive: true, sync: true })
+setupApp({ name: 'wujie-sub-react18', url: '//localhost:3000', alive: true, sync: true })
 
-app.use(WujieVue).use(routerInstance).mount('#app')
+app.use(routerInstance).use(WujieVue).mount('#app')

@@ -521,6 +521,12 @@
       "shouldPublish": false
     },
     {
+      "packageName": "@doonce/wujie-sub-react18",
+      "projectFolder": "apps/wujie-sub-react18",
+      "reviewCategory": "internal",
+      "shouldPublish": false
+    },
+    {
       "packageName": "@doonce/num2chn",
       "projectFolder": "libraries/num2chn",
       "reviewCategory": "published",
