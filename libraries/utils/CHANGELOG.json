@@ -1,0 +1,17 @@
+{
+  "name": "@doonce/utils",
+  "entries": [
+    {
+      "version": "0.0.2",
+      "tag": "@doonce/utils_v0.0.2",
+      "date": "Fri, 10 Feb 2023 09:41:28 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "add new @hw/utils project"
+          }
+        ]
+      }
+    }
+  ]
+}
