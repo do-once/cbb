@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/utils",
+      "comment": "add new @hw/utils project",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@doonce/utils"
+}
