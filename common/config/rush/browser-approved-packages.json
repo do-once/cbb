@@ -95,6 +95,18 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "@testing-library/jest-dom",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@testing-library/react",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@testing-library/user-event",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "@vitejs/plugin-legacy",
       "allowedCategories": [ "internal" ]
     },
@@ -327,6 +339,18 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "react",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "react-dom",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "react-scripts",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "register-service-worker",
       "allowedCategories": [ "internal" ]
     },
@@ -456,6 +480,10 @@
     },
     {
       "name": "vuex",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "web-vitals",
       "allowedCategories": [ "internal" ]
     },
     {

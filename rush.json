@@ -537,6 +537,12 @@
       "projectFolder": "libraries/drawing-board",
       "reviewCategory": "published",
       "shouldPublish": true
+    },
+    {
+      "packageName": "@doonce/utils",
+      "projectFolder": "libraries/utils",
+      "reviewCategory": "published",
+      "shouldPublish": true
     }
   ]
 }
