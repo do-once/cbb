@@ -1,0 +1,19 @@
+{
+  "name": "@doonce/latex-svg-dataurl",
+  "entries": [
+    {
+      "version": "1.0.0",
+      "tag": "@doonce/latex-svg-dataurl_v1.0.0",
+      "date": "Tue, 28 Mar 2023 11:50:10 GMT",
+      "comments": {
+        "major": [
+          {
+            "comment": "add new pkg @doonce/latex-svg-dataurl",
+            "author": "BryanAdamss <bryanadamss@foxmail.com>",
+            "commit": "97e44848b401d12142c05354c1b4148bdf0d0de5"
+          }
+        ]
+      }
+    }
+  ]
+}
