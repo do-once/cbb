@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DoonceLatexSvgDataurl Example</title>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_SVG"
+    ></script>
+
+    <!-- You might need at least Fabric 1.4.6, because of a bug with data URLs -->
+    <script type="text/javascript" src="https://unpkg.com/fabric@5.3.0/dist/fabric.min.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script type="module">
+      import { createApp } from 'vue'
+      import { transformLatexToSVGDataUrl } from './src/index.ts'
+
+      const app = {
+        template: `<div>
+          <h1>DoonceLatexSvgDataurl Example</h1>
+            latex:<v-pre>{{latex}}</v-pre>
+            <hr/>
+            dataUrl:{{dataUrl}}
+            <hr/>
+            latex2:{{latex2}}
+            <hr/>
+            dataUrl2:{{dataUrl2}}
+            <button @click="genDataUrl2">生成 dataurl2 </button>
+            <hr/>
+            <h2>render in canvas</h2>
+            <canvas id="canvas"></canvas>
+          </div>`,
+        data() {
+          return {
+            latex: '1+\\int_x^y e^x dx + \\ldots',
+            latex2: '1+\\int_x^y e^x dyyyyyyyyy + \\ldots',
+            dataUrl: '',
+            dataUrl2: '',
+            canvas: null
+          }
+        },
+        methods: {
+          genDataUrl2() {
+            transformLatexToSVGDataUrl(this.latex2).then(dataUrl2 => {
+              console.log('dataUrl2 :>> ', dataUrl2)
+              this.dataUrl2 = dataUrl2
+
+              fabric.Image.fromURL(dataUrl2, img => {
+                this.canvas.add(img)
+              })
+            })
+          }
+        },
+        mounted() {
+          this.canvas = new fabric.Canvas('canvas')
+
+          transformLatexToSVGDataUrl(this.latex).then(dataUrl => {
+            console.log('dataUrl :>> ', dataUrl)
+            this.dataUrl = dataUrl
+
+            fabric.Image.fromURL(dataUrl, img => {
+              this.canvas.add(img)
+            })
+          })
+        }
+      }
+
+      createApp(app).mount('#app')
+    </script>
+  </body>
+</html>

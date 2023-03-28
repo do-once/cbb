@@ -113,6 +113,25 @@ importers:
       vite: registry.npmmirror.com/vite/3.1.8
       vitest: registry.npmmirror.com/vitest/0.24.3
 
+  ../../libraries/canvas-latex:
+    specifiers:
+      '@doonce/web-rig': workspace:*
+      '@rushstack/eslint-config': 3.1.0
+      '@rushstack/heft': 0.48.0
+      '@types/heft-jest': 1.0.3
+      katex: 0.16.4
+      vite: 3.1.8
+      vue: 3.2.45
+    dependencies:
+      katex: registry.npmmirror.com/katex/0.16.4
+    devDependencies:
+      '@doonce/web-rig': link:../../run-control/web-rig
+      '@rushstack/eslint-config': registry.npmmirror.com/@rushstack/eslint-config/3.1.0_iukboom6ndih5an6iafl45j2fe
+      '@rushstack/heft': registry.npmmirror.com/@rushstack/heft/0.48.0
+      '@types/heft-jest': registry.npmmirror.com/@types/heft-jest/1.0.3
+      vite: registry.npmmirror.com/vite/3.1.8
+      vue: registry.npmmirror.com/vue/3.2.45
+
   ../../libraries/drawing-board:
     specifiers:
       '@doonce/web-rig': workspace:*
@@ -10108,6 +10127,15 @@ packages:
     dependencies:
       array-includes: registry.npmmirror.com/array-includes/3.1.6
       object.assign: registry.npmmirror.com/object.assign/4.1.4
+
+  registry.npmmirror.com/katex/0.16.4:
+    resolution: {integrity: sha512-WudRKUj8yyBeVDI4aYMNxhx5Vhh2PjpzQw1GRu/LVGqL4m1AxwD1GcUp0IMbdJaf5zsjtj8ghP0DOQRYhroNkw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/katex/-/katex-0.16.4.tgz}
+    name: katex
+    version: 0.16.4
+    hasBin: true
+    dependencies:
+      commander: registry.npmmirror.com/commander/8.3.0
+    dev: false
 
   registry.npmmirror.com/kind-of/6.0.3:
     resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/kind-of/-/kind-of-6.0.3.tgz}

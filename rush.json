@@ -543,6 +543,12 @@
       "projectFolder": "libraries/utils",
       "reviewCategory": "published",
       "shouldPublish": true
+    },
+    {
+      "packageName": "@doonce/latex-svg-dataurl",
+      "projectFolder": "libraries/latex-svg-dataurl",
+      "reviewCategory": "published",
+      "shouldPublish": true
     }
   ]
 }

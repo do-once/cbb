@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../src/index.ts"],"names":[],"mappings":"AAAA;;;GAGG;AAEH,cAAc,qBAAqB,CAAA","sourcesContent":["/**\n * @author GuangHui\n * @description DoonceCanvasLatex 入口\n */\n\nexport * from './latex-svg-dataurl'\n"]}

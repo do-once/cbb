@@ -303,6 +303,10 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "katex",
+      "allowedCategories": [ "published" ]
+    },
+    {
       "name": "lint-staged",
       "allowedCategories": [ "internal" ]
     },
