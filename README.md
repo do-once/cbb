@@ -74,6 +74,8 @@ Common building block(CBB) powered by [`RushStack`](https://rushstack.io/)
 - [x] enable [`phase_build`](https://rushjs.io/zh-cn/pages/maintainer/phased_builds/)
 - [ ] make project treat `js` as `esm` instead of `cjs`
   - [ ] add `"type":"module"` in `package.json`
+- [x] Integrate `vue-demi`
+  - [ ] add integrate `vue-demi` project template
 
 
 ## How to publish a package
