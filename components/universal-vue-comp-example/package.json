@@ -1,7 +1,7 @@
 {
   "name": "@doonce/universal-vue-comp-example",
   "version": "0.0.1",
-  "description": "universal-vue-comp-example",
+  "description": "universal-vue-comp-example work on vue2 and vue3",
   "keywords": [
     "vue3",
     "component"
@@ -46,6 +46,9 @@
     "dev": "vite",
     "test": "vitest"
   },
+  "dependencies": {
+    "vue-demi": "0.13.11"
+  },
   "devDependencies": {
     "@doonce/web-rig": "workspace:*",
     "@rushstack/eslint-config": "3.1.0",
@@ -54,6 +57,12 @@
     "vitest": "0.24.3"
   },
   "peerDependencies": {
-    "vue": "3.2.41"
+    "@vue/composition-api": "^1.0.0-rc.1",
+    "vue": "^2.6.12 || >=3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@vue/composition-api": {
+      "optional": true
+    }
   }
 }

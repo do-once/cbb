@@ -27,7 +27,7 @@ const genGlobals = external =>
     return acc
   }, {})
 
-function createViteConfig({ UMDGlobalName = '', type = 'vue', debug = false } = {}) {
+function createViteConfig({ UMDGlobalName = '', type = 'vue', debug = false, vueDemi = false } = {}) {
   if (!UMDGlobalName) throw new Error('UMDGlobalName is required')
 
   const external = genExternal(require(resolve(process.cwd(), 'package.json')))
@@ -97,6 +97,13 @@ function createViteConfig({ UMDGlobalName = '', type = 'vue', debug = false } = 
   }
 
   if (type === 'vue') conf.plugins.push(vue())
+
+  /** 集成 vue-demi */
+  if (vueDemi) {
+    conf.optimizeDeps = {
+      exclude: ['vue-demi']
+    }
+  }
 
   debug && console.log('🚦 -> file: vite-config-base.js -> line 83 -> createViteConfig -> conf', conf)
   return conf

@@ -159,6 +159,10 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "@vue/composition-api",
+      "allowedCategories": [ "published" ]
+    },
+    {
       "name": "@vue/eslint-config-prettier",
       "allowedCategories": [ "internal" ]
     },
@@ -465,6 +469,10 @@
     {
       "name": "vue-cli-plugin-style-resources-loader",
       "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "vue-demi",
+      "allowedCategories": [ "published" ]
     },
     {
       "name": "vue-lazyload",

@@ -3,8 +3,16 @@
  * * DoonceUniversalVueCompExample
  */
 
+import { ref, onMounted } from 'vue-demi'
+
+onMounted(() => {
+  console.log('mounted')
+})
+
+let isClicked = ref(false)
+
 const onClick = () => {
-  alert('DoonceUniversalVueCompExample')
+  isClicked.value = !isClicked.value
 }
 </script>
 
@@ -12,6 +20,7 @@ const onClick = () => {
   <button class="doonce-UniversalVueCompExample" type="button" @click="onClick" value="hello">
     UniversalVueCompExample
   </button>
+  isClicked:{{ isClicked }}
 </template>
 
 <style>
