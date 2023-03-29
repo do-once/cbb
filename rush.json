@@ -549,6 +549,12 @@
       "projectFolder": "libraries/latex-svg-dataurl",
       "reviewCategory": "published",
       "shouldPublish": true
+    },
+    {
+      "packageName": "@doonce/universal-vue-comp-example",
+      "projectFolder": "components/universal-vue-comp-example",
+      "reviewCategory": "published",
+      "shouldPublish": true
     }
   ]
 }
