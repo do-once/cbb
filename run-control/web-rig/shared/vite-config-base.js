@@ -66,7 +66,7 @@ function createViteConfig({ UMDGlobalName = '', type = 'vue', debug = false, vue
       "typesVersions": { # 优先根据这个查询
         "*": {
           "*": [
-            "./dist/*"
+            "./dist/index.d.ts"
           ]
         }
       }, 

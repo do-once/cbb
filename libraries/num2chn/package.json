@@ -33,7 +33,7 @@
   "typesVersions": {
     "*": {
       "*": [
-        "./dist/*"
+        "./dist/index.d.ts"
       ]
     }
   },
