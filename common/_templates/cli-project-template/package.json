@@ -45,7 +45,6 @@
     "build": "heft build --clean --verbose",
     "test": "heft test --clean --verbose"
   },
-  "dependencies": {},
   "devDependencies": {
     "@doonce/node-rig": "workspace:*",
     "@rushstack/eslint-config": "3.1.0",
