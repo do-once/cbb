@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/assets-example",
+      "comment": "add assets-example",
+      "type": "major"
+    }
+  ],
+  "packageName": "@doonce/assets-example"
+}

@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/universal-vue-comp-example",
+      "comment": "bump vue-demi version",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@doonce/universal-vue-comp-example"
+}
