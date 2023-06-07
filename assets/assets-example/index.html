@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DoonceAssetsExample Example</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script type="module">
+      import { createApp } from 'vue'
+      import DoonceAssetsExample from './src/index.ts'
+      import barSvg from './assets/bar.svg'
+      import arrowLeft from './assets/arrow-left.svg'
+
+      const app = {
+        template: `<div>
+          <h1>DoonceAssetsExample Example</h1>
+          <p>{{DoonceAssetsExample}}</p>
+          <ul>
+            <li>
+              {{barSvg}}
+              <img :src="barSvg"/>
+            </li>
+            <li>
+              {{barSvg}}
+              <img :src="arrowLeft"/>
+            </li>
+          </ul>
+
+          </div>`,
+        data() {
+          return {
+            DoonceAssetsExample,
+            barSvg,
+            arrowLeft
+          }
+        }
+      }
+
+      createApp(app).mount('#app')
+    </script>
+  </body>
+</html>

@@ -52,6 +52,18 @@
      *
      * The default value is "local".
      */
+    /**
+     * PNPM 存储的位置，这里有两个选择：
+     *
+     * - "local" - 默认使用临时文件夹 "common/temp/pnpm-store" 中的 "pnpm-store" 目录。
+     * - "global" - 使用 PNPM 的全局存储，其优点是可以在多个仓库中共享，缺点是构建的隔离性较差（例如，当两个仓库使用不同版本的 PNPM 时，会出现 bug 或兼容问题)。
+     *
+     * RUSH_PNPM_STORE_PATH 可以重写使用哪个目录来存储
+     *
+     * 在所有情况下，存储路径将会被环境变量 RUSH_PNPM_STORE_PATH 所覆盖。
+     *
+     * 默认值为 "local".
+     */
     // "pnpmStore": "local",
 
     /**
@@ -79,7 +91,18 @@
      * After modifying this field, it's recommended to run "rush update --full" so that the package manager
      * will recalculate all version selections.
      */
-    // "resolutionStrategy": "fast",
+    /**
+     * 该配置项用于指定安装期间的版本选择策略。
+     *
+     * 该功能需要 PNPM 的版本新于 3.1, 它对应了 PNPM 中 "--resolution-strategy"
+     * 的选项。可选的值为 "fast" 和 "fewer-dependencies". PNPM 的默认值为 "fast"
+     * 但是不兼容某些库，例如 DefinitelyTyped 中的 "@types" 库。Rush 默认采用了
+     * "fewer-dependencies", 这会导致 PNPM 在某个版本已经安装的情况下不再安装新版本。
+     * 这与 NPM 算法类似。
+     *
+     * 修改完该字段后，建议执行 "rush update --full" 来使得包管理器重新计算版本。
+     */
+    "resolutionStrategy": "fewer-dependencies",
 
     /**
      * If true, then `rush install` will report an error if manual modifications
@@ -553,6 +576,12 @@
     {
       "packageName": "@doonce/universal-vue-comp-example",
       "projectFolder": "components/universal-vue-comp-example",
+      "reviewCategory": "published",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@doonce/assets-example",
+      "projectFolder": "assets/assets-example",
       "reviewCategory": "published",
       "shouldPublish": true
     }

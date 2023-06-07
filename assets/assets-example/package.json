@@ -1,0 +1,57 @@
+{
+  "name": "@doonce/assets-example",
+  "version": "0.0.1",
+  "description": "A example for assets project",
+  "keywords": [
+    "library"
+  ],
+  "homepage": "https://github.com/do-once/cbb/tree/main/libraries/assets-example",
+  "bugs": {
+    "url": "https://github.com/do-once/cbb/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/do-once/cbb.git",
+    "directory": "libraries/assets-example"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "GuangHui",
+    "email": "bryanadamss@foxmail.com",
+    "url": "https://github.com/BryanAdamss"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist",
+    "assets"
+  ],
+  "scripts": {
+    "_phase:build": "heft build --clean --verbose",
+    "_phase:test": "heft test --no-build",
+    "build": "heft build --verbose --clean",
+    "dev": "vite",
+    "test": "heft test --clean --verbose"
+  },
+  "devDependencies": {
+    "@doonce/web-rig": "workspace:*",
+    "@rushstack/eslint-config": "3.1.0",
+    "@rushstack/heft": "0.48.0",
+    "@types/heft-jest": "1.0.3",
+    "vite": "3.1.8",
+    "vue": "3.2.45"
+  }
+}
