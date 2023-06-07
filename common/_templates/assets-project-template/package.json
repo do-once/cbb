@@ -1,7 +1,7 @@
 {
-  "name": "@doonce/assets-example",
+  "name": "{{packageName}}",
   "version": "0.0.1",
-  "description": "A example for assets project",
+  "description": "{{description}}",
   "keywords": [
     "assets"
   ],
@@ -12,7 +12,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/do-once/cbb.git",
-    "directory": "libraries/assets-example"
+    "directory": "assets/{{unscopedPackageName}}"
   },
   "license": "MIT",
   "author": {

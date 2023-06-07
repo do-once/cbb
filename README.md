@@ -69,6 +69,7 @@ Common building block(CBB) powered by [`RushStack`](https://rushstack.io/)
 - [x] add `tools` template
 - [x] add `components` template
 - [x] add `libraries` template
+- [x] add `assets` template
 - [x] use `vitest` replace `@heft/jest`
   - 2022-1113 switch back to `@heft/jest` in `libraries` project
 - [x] enable [`phase_build`](https://rushjs.io/zh-cn/pages/maintainer/phased_builds/)
