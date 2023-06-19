@@ -3,4 +3,4 @@
  * @description {{pascalPackageName}} 入口
  */
 
-export default class {{pascalPackageName}}{}
+export * from  './{{pascalPackageName}}'
