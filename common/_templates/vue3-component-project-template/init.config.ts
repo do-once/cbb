@@ -16,7 +16,8 @@ const config: IConfig = {
   plugins: [new TransformQuestion(), new TransformAnswers()],
   defaultProjectConfiguration: {
     reviewCategory: 'published',
-    shouldPublish: true
+    shouldPublish: true,
+    tags:['vue','vue3']
   }
 }
 

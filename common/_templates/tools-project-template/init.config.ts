@@ -16,7 +16,8 @@ const config: IConfig = {
   plugins: [new TransformQuestion(), new TransformAnswers()],
   defaultProjectConfiguration: {
     reviewCategory: 'published',
-    shouldPublish: false
+    shouldPublish: false,
+    tags:['tool']
   }
 }
 
