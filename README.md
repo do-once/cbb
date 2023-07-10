@@ -3,7 +3,7 @@
 Common building block(CBB) powered by [`RushStack`](https://rushstack.io/)
 
 
-## monorepo principle with RushStack
+## Monorepo principle with RushStack
 - minimizing "boilerplate" files. In other words, consolidating files and settings that would otherwise get copy+pasted into every single project folder in the monorepo. Boilerplate is a nuisance because it's difficult to keep in sync. When a fix is needed, if you have hundreds of projects, you would need to reapply the same fix hundreds of times.
   - 尽量减少 "模板 "文件。换句话说，合并那些在 `monorepo` 中需要复制粘贴到每个项目下的配置文件。让模板保持同步是个麻烦事。一旦需要变动，如果你有百个项目，你需要数百次重复操作。
 - principle of project isolation: Each project should build independently and should not become entangled with other projects (for example, by referencing files using relative paths like ../../other-project). This discipline facilitates Rush features like subset builds and incremental builds. It also makes it very easy to move Rush project folders around, to migrate projects between monorepos, and even to stop using Rush later if you change your mind. For this reason, we discourage practices such as putting a centralized .eslintrc.js file in the root of the monorepo and invoking ESLint globally for all projects.
