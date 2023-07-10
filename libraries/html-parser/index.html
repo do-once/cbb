@@ -12,18 +12,28 @@
     <script type="module">
       import { createApp } from 'vue'
       import { DoonceHtmlParser } from './src/index.ts'
-      const dhpsm = new DoonceHtmlParser({ debug: true })
+      const dhp = new DoonceHtmlParser({ debug: true })
 
       const app = {
         template: `<div>
           <h1>DoonceHtmlParser Example</h1>
-          </div>`,
+          </div>
+          input:
+          <br>
+          {{input}}
+          <hr>
+          output
+          <br>
+          {{output}}
+          `,
+        data() {
+          return {
+            output: [],
+            input: `<!-- 这是注释 --><input type="checkbox" class="container" id="app" disabled mash=""><span>我是内容</span> 我是另外的文本内容<img src="http://path.to.img.com/a/img/path.png"/></div>`
+          }
+        },
         mounted() {
-          // dhpsm.start(
-          //   `beforeText   <br> <br /> <br/>  <div id="3" style="color:red;font-size:12px;" src="http://adfjasdf.com/xxx.png">hello<!--这是一个注释--></div>`
-          // )
-
-          dhpsm.start(`<!--hello--><i href="h"jkl>`)
+          this.output = dhp.parse(this.input)
         }
       }
 
