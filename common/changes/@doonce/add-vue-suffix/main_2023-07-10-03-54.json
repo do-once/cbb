@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/add-vue-suffix",
+      "comment": "rename scope on doc",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@doonce/add-vue-suffix"
+}

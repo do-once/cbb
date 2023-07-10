@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/drawing-board",
+      "comment": "rename scope on doc",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@doonce/drawing-board"
+}
