@@ -43,7 +43,7 @@
 ```
 
 ```javascript
-import DrawingBoard from '@bryanadamss/drawing-board'
+import DrawingBoard from '@doonce/drawing-board'
 
 const options = {
   size: [400, 300],

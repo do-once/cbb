@@ -86,8 +86,8 @@ addVueSuffix({
 ## NPM
 
 - [vue-cli-plugin-auto-alias](https://www.npmjs.com/package/vue-cli-plugin-auto-alias)
-- [@bryanadamss/drawing-board](https://www.npmjs.com/package/@bryanadamss/drawing-board)
-- [@bryanadamss/num2chn](https://www.npmjs.com/package/@bryanadamss/num2chn)
+- [@doonce/drawing-board](https://www.npmjs.com/package/@doonce/drawing-board)
+- [@doonce/num2chn](https://www.npmjs.com/package/@doonce/num2chn)
 - [ant-color-converter](https://www.npmjs.com/package/ant-color-converter)
 
 ## Show your support
