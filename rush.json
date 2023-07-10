@@ -584,6 +584,13 @@
       "projectFolder": "assets/assets-example",
       "reviewCategory": "published",
       "shouldPublish": true
+    },
+    {
+      "packageName": "@doonce/html-parser",
+      "projectFolder": "libraries/html-parser",
+      "reviewCategory": "published",
+      "shouldPublish": true,
+      "tags": ["lib"]
     }
   ]
 }

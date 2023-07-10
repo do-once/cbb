@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DoonceHtmlParser Example</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script type="module">
+      import { createApp } from 'vue'
+      import { DoonceHtmlParser } from './src/index.ts'
+      const dhpsm = new DoonceHtmlParser({ debug: true })
+
+      const app = {
+        template: `<div>
+          <h1>DoonceHtmlParser Example</h1>
+          </div>`,
+        mounted() {
+          // dhpsm.start(
+          //   `beforeText   <br> <br /> <br/>  <div id="3" style="color:red;font-size:12px;" src="http://adfjasdf.com/xxx.png">hello<!--这是一个注释--></div>`
+          // )
+
+          dhpsm.start(`<!--hello--><i href="h"jkl>`)
+        }
+      }
+
+      createApp(app).mount('#app')
+    </script>
+  </body>
+</html>
