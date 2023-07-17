@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/num2chn",
+      "comment": "rush build",
+      "type": "major"
+    }
+  ],
+  "packageName": "@doonce/num2chn"
+}

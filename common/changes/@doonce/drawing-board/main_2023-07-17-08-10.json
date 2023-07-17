@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/drawing-board",
+      "comment": "rush build",
+      "type": "major"
+    }
+  ],
+  "packageName": "@doonce/drawing-board"
+}

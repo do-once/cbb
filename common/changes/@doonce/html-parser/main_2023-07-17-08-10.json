@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/html-parser",
+      "comment": "rush build",
+      "type": "major"
+    }
+  ],
+  "packageName": "@doonce/html-parser"
+}
