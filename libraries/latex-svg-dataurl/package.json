@@ -6,7 +6,8 @@
     "library",
     "latex",
     "mathjax",
-    "svg"
+    "svg",
+    "dataurl"
   ],
   "homepage": "https://github.com/do-once/cbb/tree/main/libraries/latex-svg-dataurl",
   "bugs": {
