@@ -182,7 +182,7 @@
               "text": "export default class DoonceNum2chn "
             }
           ],
-          "fileUrlPath": "src/index.ts",
+          "fileUrlPath": "src/Num2Chn.ts",
           "releaseTag": "Public",
           "name": "DoonceNum2chn",
           "preserveMemberOrder": false,
@@ -199,7 +199,7 @@
                 {
                   "kind": "Reference",
                   "text": "Options",
-                  "canonicalReference": "@doonce/num2chn!Options:interface"
+                  "canonicalReference": "@doonce/num2chn!~Options:interface"
                 },
                 {
                   "kind": "Content",
@@ -694,28 +694,119 @@
           "implementsTokenRanges": []
         },
         {
-          "kind": "Interface",
-          "canonicalReference": "@doonce/num2chn!Options:interface",
-          "docComment": "/**\n * @author GuangHui  @description DoonceNum2chn 入口\n */\n",
+          "kind": "Function",
+          "canonicalReference": "@doonce/num2chn!getNumParts:function(1)",
+          "docComment": "/**\n * 获取浮点数各组成部分\n *\n * @export\n *\n * @param n - 待解析数字\n *\n * @returns {(NumberParts | string)} 各组成部分\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export interface Options "
+              "text": "export declare function getNumParts(n: "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "NumberParts",
+              "canonicalReference": "@doonce/num2chn!NumberParts:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
             }
           ],
-          "fileUrlPath": "src/index.ts",
+          "fileUrlPath": "src/utils.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "Options",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "n",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "getNumParts"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@doonce/num2chn!isSafeNumber:function(1)",
+          "docComment": "/**\n * 判断数字是否在安全范围内\n *\n * @export\n *\n * @param n - 数字\n *\n * @returns {boolean} 是否是安全数字\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function isSafeNumber(n: "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "src/utils.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "n",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isSafeNumber"
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@doonce/num2chn!NumberParts:interface",
+          "docComment": "/**\n * @author GuangHui  @description description\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface NumberParts "
+            }
+          ],
+          "fileUrlPath": "src/utils.ts",
+          "releaseTag": "Public",
+          "name": "NumberParts",
           "preserveMemberOrder": false,
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@doonce/num2chn!Options#dotChar:member",
+              "canonicalReference": "@doonce/num2chn!NumberParts#decimal:member",
               "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "dotChar?: "
+                  "text": "decimal: "
                 },
                 {
                   "kind": "Content",
@@ -727,9 +818,9 @@
                 }
               ],
               "isReadonly": false,
-              "isOptional": true,
+              "isOptional": false,
               "releaseTag": "Public",
-              "name": "dotChar",
+              "name": "decimal",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -737,66 +828,12 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@doonce/num2chn!Options#numChars:member",
+              "canonicalReference": "@doonce/num2chn!NumberParts#dot:member",
               "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "numChars?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string[]"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "numChars",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@doonce/num2chn!Options#sectionUnitChars:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "sectionUnitChars?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string[]"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "sectionUnitChars",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@doonce/num2chn!Options#signChar:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "signChar?: "
+                  "text": "dot: "
                 },
                 {
                   "kind": "Content",
@@ -808,9 +845,9 @@
                 }
               ],
               "isReadonly": false,
-              "isOptional": true,
+              "isOptional": false,
               "releaseTag": "Public",
-              "name": "signChar",
+              "name": "dot",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -818,16 +855,16 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@doonce/num2chn!Options#unitChars:member",
+              "canonicalReference": "@doonce/num2chn!NumberParts#interger:member",
               "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "unitChars?: "
+                  "text": "interger: "
                 },
                 {
                   "kind": "Content",
-                  "text": "string[]"
+                  "text": "string"
                 },
                 {
                   "kind": "Content",
@@ -835,9 +872,36 @@
                 }
               ],
               "isReadonly": false,
-              "isOptional": true,
+              "isOptional": false,
               "releaseTag": "Public",
-              "name": "unitChars",
+              "name": "interger",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@doonce/num2chn!NumberParts#sign:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "sign: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "sign",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -845,6 +909,99 @@
             }
           ],
           "extendsTokenRanges": []
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@doonce/num2chn!padStr:function(1)",
+          "docComment": "/**\n * 填充字符串\n *\n * @export\n *\n * @param str - 原始字符串\n *\n * @param padNum - 填充数量\n *\n * @param padChar - 填充字符\n *\n * @param before - 前填充\n *\n * @returns 填充后的字符串\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function padStr(str: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", padNum: "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": ", padChar: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", before?: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "src/utils.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 9,
+            "endIndex": 10
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "str",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "padNum",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "padChar",
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "before",
+              "parameterTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "padStr"
         }
       ]
     }

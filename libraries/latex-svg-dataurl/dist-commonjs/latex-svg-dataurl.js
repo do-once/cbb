@@ -6,24 +6,6 @@
 Object.defineProperty(exports, '__esModule', { value: true })
 exports.transformSvgEl2DataUrl = exports.transformLatexToSVGDataUrl = void 0
 /**
- * querySelector 包装
- *
- * @date 2023-03-28 17:33:05
- * @param elName
- * @returns {HTMLElement|null} 查询到的元素
- */
-function $(elName) {
-  return document.querySelector(elName)
-}
-/**
- * 将 latex 公式转为 svg dataurl
- *
- * @date 2023-03-28 17:33:45
- * @export
- * @param latex
- * @returns {Promise<string>} svg dataurl
- */
-/**
  * 将 latex 公式转为 svg dataurl
  *
  * @date 2023-03-28 19:27:07
@@ -31,9 +13,14 @@ function $(elName) {
  * @param latex latex 公式字符串
  * @param retryInterval 重试间隔 默认500ms
  * @param retryMaxCount 重试最大次数 默认10
- * @returns {Promise<string>} svg dataurl
+ * @returns {Promise<TransformLatexToSVGDataUrlRet>} svg dataurl
  */
-function transformLatexToSVGDataUrl(latex, retryInterval = 500, retryMaxCount = 10) {
+function transformLatexToSVGDataUrl({
+  latex,
+  retryInterval = 500,
+  retryMaxCount = 10,
+  outputType = 'dataurl'
+} = {}) {
   if (!window.MathJax) throw new Error('window.MathJax can not access')
   const renderContainer = createRenderContainer()
   const scriptElWithLatex = createScriptElWithLatex(latex)
@@ -56,7 +43,16 @@ function transformLatexToSVGDataUrl(latex, retryInterval = 500, retryMaxCount = 
           const frame = document.querySelector(mathjaxFrameId)
           if (!frame) throw new Error(`${mathjaxFrameId} element dont exist`)
           const svg = cloneGlobalSvgDefsIntoSvg(frame)
-          resolve(transformSvgEl2DataUrl(svg))
+          if (outputType === 'dataurl') {
+            resolve(transformSvgEl2DataUrl(svg))
+          } else if (outputType === 'svgstring') {
+            resolve(new XMLSerializer().serializeToString(svg))
+          } else {
+            resolve({
+              dataUrl: transformSvgEl2DataUrl(svg),
+              svgStr: new XMLSerializer().serializeToString(svg)
+            })
+          }
         } catch (error) {
           console.log('error :>> ', error)
           retryCount++
@@ -104,7 +100,7 @@ function cloneGlobalSvgDefsIntoSvg(mathjaxFrame) {
     })
     .filter(href => !!href)
   /** 根据 href 在mathjax svg def中进行查找.若有,则拷贝到新建的 svgDef 中 */
-  var mathJaxGlobalDef = $('#MathJax_SVG_glyphs')
+  var mathJaxGlobalDef = document.querySelector('#MathJax_SVG_glyphs')
   const svgDef = document.createElement('def')
   svgDef.id = `CanvasLatexSvgDef_${mathjaxFrame.id}`
   useElHrefs.forEach(href => {

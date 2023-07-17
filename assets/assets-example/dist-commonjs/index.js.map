@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../src/index.ts"],"names":[],"mappings":";AAAA;;;GAGG;;AAEH,kBAAe,CAAC,gBAAgB,EAAE,SAAS,CAAC,CAAA","sourcesContent":["/**\n * @author GuangHui\n * @description DoonceAssetsExample 入口\n */\n\nexport default ['arrow-left.svg', 'bar.svg']\n"]}

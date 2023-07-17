@@ -1,1 +1,1 @@
-{"version":3,"file":"file-convert.d.ts","sourceRoot":"","sources":["../../src/libs/file-convert.ts"],"names":[],"mappings":"AAAA;;;GAGG;AACH,OAAO,EAAE,gBAAgB,EAAE,MAAM,eAAe,CAAA;AAIhD;;;;;;;GAOG;AACH,wBAAgB,SAAS,CACvB,IAAI,EAAE,gBAAgB,EACtB,IAAI,EAAE,MAAM,GACX,IAAI,GAAG,gBAAgB,CASzB"}
+{"version":3,"file":"file-convert.d.ts","sourceRoot":"","sources":["../../src/libs/file-convert.ts"],"names":[],"mappings":"AAAA;;;GAGG;AACH,OAAO,EAAE,gBAAgB,EAAE,MAAM,eAAe,CAAA;AAIhD;;;;;;;GAOG;AACH,wBAAgB,SAAS,CAAC,IAAI,EAAE,gBAAgB,EAAE,IAAI,EAAE,MAAM,GAAG,IAAI,GAAG,gBAAgB,CASvF"}

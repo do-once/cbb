@@ -15,8 +15,7 @@ export const getImageFromURL = (imgURL) => new Promise((resolve, reject) => {
     image.onerror = reject;
     // 确保从缓存加载图片时，也能触发load事件
     if (image.complete || image.complete === undefined) {
-        image.src =
-            'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+        image.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
         image.src = imgURL;
     }
 });

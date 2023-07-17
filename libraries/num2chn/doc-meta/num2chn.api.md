@@ -6,6 +6,7 @@
 
 // @public (undocumented)
 class DoonceNum2chn {
+    // Warning: (ae-forgotten-export) The symbol "Options" needs to be exported by the entry point index.d.ts
     constructor(options?: Options);
     getDecimalPartChn(n: number | string): string;
     getDotPartChn(dotPart: string): string;
@@ -21,18 +22,25 @@ class DoonceNum2chn {
 export default DoonceNum2chn;
 
 // @public
-export interface Options {
+export function getNumParts(n: number): NumberParts;
+
+// @public
+export function isSafeNumber(n: number): boolean;
+
+// @public
+export interface NumberParts {
     // (undocumented)
-    dotChar?: string;
+    decimal: string;
     // (undocumented)
-    numChars?: string[];
+    dot: string;
     // (undocumented)
-    sectionUnitChars?: string[];
+    interger: string;
     // (undocumented)
-    signChar?: string;
-    // (undocumented)
-    unitChars?: string[];
+    sign: string;
 }
+
+// @public
+export function padStr(str: string, padNum: number, padChar: string, before?: boolean): string;
 
 // (No @packageDocumentation comment for this package)
 
