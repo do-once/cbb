@@ -8,17 +8,6 @@ declare global {
 }
 
 /**
- * querySelector 包装
- *
- * @date 2023-03-28 17:33:05
- * @param elName
- * @returns {HTMLElement|null} 查询到的元素
- */
-function $(elName: string): HTMLElement | null {
-  return document.querySelector(elName)
-}
-
-/**
  * 将 latex 公式转为 svg dataurl
  *
  * @date 2023-03-28 19:27:07
@@ -117,7 +106,7 @@ function cloneGlobalSvgDefsIntoSvg(mathjaxFrame: Element): SVGElement {
     .filter(href => !!href)
 
   /** 根据 href 在mathjax svg def中进行查找.若有,则拷贝到新建的 svgDef 中 */
-  var mathJaxGlobalDef = $('#MathJax_SVG_glyphs')
+  var mathJaxGlobalDef = document.querySelector('#MathJax_SVG_glyphs')
 
   const svgDef = document.createElement('def')
   svgDef.id = `CanvasLatexSvgDef_${mathjaxFrame.id}`
