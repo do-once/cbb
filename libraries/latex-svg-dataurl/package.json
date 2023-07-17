@@ -1,6 +1,6 @@
 {
   "name": "@doonce/latex-svg-dataurl",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Transform latex string to svg dataurl",
   "keywords": [
     "library",

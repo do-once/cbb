@@ -2,6 +2,18 @@
   "name": "@doonce/latex-svg-dataurl",
   "entries": [
     {
+      "version": "3.0.0",
+      "tag": "@doonce/latex-svg-dataurl_v3.0.0",
+      "date": "Mon, 17 Jul 2023 07:42:47 GMT",
+      "comments": {
+        "major": [
+          {
+            "comment": "support ouput svg string and update README"
+          }
+        ]
+      }
+    },
+    {
       "version": "2.0.0",
       "tag": "@doonce/latex-svg-dataurl_v2.0.0",
       "date": "Mon, 17 Jul 2023 03:39:09 GMT",
