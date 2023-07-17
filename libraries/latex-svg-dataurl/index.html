@@ -23,7 +23,7 @@
       const app = {
         template: `<div>
           <h1>DoonceLatexSvgDataurl Example</h1>
-            <h2>latex:<v-pre>{{latex}}</v-pre></h2>
+            <h2>latex:{{latex}}</h2>
       
             <h2>output:</h2>
             <h3>dataUrl:</h3>
@@ -31,7 +31,7 @@
             <h3>svgStr:</h3>
             {{svgStr}}
             <hr/>
-            <h2>latex2:<v-pre>{{latex2}}</v-pre></h2>
+            <h2>latex2:{{latex2}}</h2>
             <h2>output:</h2>
             <h3>dataUrl:</h3>
             {{dataUrl2}}
@@ -42,6 +42,12 @@
             <hr/>
             <h2>render in canvas</h2>
             <canvas id="canvas"></canvas>
+            <hr/>
+            <h2>用图片展示 latex 转换的 dataUrl</h2>
+            <img :src="dataUrl"/>
+            <hr/>
+            <button type="button" @click="transformSvgStrToSvgEl">将 latex 输出的 svgStr 转化为 svg 节点</button>
+            <div id="example-node"></div>
           </div>`,
         data() {
           return {
@@ -55,6 +61,12 @@
           }
         },
         methods: {
+          transformSvgStrToSvgEl() {
+            const dp = new DOMParser()
+
+            const parsedEl = dp.parseFromString(this.svgStr, 'image/svg+xml')
+            document.querySelector('#example-node').appendChild(parsedEl.rootElement)
+          },
           genDataUrl2() {
             transformLatexToSVGDataUrl({ latex: this.latex2, outputType: 'both' }).then(
               ({ dataUrl: dataUrl2, svgStr: svgStr2 }) => {
