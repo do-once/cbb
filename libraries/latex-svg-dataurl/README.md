@@ -1,6 +1,6 @@
 # @doonce/latex-svg-dataurl
 
-> 输入 latex 字符串,输出 svg dataurl ,此 dataurl 可供 canvas 消费
+> This is a library that converts LaTeX strings to SVG dataurl or SVG strings, dataurl can be used with canvas.输入 latex 字符串,输出 svg dataurl或 svg string , dataurl 可供 canvas 消费
 
 ```bash
 .
@@ -35,3 +35,41 @@
 └── tsconfig.json
 └── vite.config.js                  # 2022-1113构建、测试交给heft，vite仅做开发服务器使用
 ```
+
+## Installation
+
+```bash
+npm i @doonce/latex-svg-dataurl
+```
+
+## Usage
+- Since this package uses `mathjax@2.7` to render `LaTeX` to `SVG`, you need to reference `mathjax` and configure it to output `TeX-AMS-MML_SVG`. Also, make sure that `window.MathJax` is accessible.
+  - For example`<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_SVG"></script>`
+
+```typescript
+/** params */
+export type TransformLatexToSVGDataUrlParams = {
+  latex: string /** latex输入字符串 */
+  retryInterval?: number /** 渲染失败的重试间隔,默认500ms */
+  retryMaxCount?: number /** 渲染重试次数,默认10次 */
+  outputType: 'dataUrl' | 'svgStr' | 'both' /** 输出类型,dataurl svgel 转换的string 或 都输出;默认 dataurl*/
+}
+
+/** return */
+export type TransformLatexToSVGDataUrlRet =
+  | string
+  | {
+      dataUrl: string
+      svgStr: string
+    }
+
+
+import { transformLatexToSVGDataUrl } from '@doonce/latex-svg-dataurl'
+
+const { dataUrl,svgStr } = await transformLatexToSVGDataUrl({latex:'1+\\int_x^y e^x dx + \\ldots',outputType:'both'})
+```
+
+- svgStr is use `new XMLSerializer().serializeToString(svg)` to generate
+  - If you need to deserialize the svgStr into a DOM node, please use `var ret = new DOMParser().parseFromString(svgStr, 'image/svg+xml')`. Then, you can insert `ret.rootElement` into your desired node.
+  - 如果你需要将 svgStr 反序列化为dom 节点,请使用 ` var ret = new DomParser().parserFromString(svgStr,'image/svg+xml')`,然后将`ret.rootElement`插入到节点即可
+- dataUrl is generate with `'data:image/svg+xml; charset=utf8, ' + encodeURIComponent(svgStr)`

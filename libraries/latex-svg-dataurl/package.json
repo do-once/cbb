@@ -49,9 +49,6 @@
     "dev": "vite",
     "test": "heft test --clean --verbose"
   },
-  "dependencies": {
-    "katex": "0.16.4"
-  },
   "devDependencies": {
     "@doonce/web-rig": "workspace:*",
     "@rushstack/eslint-config": "3.1.0",

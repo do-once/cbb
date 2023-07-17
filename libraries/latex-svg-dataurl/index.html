@@ -23,13 +23,21 @@
       const app = {
         template: `<div>
           <h1>DoonceLatexSvgDataurl Example</h1>
-            latex:<v-pre>{{latex}}</v-pre>
+            <h2>latex:<v-pre>{{latex}}</v-pre></h2>
+      
+            <h2>output:</h2>
+            <h3>dataUrl:</h3>
+            {{dataUrl}}
+            <h3>svgStr:</h3>
+            {{svgStr}}
             <hr/>
-            dataUrl:{{dataUrl}}
+            <h2>latex2:<v-pre>{{latex2}}</v-pre></h2>
+            <h2>output:</h2>
+            <h3>dataUrl:</h3>
+            {{dataUrl2}}
+            <h3>svgStr:</h3>
+            {{svgStr2}}
             <hr/>
-            latex2:{{latex2}}
-            <hr/>
-            dataUrl2:{{dataUrl2}}
             <button @click="genDataUrl2">生成 dataurl2 </button>
             <hr/>
             <h2>render in canvas</h2>
@@ -41,32 +49,42 @@
             latex2: '1+\\int_x^y e^x dyyyyyyyyy + \\ldots',
             dataUrl: '',
             dataUrl2: '',
+            svgStr: '',
+            svgStr2: '',
             canvas: null
           }
         },
         methods: {
           genDataUrl2() {
-            transformLatexToSVGDataUrl(this.latex2).then(dataUrl2 => {
-              console.log('dataUrl2 :>> ', dataUrl2)
-              this.dataUrl2 = dataUrl2
+            transformLatexToSVGDataUrl({ latex: this.latex2, outputType: 'both' }).then(
+              ({ dataUrl: dataUrl2, svgStr: svgStr2 }) => {
+                console.log('svgStr :>> ', svgStr)
+                console.log('dataUrl2 :>> ', dataUrl2)
+                this.dataUrl2 = dataUrl2
+                this.svgStr2 = svgStr2
 
-              fabric.Image.fromURL(dataUrl2, img => {
-                this.canvas.add(img)
-              })
-            })
+                fabric.Image.fromURL(dataUrl2, img => {
+                  this.canvas.add(img)
+                })
+              }
+            )
           }
         },
         mounted() {
           this.canvas = new fabric.Canvas('canvas')
 
-          transformLatexToSVGDataUrl(this.latex).then(dataUrl => {
-            console.log('dataUrl :>> ', dataUrl)
-            this.dataUrl = dataUrl
+          transformLatexToSVGDataUrl({ latex: this.latex, outputType: 'both' }).then(
+            ({ svgStr, dataUrl }) => {
+              console.log('svgStr :>> ', svgStr)
+              console.log('dataUrl :>> ', dataUrl)
+              this.dataUrl = dataUrl
+              this.svgStr = svgStr
 
-            fabric.Image.fromURL(dataUrl, img => {
-              this.canvas.add(img)
-            })
-          })
+              fabric.Image.fromURL(dataUrl, img => {
+                this.canvas.add(img)
+              })
+            }
+          )
         }
       }
 

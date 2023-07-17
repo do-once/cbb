@@ -7,6 +7,20 @@ declare global {
   var MathJax: any
 }
 
+export type TransformLatexToSVGDataUrlParams = {
+  latex: string /** latex输入字符串 */
+  retryInterval?: number /** 渲染失败的重试间隔,默认500ms */
+  retryMaxCount?: number /** 渲染重试次数,默认10次 */
+  outputType: 'dataUrl' | 'svgStr' | 'both' /** 输出类型,dataurl svgel 转换的string 或 都输出;默认 dataurl*/
+}
+
+export type TransformLatexToSVGDataUrlRet =
+  | string
+  | {
+      dataUrl: string
+      svgStr: string
+    }
+
 /**
  * 将 latex 公式转为 svg dataurl
  *
@@ -15,13 +29,16 @@ declare global {
  * @param latex latex 公式字符串
  * @param retryInterval 重试间隔 默认500ms
  * @param retryMaxCount 重试最大次数 默认10
- * @returns {Promise<string>} svg dataurl
+ * @returns {Promise<TransformLatexToSVGDataUrlRet>} svg dataurl
  */
 export function transformLatexToSVGDataUrl(
-  latex: string,
-  retryInterval = 500,
-  retryMaxCount = 10
-): Promise<string> {
+  {
+    latex,
+    retryInterval = 500,
+    retryMaxCount = 10,
+    outputType = 'dataurl'
+  } = {} as TransformLatexToSVGDataUrlParams
+): Promise<TransformLatexToSVGDataUrlRet> {
   if (!window.MathJax) throw new Error('window.MathJax can not access')
 
   const renderContainer = createRenderContainer()
@@ -53,7 +70,16 @@ export function transformLatexToSVGDataUrl(
 
           const svg = cloneGlobalSvgDefsIntoSvg(frame)
 
-          resolve(transformSvgEl2DataUrl(svg))
+          if (outputType === 'dataurl') {
+            resolve(transformSvgEl2DataUrl(svg))
+          } else if (outputType === 'svgstring') {
+            resolve(new XMLSerializer().serializeToString(svg))
+          } else {
+            resolve({
+              dataUrl: transformSvgEl2DataUrl(svg),
+              svgStr: new XMLSerializer().serializeToString(svg)
+            })
+          }
         } catch (error) {
           console.log('error :>> ', error)
           retryCount++
