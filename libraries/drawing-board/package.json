@@ -1,6 +1,6 @@
 {
   "name": "@doonce/drawing-board",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Javascript drawing board based on canvas",
   "keywords": [
     "library",

@@ -1,0 +1,17 @@
+{
+  "name": "@doonce/universal-vue-comp-example",
+  "entries": [
+    {
+      "version": "0.0.2",
+      "tag": "@doonce/universal-vue-comp-example_v0.0.2",
+      "date": "Mon, 17 Jul 2023 03:39:09 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "bump vue-demi version"
+          }
+        ]
+      }
+    }
+  ]
+}

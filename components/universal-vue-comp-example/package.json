@@ -1,6 +1,6 @@
 {
   "name": "@doonce/universal-vue-comp-example",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "universal-vue-comp-example work on vue2 and vue3",
   "keywords": [
     "vue3",
