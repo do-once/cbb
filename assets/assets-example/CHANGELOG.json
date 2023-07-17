@@ -2,6 +2,18 @@
   "name": "@doonce/assets-example",
   "entries": [
     {
+      "version": "2.0.0",
+      "tag": "@doonce/assets-example_v2.0.0",
+      "date": "Mon, 17 Jul 2023 08:13:32 GMT",
+      "comments": {
+        "major": [
+          {
+            "comment": "rush build"
+          }
+        ]
+      }
+    },
+    {
       "version": "1.0.0",
       "tag": "@doonce/assets-example_v1.0.0",
       "date": "Mon, 17 Jul 2023 03:39:09 GMT",
