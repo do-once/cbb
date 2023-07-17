@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/latex-svg-dataurl",
+      "comment": "update keywords",
+      "type": "major"
+    }
+  ],
+  "packageName": "@doonce/latex-svg-dataurl"
+}
