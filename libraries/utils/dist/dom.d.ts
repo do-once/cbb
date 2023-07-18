@@ -3,6 +3,18 @@
  * @description dom 操作相关
  */
 /**
+ * 测量图片尺寸
+ *
+ * @date 2023-07-18 00:17:21
+ * @export
+ * @param src 图片链接
+ * @returns {{width:number,height:number}} 款片宽高尺寸对象
+ */
+export declare function measureImgSize(src: string): Promise<{
+    width: number;
+    height: number;
+}>;
+/**
  * 添加样式类
  * @param {Element} el 元素
  * @param {String} className 样式名

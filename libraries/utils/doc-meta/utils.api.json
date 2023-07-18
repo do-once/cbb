@@ -1706,6 +1706,32 @@
           "name": "flattenDeep"
         },
         {
+          "kind": "TypeAlias",
+          "canonicalReference": "@doonce/utils!FontDesc:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type FontDesc = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    fontSize: number | string;\n    fontFamily: string;\n    lineHeight?: number | string;\n    fontStyle?: string;\n    fontWeight?: string | number;\n    fontVariant?: string;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "src/font.ts",
+          "releaseTag": "Public",
+          "name": "FontDesc",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
           "kind": "Function",
           "canonicalReference": "@doonce/utils!genSvgText:function(1)",
           "docComment": "/**\n * 生成svg文本\n *\n * @export\n *\n * @param  - {*} [{ width = 300, height = 150, fontSize = 14, fontFamily = 'system-ui, sans-serif', color = '#a2a9b6', opacity = 1, x = 50, y = 50, content = 'svg测试文本', transform = 'rotate(0,0,0)' }={}]  @return {String} svg字符串（未转义）\n */\n",
@@ -1749,6 +1775,52 @@
             }
           ],
           "name": "genSvgText"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@doonce/utils!getCssFontDesc:function(1)",
+          "docComment": "/**\n * 获取cssFont字体描述字符串\n *\n * 参考https://developer.mozilla.org/zh-CN/docs/Web/CSS/font 必须包含以下值： <font-size><font-family> 可以选择性包含以下值： <font-style><font-variant><font-weight><line-height> font-style, font-variant 和 font-weight 必须在 font-size 之前 在 CSS 2.1 中 font-variant 只可以是 normal 和 small-caps line-height 必须跟在 font-size 后面，由 \"/\" 分隔，例如 \"16px/3\" font-family 必须最后指定\n *\n * @param fontDescObj - 字体描述对象\n *\n * @returns {string} 字体描述字符串\n *\n * @example\n *\n * cssFontStr -> \"italic small-caps bold 16px/20px SimSun  @date 2023-07-18 14:17:02  @export\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function getCssFontDesc({ fontSize, fontFamily, fontStyle, fontWeight, lineHeight, fontVariant }: "
+            },
+            {
+              "kind": "Reference",
+              "text": "FontDesc",
+              "canonicalReference": "@doonce/utils!FontDesc:type"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "src/font.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "{ fontSize, fontFamily, fontStyle, fontWeight, lineHeight, fontVariant }",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "getCssFontDesc"
         },
         {
           "kind": "Function",
@@ -2976,6 +3048,103 @@
         },
         {
           "kind": "Function",
+          "canonicalReference": "@doonce/utils!loadFont:function(1)",
+          "docComment": "/**\n * 加载字体 参考:https://developer.mozilla.org/en-US/docs/Web/API/FontFace/FontFace\n *\n * @date 2023-07-17 23:33:33  @export\n *\n * @param family - 字体名\n *\n * @param source - 字体来源,格式为`url(\"path/to/font\")`\n *\n * @param descriptors - 字体描述对象\n *\n * @returns {FontFace} 需要加载的 FontFace 对象\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function loadFont(family: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", source: "
+            },
+            {
+              "kind": "Content",
+              "text": "string | "
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryData",
+              "canonicalReference": "!BinaryData:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", descriptors?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "FontFaceDescriptors",
+              "canonicalReference": "!FontFaceDescriptors:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "FontFace",
+              "canonicalReference": "!FontFace:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "src/font.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 12
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "family",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "source",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "descriptors",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "loadFont"
+        },
+        {
+          "kind": "Function",
           "canonicalReference": "@doonce/utils!loadJs:function(1)",
           "docComment": "/**\n * 加载js\n *\n * @export\n *\n * @param src - script地址\n *\n * @param options - 额外options  @return {Promise} promise实例\n */\n",
           "excerptTokens": [
@@ -3246,6 +3415,118 @@
             }
           ],
           "name": "matches"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@doonce/utils!measureImgSize:function(1)",
+          "docComment": "/**\n * 测量图片尺寸\n *\n * @date 2023-07-18 00:17:21  @export\n *\n * @param src - 图片链接\n *\n * @returns {{width:number,height:number}} 款片宽高尺寸对象\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function measureImgSize(src: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<{\n    width: number;\n    height: number;\n}>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "src/dom.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "src",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "measureImgSize"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@doonce/utils!measureTextMetrics:function(1)",
+          "docComment": "/**\n * 测量字符宽度\n *\n * @date 2023-07-17 23:51:16  @export\n *\n * @param text - 待测量字符\n *\n * @param cssFontDescStr - 和 cssFont 规范一样的字体描述字符串,参考https://developer.mozilla.org/zh-CN/docs/Web/CSS/font 必须包含以下值： <font-size><font-family> 可以选择性包含以下值： <font-style><font-variant><font-weight><line-height> font-style, font-variant 和 font-weight 必须在 font-size 之前 在 CSS 2.1 中 font-variant 只可以是 normal 和 small-caps line-height 必须跟在 font-size 后面，由 \"/\" 分隔，例如 \"16px/3\" font-family 必须最后指定\n *\n * @returns {TextMetrics} canvas文本尺寸对象\n *\n * @example\n *\n * cssFontStr -> \"italic normal bold 16px/20px SimSun\"\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function measureTextMetrics(text: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", cssFontDescStr: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "TextMetrics",
+              "canonicalReference": "!TextMetrics:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "src/font.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "text",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "cssFontDescStr",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "measureTextMetrics"
         },
         {
           "kind": "Function",

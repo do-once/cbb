@@ -1,0 +1,1 @@
+{"version":3,"file":"DoonceLayoutEngine.js","sourceRoot":"","sources":["../src/DoonceLayoutEngine.ts"],"names":[],"mappings":"AAAA;;;GAGG;AAEH,MAAM,OAAO,kBAAkB;CAAG","sourcesContent":["/**\n * @author GuangHui\n * @description DoonceLayoutEngine 主体程序\n */\n\nexport class DoonceLayoutEngine {}\n"]}

@@ -7,6 +7,27 @@ import { str2kebab } from './tools'
 import { isEmpty } from './type-judge'
 
 /**
+ * 测量图片尺寸
+ *
+ * @date 2023-07-18 00:17:21
+ * @export
+ * @param src 图片链接
+ * @returns {{width:number,height:number}} 款片宽高尺寸对象
+ */
+export function measureImgSize(src: string): Promise<{ width: number; height: number }> {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.src = src
+
+    img.onload = () => {
+      resolve({ width: img.width, height: img.height })
+    }
+
+    img.onerror = reject
+  })
+}
+
+/**
  * 添加样式类
  * @param {Element} el 元素
  * @param {String} className 样式名

@@ -22,9 +22,29 @@ exports.loadJs =
   exports.hasClass =
   exports.removeClass =
   exports.addClass =
+  exports.measureImgSize =
     void 0
 const tools_1 = require('./tools')
 const type_judge_1 = require('./type-judge')
+/**
+ * 测量图片尺寸
+ *
+ * @date 2023-07-18 00:17:21
+ * @export
+ * @param src 图片链接
+ * @returns {{width:number,height:number}} 款片宽高尺寸对象
+ */
+function measureImgSize(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.src = src
+    img.onload = () => {
+      resolve({ width: img.width, height: img.height })
+    }
+    img.onerror = reject
+  })
+}
+exports.measureImgSize = measureImgSize
 /**
  * 添加样式类
  * @param {Element} el 元素

@@ -18,4 +18,5 @@ tslib_1.__exportStar(require('./select'), exports)
 tslib_1.__exportStar(require('./tools'), exports)
 tslib_1.__exportStar(require('./type-judge'), exports)
 tslib_1.__exportStar(require('./url'), exports)
+tslib_1.__exportStar(require('./font'), exports)
 //# sourceMappingURL=index.js.map

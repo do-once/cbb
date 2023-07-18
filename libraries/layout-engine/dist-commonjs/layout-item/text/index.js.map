@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/layout-item/text/index.ts"],"names":[],"mappings":";AAAA;;;GAGG;;;AAEH,iDAAsB;AACtB,oDAAyB;AACzB,2DAAgC;AAChC,sDAA2B","sourcesContent":["/**\n * @author GuangHui\n * @description 文本入口\n */\n\nexport * from './Char'\nexport * from './Formula'\nexport * from './ImgPlaceholder'\nexport * from './TextGroup'\n"]}

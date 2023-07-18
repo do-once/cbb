@@ -15,4 +15,5 @@ export * from './select';
 export * from './tools';
 export * from './type-judge';
 export * from './url';
+export * from './font';
 //# sourceMappingURL=index.js.map

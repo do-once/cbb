@@ -1,6 +1,13 @@
 # Change Log - @doonce/latex-svg-dataurl
 
-This log was last generated on Mon, 17 Jul 2023 08:13:32 GMT and should not be manually modified.
+This log was last generated on Tue, 18 Jul 2023 09:08:22 GMT and should not be manually modified.
+
+## 5.0.0
+Tue, 18 Jul 2023 09:08:22 GMT
+
+### Breaking changes
+
+- fix dts and params inconsistent
 
 ## 4.0.0
 Mon, 17 Jul 2023 08:13:32 GMT

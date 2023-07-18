@@ -93,6 +93,16 @@ export function flatten<T>(arr: T[][]): T[];
 // @public
 export function flattenDeep<T>(arr: NestedArray<T>): T[];
 
+// @public (undocumented)
+export type FontDesc = {
+    fontSize: number | string;
+    fontFamily: string;
+    lineHeight?: number | string;
+    fontStyle?: string;
+    fontWeight?: string | number;
+    fontVariant?: string;
+};
+
 // @public
 export function genSvgText({ width, height, fontSize, fontFamily, color, opacity, x, y, content, rotate }?: {
     width?: number | undefined;
@@ -106,6 +116,9 @@ export function genSvgText({ width, height, fontSize, fontFamily, color, opacity
     content?: string | undefined;
     rotate?: number | undefined;
 }): string;
+
+// @public
+export function getCssFontDesc({ fontSize, fontFamily, fontStyle, fontWeight, lineHeight, fontVariant }: FontDesc): string;
 
 // @public
 export function getData(el: HTMLElement, name: string, val: any): string | void | null;
@@ -206,6 +219,9 @@ export function loadCss(href: string, options?: {
 }): Promise<unknown>;
 
 // @public
+export function loadFont(family: string, source: string | BinaryData, descriptors?: FontFaceDescriptors): Promise<FontFace>;
+
+// @public
 export function loadJs(src: string, options?: {
     type: string;
 }): Promise<unknown>;
@@ -220,6 +236,15 @@ export function makeSvgInline(svg: string): string;
 
 // @public
 export function matches(el: HTMLElement, selector: string): boolean;
+
+// @public
+export function measureImgSize(src: string): Promise<{
+    width: number;
+    height: number;
+}>;
+
+// @public
+export function measureTextMetrics(text: string, cssFontDescStr: string): TextMetrics;
 
 // @public
 export function ms2h(ms: number): number;

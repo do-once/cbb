@@ -47,12 +47,20 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "@doonce/html-parser",
+      "allowedCategories": [ "published" ]
+    },
+    {
       "name": "@doonce/node-rig",
       "allowedCategories": [ "internal", "published" ]
     },
     {
       "name": "@doonce/toolchain",
       "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@doonce/utils",
+      "allowedCategories": [ "published" ]
     },
     {
       "name": "@doonce/web-rig",
