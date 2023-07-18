@@ -1,6 +1,6 @@
 /**
  * @author GuangHui
- * @description 字体相关
+ * @description 字体相关库
  */
 
 /**
