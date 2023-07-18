@@ -33,6 +33,12 @@ function createViteConfig({ UMDGlobalName = '', type = 'vue', debug = false, vue
   const external = genExternal(require(resolve(process.cwd(), 'package.json')))
 
   let conf = {
+    define: {
+      /** 构建标志 */
+      /** https://github.com/vuejs/core/tree/main/packages/vue#bundler-build-feature-flags */
+      __VUE_OPTIONS_API__: true,
+      __VUE_PROD_DEVTOOLS__: false
+    },
     resolve: {
       alias: {
         /* vite启动本地服务时使用的index.html，其中使用了template语法，所以无法使用runtime版本 */
