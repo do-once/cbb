@@ -5,7 +5,7 @@
 ```ts
 
 // @public
-export function transformLatexToSVGDataUrl({ latex, retryInterval, retryMaxCount, outputType }?: TransformLatexToSVGDataUrlParams): Promise<TransformLatexToSVGDataUrlRet>;
+export function transformLatexToSVGDataUrl({ latex, retryInterval, retryMaxCount, outputType }?: TransformLatexToSVGDataUrlParams): Promise<TransformLatexToSVGDataUrlRet | string>;
 
 // @public (undocumented)
 export type TransformLatexToSVGDataUrlParams = {
@@ -16,7 +16,7 @@ export type TransformLatexToSVGDataUrlParams = {
 };
 
 // @public (undocumented)
-export type TransformLatexToSVGDataUrlRet = string | {
+export type TransformLatexToSVGDataUrlRet = {
     dataUrl: string;
     svgStr: string;
 };

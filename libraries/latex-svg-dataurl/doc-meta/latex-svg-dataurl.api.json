@@ -175,7 +175,7 @@
         {
           "kind": "Function",
           "canonicalReference": "@doonce/latex-svg-dataurl!transformLatexToSVGDataUrl:function(1)",
-          "docComment": "/**\n * 将 latex 公式转为 svg dataurl\n *\n * @date 2023-03-28 19:27:07  @export\n *\n * @param latex - latex 公式字符串\n *\n * @param retryInterval - 重试间隔 默认500ms\n *\n * @param retryMaxCount - 重试最大次数 默认10\n *\n * @returns {Promise<TransformLatexToSVGDataUrlRet>} svg dataurl\n */\n",
+          "docComment": "/**\n * 将 latex 公式转为 svg dataurl\n *\n * @date 2023-03-28 19:27:07  @export\n *\n * @param latex - latex 公式字符串\n *\n * @param retryInterval - 重试间隔 默认500ms\n *\n * @param retryMaxCount - 重试最大次数 默认10\n *\n * @param outputType - 输出类型,默认 dataUrl\n *\n * @returns {Promise<TransformLatexToSVGDataUrlRet>} svg dataurl\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -206,7 +206,7 @@
             },
             {
               "kind": "Content",
-              "text": ">"
+              "text": " | string>"
             },
             {
               "kind": "Content",
@@ -269,7 +269,7 @@
             },
             {
               "kind": "Content",
-              "text": "string | {\n    dataUrl: string;\n    svgStr: string;\n}"
+              "text": "{\n    dataUrl: string;\n    svgStr: string;\n}"
             },
             {
               "kind": "Content",

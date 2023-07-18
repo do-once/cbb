@@ -13,13 +13,14 @@ exports.transformSvgEl2DataUrl = exports.transformLatexToSVGDataUrl = void 0
  * @param latex latex 公式字符串
  * @param retryInterval 重试间隔 默认500ms
  * @param retryMaxCount 重试最大次数 默认10
+ * @param outputType 输出类型,默认 dataUrl
  * @returns {Promise<TransformLatexToSVGDataUrlRet>} svg dataurl
  */
 function transformLatexToSVGDataUrl({
   latex,
   retryInterval = 500,
   retryMaxCount = 10,
-  outputType = 'dataurl'
+  outputType = 'dataUrl'
 } = {}) {
   if (!window.MathJax) throw new Error('window.MathJax can not access')
   const renderContainer = createRenderContainer()
@@ -43,9 +44,9 @@ function transformLatexToSVGDataUrl({
           const frame = document.querySelector(mathjaxFrameId)
           if (!frame) throw new Error(`${mathjaxFrameId} element dont exist`)
           const svg = cloneGlobalSvgDefsIntoSvg(frame)
-          if (outputType === 'dataurl') {
+          if (outputType === 'dataUrl') {
             resolve(transformSvgEl2DataUrl(svg))
-          } else if (outputType === 'svgstring') {
+          } else if (outputType === 'svgStr') {
             resolve(new XMLSerializer().serializeToString(svg))
           } else {
             resolve({

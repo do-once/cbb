@@ -11,7 +11,7 @@ export declare type TransformLatexToSVGDataUrlParams = {
     retryMaxCount?: number; /** 渲染重试次数,默认10次 */
     outputType: 'dataUrl' | 'svgStr' | 'both'; /** 输出类型,dataurl svgel 转换的string 或 都输出;默认 dataurl*/
 };
-export declare type TransformLatexToSVGDataUrlRet = string | {
+export declare type TransformLatexToSVGDataUrlRet = {
     dataUrl: string;
     svgStr: string;
 };
@@ -23,9 +23,10 @@ export declare type TransformLatexToSVGDataUrlRet = string | {
  * @param latex latex 公式字符串
  * @param retryInterval 重试间隔 默认500ms
  * @param retryMaxCount 重试最大次数 默认10
+ * @param outputType 输出类型,默认 dataUrl
  * @returns {Promise<TransformLatexToSVGDataUrlRet>} svg dataurl
  */
-export declare function transformLatexToSVGDataUrl({ latex, retryInterval, retryMaxCount, outputType }?: TransformLatexToSVGDataUrlParams): Promise<TransformLatexToSVGDataUrlRet>;
+export declare function transformLatexToSVGDataUrl({ latex, retryInterval, retryMaxCount, outputType }?: TransformLatexToSVGDataUrlParams): Promise<TransformLatexToSVGDataUrlRet | string>;
 /**
  * 将 svg 元素内容转为 dataurl
  *
