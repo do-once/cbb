@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/utils",
+      "comment": "add font lib",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@doonce/utils"
+}
