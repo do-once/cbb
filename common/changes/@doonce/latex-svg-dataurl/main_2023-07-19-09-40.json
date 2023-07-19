@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/latex-svg-dataurl",
+      "comment": "fix id duplicate",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@doonce/latex-svg-dataurl"
+}
