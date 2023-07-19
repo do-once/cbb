@@ -18,7 +18,7 @@
 
     <script type="module">
       import { createApp } from 'vue'
-      import { transformLatexToSVGDataUrl } from './src/index.ts'
+      import { transformLatexToSVGStrAndDataUrl } from './src/index.ts'
 
       const app = {
         template: `<div>
@@ -68,7 +68,7 @@
             document.querySelector('#example-node').appendChild(parsedEl.rootElement)
           },
           genDataUrl2() {
-            transformLatexToSVGDataUrl({ latex: this.latex2, outputType: 'both' }).then(
+            transformLatexToSVGStrAndDataUrl({ latex: this.latex2 }).then(
               ({ dataUrl: dataUrl2, svgStr: svgStr2 }) => {
                 console.log('svgStr :>> ', svgStr2)
                 console.log('dataUrl2 :>> ', dataUrl2)
@@ -85,18 +85,16 @@
         mounted() {
           this.canvas = new fabric.Canvas('canvas')
 
-          transformLatexToSVGDataUrl({ latex: this.latex, outputType: 'both' }).then(
-            ({ svgStr, dataUrl }) => {
-              console.log('svgStr :>> ', svgStr)
-              console.log('dataUrl :>> ', dataUrl)
-              this.dataUrl = dataUrl
-              this.svgStr = svgStr
+          transformLatexToSVGStrAndDataUrl({ latex: this.latex }).then(({ svgStr, dataUrl }) => {
+            console.log('svgStr :>> ', svgStr)
+            console.log('dataUrl :>> ', dataUrl)
+            this.dataUrl = dataUrl
+            this.svgStr = svgStr
 
-              fabric.Image.fromURL(dataUrl, img => {
-                this.canvas.add(img)
-              })
-            }
-          )
+            fabric.Image.fromURL(dataUrl, img => {
+              this.canvas.add(img)
+            })
+          })
         }
       }
 

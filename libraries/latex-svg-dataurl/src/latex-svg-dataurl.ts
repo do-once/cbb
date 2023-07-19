@@ -1,44 +1,42 @@
 /**
  * @author GuangHui
- * @description 输入 latex 字符串,输出 svg dataurl ,此 dataurl 可供 canvas 消费
+ * @description 输入 latex 字符串,输出 svgStr 和dataUrl ,此 dataUrl 可供 canvas 消费
  */
+
 import { uuid } from '@doonce/utils'
+
 declare global {
   var MathJax: any
 }
 
-export type TransformLatexToSVGDataUrlParams = {
+export type TransformLatexToSVGStrAndDataUrlPrams = {
   latex: string /** latex输入字符串 */
   retryInterval?: number /** 渲染失败的重试间隔,默认500ms */
   retryMaxCount?: number /** 渲染重试次数,默认10次 */
-  outputType: 'dataUrl' | 'svgStr' | 'both' /** 输出类型,dataurl svgel 转换的string 或 都输出;默认 dataurl*/
 }
 
-export type TransformLatexToSVGDataUrlRet = {
-  dataUrl: string
-  svgStr: string
+export type TransformLatexToSVGStrAndDataUrlRet = {
+  dataUrl: string /**  转成 dataUrl 的字符串 */
+  svgStr: string /** 序列化后的 svg 字符串 */
 }
 
 /**
- * 将 latex 公式转为 svg dataurl
+ * 输入 latex 字符串,输出 svgStr 和dataUrl
  *
- * @date 2023-03-28 19:27:07
+ * @date 2023-07-19 21:10:27
  * @export
- * @param latex latex 公式字符串
- * @param retryInterval 重试间隔 默认500ms
- * @param retryMaxCount 重试最大次数 默认10
- * @param outputType 输出类型,默认 dataUrl
- * @returns {Promise<TransformLatexToSVGDataUrlRet>} svg dataurl
+ * @param params 入参
+ * @returns {TransformLatexToSVGStrAndDataUrlRet} 转换后的 svgStr 和 dataUrl 结果对象
  */
-export function transformLatexToSVGDataUrl(
-  {
-    latex,
-    retryInterval = 500,
-    retryMaxCount = 10,
-    outputType = 'dataUrl'
-  } = {} as TransformLatexToSVGDataUrlParams
-): Promise<TransformLatexToSVGDataUrlRet | string> {
+export function transformLatexToSVGStrAndDataUrl(
+  params: TransformLatexToSVGStrAndDataUrlPrams
+): Promise<TransformLatexToSVGStrAndDataUrlRet> {
   if (!window.MathJax) throw new Error('window.MathJax can not access')
+  if (!params.latex) throw new Error('latex is required')
+
+  const latex = params.latex
+  const retryInterval = params.retryInterval ?? 10
+  const retryMaxCount = params.retryMaxCount ?? 5
 
   const renderContainer = createRenderContainer()
   const scriptElWithLatex = createScriptElWithLatex(latex)
@@ -68,45 +66,24 @@ export function transformLatexToSVGDataUrl(
           if (!frame) throw new Error(`${mathjaxFrameId} element dont exist`)
 
           const svg = cloneGlobalSvgDefsIntoSvg(frame)
+          const svgStr = new XMLSerializer().serializeToString(svg)
 
-          if (outputType === 'dataUrl') {
-            resolve(transformSvgEl2DataUrl(svg))
-          } else if (outputType === 'svgStr') {
-            resolve(new XMLSerializer().serializeToString(svg))
-          } else {
-            resolve({
-              dataUrl: transformSvgEl2DataUrl(svg),
-              svgStr: new XMLSerializer().serializeToString(svg)
-            })
-          }
+          resolve({
+            svgStr,
+            dataUrl: 'data:image/svg+xml; charset=utf8, ' + encodeURIComponent(svgStr)
+          })
         } catch (error) {
           console.log('error :>> ', error)
           retryCount++
 
           clearTimeout(timer)
-          timer = setTimeout(() => {
-            display()
-          }, retryInterval)
+          timer = setTimeout(display, retryInterval)
         }
       }
 
       display()
     })
   })
-}
-
-/**
- * 将 svg 元素内容转为 dataurl
- *
- * @date 2023-03-28 17:34:57
- * @export
- * @param svgEl
- * @returns {string} dataurl
- */
-export function transformSvgEl2DataUrl(svgEl: SVGElement) {
-  return (
-    'data:image/svg+xml; charset=utf8, ' + encodeURIComponent(new XMLSerializer().serializeToString(svgEl))
-  )
 }
 
 /**
@@ -131,7 +108,7 @@ function cloneGlobalSvgDefsIntoSvg(mathjaxFrame: Element): SVGElement {
     .filter(href => !!href)
 
   /** 根据 href 在mathjax svg def中进行查找.若有,则拷贝到新建的 svgDef 中 */
-  var mathJaxGlobalDef = document.querySelector('#MathJax_SVG_glyphs')
+  const mathJaxGlobalDef = document.querySelector('#MathJax_SVG_glyphs')
 
   const svgDef = document.createElement('def')
   svgDef.id = `CanvasLatexSvgDef_${mathjaxFrame.id}`
@@ -156,9 +133,7 @@ function cloneGlobalSvgDefsIntoSvg(mathjaxFrame: Element): SVGElement {
 function createRenderContainer() {
   const div = document.createElement('div')
 
-  const renderContainerId = `CanvasLatexRenderContainer_${uuid()}`
-  div.id = renderContainerId
-
+  div.id = `CanvasLatexRenderContainer_${uuid()}`
   div.style.display = 'none'
   div.style.visibility = 'hidden'
   div.style.position = 'absolute'
@@ -175,10 +150,9 @@ function createRenderContainer() {
  * @returns {HTMLScriptElement} scriptEl
  */
 function createScriptElWithLatex(latex: string) {
-  let script = document.createElement('script')
+  const script = document.createElement('script')
 
-  const canvasLatexLatexScriptId = `CanvasLatexLatexScript_${uuid()}`
-  script.id = canvasLatexLatexScriptId
+  script.id = `CanvasLatexLatexScript_${uuid()}`
 
   script.type = 'math/tex'
   script.innerHTML = latex

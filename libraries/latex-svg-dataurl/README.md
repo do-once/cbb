@@ -48,25 +48,22 @@ npm i @doonce/latex-svg-dataurl
 
 ```typescript
 /** params */
-export type TransformLatexToSVGDataUrlParams = {
+export type TransformLatexToSVGStrAndDataUrlPrams = {
   latex: string /** latex输入字符串 */
   retryInterval?: number /** 渲染失败的重试间隔,默认500ms */
   retryMaxCount?: number /** 渲染重试次数,默认10次 */
-  outputType: 'dataUrl' | 'svgStr' | 'both' /** 输出类型,dataurl svgel 转换的string 或 都输出;默认 dataurl*/
 }
 
 /** return */
-export type TransformLatexToSVGDataUrlRet =
-  | string
-  | {
-      dataUrl: string
-      svgStr: string
-    }
+export type TransformLatexToSVGStrAndDataUrlRet = {
+  dataUrl: string /**  转成 dataUrl 的字符串 */
+  svgStr: string /** 序列化后的 svg 字符串 */
+}
 
 
-import { transformLatexToSVGDataUrl } from '@doonce/latex-svg-dataurl'
+import { transformLatexToSVGStrAndDataUrl } from '@doonce/latex-svg-dataurl'
 
-const { dataUrl,svgStr } = await transformLatexToSVGDataUrl({latex:'1+\\int_x^y e^x dx + \\ldots',outputType:'both'})
+const { dataUrl,svgStr } = await transformLatexToSVGDataUrl({latex:'1+\\int_x^y e^x dx + \\ldots'})
 ```
 
 - svgStr is use `new XMLSerializer().serializeToString(svg)` to generate
