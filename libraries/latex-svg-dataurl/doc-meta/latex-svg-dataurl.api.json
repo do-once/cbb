@@ -174,17 +174,17 @@
       "members": [
         {
           "kind": "Function",
-          "canonicalReference": "@doonce/latex-svg-dataurl!transformLatexToSVGDataUrl:function(1)",
-          "docComment": "/**\n * 将 latex 公式转为 svg dataurl\n *\n * @date 2023-03-28 19:27:07  @export\n *\n * @param latex - latex 公式字符串\n *\n * @param retryInterval - 重试间隔 默认500ms\n *\n * @param retryMaxCount - 重试最大次数 默认10\n *\n * @param outputType - 输出类型,默认 dataUrl\n *\n * @returns {Promise<TransformLatexToSVGDataUrlRet>} svg dataurl\n */\n",
+          "canonicalReference": "@doonce/latex-svg-dataurl!transformLatexToSVGStrAndDataUrl:function(1)",
+          "docComment": "/**\n * 输入 latex 字符串,输出 svgStr 和dataUrl\n *\n * @date 2023-07-19 21:10:27  @export\n *\n * @param params - 入参\n *\n * @returns {TransformLatexToSVGStrAndDataUrlRet} 转换后的 svgStr 和 dataUrl 结果对象\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare function transformLatexToSVGDataUrl({ latex, retryInterval, retryMaxCount, outputType }?: "
+              "text": "export declare function transformLatexToSVGStrAndDataUrl(params: "
             },
             {
               "kind": "Reference",
-              "text": "TransformLatexToSVGDataUrlParams",
-              "canonicalReference": "@doonce/latex-svg-dataurl!TransformLatexToSVGDataUrlParams:type"
+              "text": "TransformLatexToSVGStrAndDataUrlPrams",
+              "canonicalReference": "@doonce/latex-svg-dataurl!TransformLatexToSVGStrAndDataUrlPrams:type"
             },
             {
               "kind": "Content",
@@ -201,12 +201,12 @@
             },
             {
               "kind": "Reference",
-              "text": "TransformLatexToSVGDataUrlRet",
-              "canonicalReference": "@doonce/latex-svg-dataurl!TransformLatexToSVGDataUrlRet:type"
+              "text": "TransformLatexToSVGStrAndDataUrlRet",
+              "canonicalReference": "@doonce/latex-svg-dataurl!TransformLatexToSVGStrAndDataUrlRet:type"
             },
             {
               "kind": "Content",
-              "text": " | string>"
+              "text": ">"
             },
             {
               "kind": "Content",
@@ -222,105 +222,7 @@
           "overloadIndex": 1,
           "parameters": [
             {
-              "parameterName": "{ latex, retryInterval, retryMaxCount, outputType }",
-              "parameterTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isOptional": true
-            }
-          ],
-          "name": "transformLatexToSVGDataUrl"
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@doonce/latex-svg-dataurl!TransformLatexToSVGDataUrlParams:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare type TransformLatexToSVGDataUrlParams = "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    latex: string; /** latex输入字符串 */\n    retryInterval?: number; /** 渲染失败的重试间隔,默认500ms */\n    retryMaxCount?: number; /** 渲染重试次数,默认10次 */\n    outputType: 'dataUrl' | 'svgStr' | 'both'; /** 输出类型,dataurl svgel 转换的string 或 都输出;默认 dataurl*/\n}"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "src/latex-svg-dataurl.ts",
-          "releaseTag": "Public",
-          "name": "TransformLatexToSVGDataUrlParams",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@doonce/latex-svg-dataurl!TransformLatexToSVGDataUrlRet:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare type TransformLatexToSVGDataUrlRet = "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    dataUrl: string;\n    svgStr: string;\n}"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "src/latex-svg-dataurl.ts",
-          "releaseTag": "Public",
-          "name": "TransformLatexToSVGDataUrlRet",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
-        },
-        {
-          "kind": "Function",
-          "canonicalReference": "@doonce/latex-svg-dataurl!transformSvgEl2DataUrl:function(1)",
-          "docComment": "/**\n * 将 svg 元素内容转为 dataurl\n *\n * @date 2023-03-28 17:34:57  @export\n *\n * @param svgEl - \n *\n * @returns {string} dataurl\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare function transformSvgEl2DataUrl(svgEl: "
-            },
-            {
-              "kind": "Reference",
-              "text": "SVGElement",
-              "canonicalReference": "!SVGElement:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "): "
-            },
-            {
-              "kind": "Content",
-              "text": "string"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "src/latex-svg-dataurl.ts",
-          "returnTypeTokenRange": {
-            "startIndex": 3,
-            "endIndex": 4
-          },
-          "releaseTag": "Public",
-          "overloadIndex": 1,
-          "parameters": [
-            {
-              "parameterName": "svgEl",
+              "parameterName": "params",
               "parameterTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -328,7 +230,59 @@
               "isOptional": false
             }
           ],
-          "name": "transformSvgEl2DataUrl"
+          "name": "transformLatexToSVGStrAndDataUrl"
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@doonce/latex-svg-dataurl!TransformLatexToSVGStrAndDataUrlPrams:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type TransformLatexToSVGStrAndDataUrlPrams = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    latex: string; /** latex输入字符串 */\n    retryInterval?: number; /** 渲染失败的重试间隔,默认500ms */\n    retryMaxCount?: number; /** 渲染重试次数,默认10次 */\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "src/latex-svg-dataurl.ts",
+          "releaseTag": "Public",
+          "name": "TransformLatexToSVGStrAndDataUrlPrams",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@doonce/latex-svg-dataurl!TransformLatexToSVGStrAndDataUrlRet:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type TransformLatexToSVGStrAndDataUrlRet = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    dataUrl: string; /**  转成 dataUrl 的字符串 */\n    svgStr: string; /** 序列化后的 svg 字符串 */\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "src/latex-svg-dataurl.ts",
+          "releaseTag": "Public",
+          "name": "TransformLatexToSVGStrAndDataUrlRet",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
         }
       ]
     }

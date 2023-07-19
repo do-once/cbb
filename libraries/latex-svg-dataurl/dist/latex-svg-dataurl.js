@@ -1,22 +1,24 @@
 /**
  * @author GuangHui
- * @description 输入 latex 字符串,输出 svg dataurl ,此 dataurl 可供 canvas 消费
+ * @description 输入 latex 字符串,输出 svgStr 和dataUrl ,此 dataUrl 可供 canvas 消费
  */
 import { uuid } from '@doonce/utils';
 /**
- * 将 latex 公式转为 svg dataurl
+ * 输入 latex 字符串,输出 svgStr 和dataUrl
  *
- * @date 2023-03-28 19:27:07
+ * @date 2023-07-19 21:10:27
  * @export
- * @param latex latex 公式字符串
- * @param retryInterval 重试间隔 默认500ms
- * @param retryMaxCount 重试最大次数 默认10
- * @param outputType 输出类型,默认 dataUrl
- * @returns {Promise<TransformLatexToSVGDataUrlRet>} svg dataurl
+ * @param params 入参
+ * @returns {TransformLatexToSVGStrAndDataUrlRet} 转换后的 svgStr 和 dataUrl 结果对象
  */
-export function transformLatexToSVGDataUrl({ latex, retryInterval = 500, retryMaxCount = 10, outputType = 'dataUrl' } = {}) {
+export function transformLatexToSVGStrAndDataUrl(params) {
     if (!window.MathJax)
         throw new Error('window.MathJax can not access');
+    if (!params.latex)
+        throw new Error('latex is required');
+    const latex = params.latex;
+    const retryInterval = params.retryInterval ?? 10;
+    const retryMaxCount = params.retryMaxCount ?? 5;
     const renderContainer = createRenderContainer();
     const scriptElWithLatex = createScriptElWithLatex(latex);
     renderContainer.appendChild(scriptElWithLatex);
@@ -39,42 +41,22 @@ export function transformLatexToSVGDataUrl({ latex, retryInterval = 500, retryMa
                     if (!frame)
                         throw new Error(`${mathjaxFrameId} element dont exist`);
                     const svg = cloneGlobalSvgDefsIntoSvg(frame);
-                    if (outputType === 'dataUrl') {
-                        resolve(transformSvgEl2DataUrl(svg));
-                    }
-                    else if (outputType === 'svgStr') {
-                        resolve(new XMLSerializer().serializeToString(svg));
-                    }
-                    else {
-                        resolve({
-                            dataUrl: transformSvgEl2DataUrl(svg),
-                            svgStr: new XMLSerializer().serializeToString(svg)
-                        });
-                    }
+                    const svgStr = new XMLSerializer().serializeToString(svg);
+                    resolve({
+                        svgStr,
+                        dataUrl: 'data:image/svg+xml; charset=utf8, ' + encodeURIComponent(svgStr)
+                    });
                 }
                 catch (error) {
                     console.log('error :>> ', error);
                     retryCount++;
                     clearTimeout(timer);
-                    timer = setTimeout(() => {
-                        display();
-                    }, retryInterval);
+                    timer = setTimeout(display, retryInterval);
                 }
             }
             display();
         });
     });
-}
-/**
- * 将 svg 元素内容转为 dataurl
- *
- * @date 2023-03-28 17:34:57
- * @export
- * @param svgEl
- * @returns {string} dataurl
- */
-export function transformSvgEl2DataUrl(svgEl) {
-    return ('data:image/svg+xml; charset=utf8, ' + encodeURIComponent(new XMLSerializer().serializeToString(svgEl)));
 }
 /**
  * 将 mathjax 生成的 svg defs拷贝到 mathjaxFrame 的 svg 下
@@ -96,7 +78,7 @@ function cloneGlobalSvgDefsIntoSvg(mathjaxFrame) {
     })
         .filter(href => !!href);
     /** 根据 href 在mathjax svg def中进行查找.若有,则拷贝到新建的 svgDef 中 */
-    var mathJaxGlobalDef = document.querySelector('#MathJax_SVG_glyphs');
+    const mathJaxGlobalDef = document.querySelector('#MathJax_SVG_glyphs');
     const svgDef = document.createElement('def');
     svgDef.id = `CanvasLatexSvgDef_${mathjaxFrame.id}`;
     useElHrefs.forEach(href => {
@@ -115,8 +97,7 @@ function cloneGlobalSvgDefsIntoSvg(mathjaxFrame) {
  */
 function createRenderContainer() {
     const div = document.createElement('div');
-    const renderContainerId = `CanvasLatexRenderContainer_${uuid()}`;
-    div.id = renderContainerId;
+    div.id = `CanvasLatexRenderContainer_${uuid()}`;
     div.style.display = 'none';
     div.style.visibility = 'hidden';
     div.style.position = 'absolute';
@@ -131,9 +112,8 @@ function createRenderContainer() {
  * @returns {HTMLScriptElement} scriptEl
  */
 function createScriptElWithLatex(latex) {
-    let script = document.createElement('script');
-    const canvasLatexLatexScriptId = `CanvasLatexLatexScript_${uuid()}`;
-    script.id = canvasLatexLatexScriptId;
+    const script = document.createElement('script');
+    script.id = `CanvasLatexLatexScript_${uuid()}`;
     script.type = 'math/tex';
     script.innerHTML = latex;
     return script;
