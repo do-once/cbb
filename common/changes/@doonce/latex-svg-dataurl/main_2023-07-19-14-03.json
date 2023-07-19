@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/latex-svg-dataurl",
+      "comment": "update retryMaxCount and retryInterval",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@doonce/latex-svg-dataurl"
+}
