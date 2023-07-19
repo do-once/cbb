@@ -73,7 +73,6 @@ export function transformLatexToSVGStrAndDataUrl(
             dataUrl: 'data:image/svg+xml; charset=utf8, ' + encodeURIComponent(svgStr)
           })
         } catch (error) {
-          console.log('error :>> ', error)
           retryCount++
 
           clearTimeout(timer)
