@@ -1,10 +1,11 @@
 'use strict'
+Object.defineProperty(exports, '__esModule', { value: true })
+exports.transformSvgEl2DataUrl = exports.transformLatexToSVGDataUrl = void 0
 /**
  * @author GuangHui
  * @description 输入 latex 字符串,输出 svg dataurl ,此 dataurl 可供 canvas 消费
  */
-Object.defineProperty(exports, '__esModule', { value: true })
-exports.transformSvgEl2DataUrl = exports.transformLatexToSVGDataUrl = void 0
+const utils_1 = require('@doonce/utils')
 /**
  * 将 latex 公式转为 svg dataurl
  *
@@ -120,12 +121,12 @@ function cloneGlobalSvgDefsIntoSvg(mathjaxFrame) {
  */
 function createRenderContainer() {
   const div = document.createElement('div')
-  const renderContainerId = `CanvasLatexRenderContainer_${new Date().getTime()}`
+  const renderContainerId = `CanvasLatexRenderContainer_${(0, utils_1.uuid)()}`
   div.id = renderContainerId
   div.style.display = 'none'
   div.style.visibility = 'hidden'
   div.style.position = 'absolute'
-  div.style.left = '-1000px'
+  div.style.left = '-100vw'
   return div
 }
 /**
@@ -137,7 +138,7 @@ function createRenderContainer() {
  */
 function createScriptElWithLatex(latex) {
   let script = document.createElement('script')
-  const canvasLatexLatexScriptId = `CanvasLatexLatexScript_${new Date().getTime()}`
+  const canvasLatexLatexScriptId = `CanvasLatexLatexScript_${(0, utils_1.uuid)()}`
   script.id = canvasLatexLatexScriptId
   script.type = 'math/tex'
   script.innerHTML = latex

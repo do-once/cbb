@@ -1,7 +1,3 @@
-/**
- * @author GuangHui
- * @description 输入 latex 字符串,输出 svg dataurl ,此 dataurl 可供 canvas 消费
- */
 declare global {
     var MathJax: any;
 }

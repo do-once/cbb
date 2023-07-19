@@ -2,6 +2,7 @@
  * @author GuangHui
  * @description 输入 latex 字符串,输出 svg dataurl ,此 dataurl 可供 canvas 消费
  */
+import { uuid } from '@doonce/utils';
 /**
  * 将 latex 公式转为 svg dataurl
  *
@@ -11,7 +12,7 @@
  * @param retryInterval 重试间隔 默认500ms
  * @param retryMaxCount 重试最大次数 默认10
  * @param outputType 输出类型,默认 dataUrl
- * @returns {Promise<TransformLatexToSVGDataUrlRet|string>} svg dataurl
+ * @returns {Promise<TransformLatexToSVGDataUrlRet>} svg dataurl
  */
 export function transformLatexToSVGDataUrl({ latex, retryInterval = 500, retryMaxCount = 10, outputType = 'dataUrl' } = {}) {
     if (!window.MathJax)
@@ -114,12 +115,12 @@ function cloneGlobalSvgDefsIntoSvg(mathjaxFrame) {
  */
 function createRenderContainer() {
     const div = document.createElement('div');
-    const renderContainerId = `CanvasLatexRenderContainer_${new Date().getTime()}`;
+    const renderContainerId = `CanvasLatexRenderContainer_${uuid()}`;
     div.id = renderContainerId;
     div.style.display = 'none';
     div.style.visibility = 'hidden';
     div.style.position = 'absolute';
-    div.style.left = '-1000px';
+    div.style.left = '-100vw';
     return div;
 }
 /**
@@ -131,7 +132,7 @@ function createRenderContainer() {
  */
 function createScriptElWithLatex(latex) {
     let script = document.createElement('script');
-    const canvasLatexLatexScriptId = `CanvasLatexLatexScript_${new Date().getTime()}`;
+    const canvasLatexLatexScriptId = `CanvasLatexLatexScript_${uuid()}`;
     script.id = canvasLatexLatexScriptId;
     script.type = 'math/tex';
     script.innerHTML = latex;
