@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/latex-svg-dataurl",
+      "comment": "combine api output object",
+      "type": "major"
+    }
+  ],
+  "packageName": "@doonce/latex-svg-dataurl"
+}
