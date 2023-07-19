@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/utils",
+      "comment": "add cache to measureText",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@doonce/utils"
+}
