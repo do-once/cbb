@@ -1,6 +1,6 @@
 /**
  * @author GuangHui
- * @description 字体相关
+ * @description 字体相关库
  */
 /**
  * 加载字体
@@ -32,7 +32,11 @@ export declare function loadFont(family: string, source: string | BinaryData, de
  * @example cssFontStr -> "italic normal bold 16px/20px SimSun"
  * @returns {TextMetrics} canvas文本尺寸对象
  */
-export declare function measureTextMetrics(text: string, cssFontDescStr: string): TextMetrics;
+export declare type IMeasureTextMetrics = {
+    (text: string, cssFontDescStr: string): TextMetrics;
+    _cachedCtx: CanvasRenderingContext2D;
+};
+export declare const measureTextMetrics: IMeasureTextMetrics;
 export declare type FontDesc = {
     fontSize: number | string;
     fontFamily: string;

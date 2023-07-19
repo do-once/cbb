@@ -1,6 +1,6 @@
 /**
  * @author GuangHui
- * @description 字体相关
+ * @description 字体相关库
  */
 /**
  * 加载字体
@@ -25,32 +25,16 @@ export async function loadFont(family, source, descriptors) {
     }
     return font;
 }
-/**
- * 测量字符宽度
- *
- * @date 2023-07-17 23:51:16
- * @export
- * @param text 待测量字符
- * @param cssFontDescStr 和 cssFont 规范一样的字体描述字符串,参考https://developer.mozilla.org/zh-CN/docs/Web/CSS/font
- * 必须包含以下值：
- * <font-size><font-family>
- * 可以选择性包含以下值：
- * <font-style><font-variant><font-weight><line-height>
- * font-style, font-variant 和 font-weight 必须在 font-size 之前
- * 在 CSS 2.1 中 font-variant 只可以是 normal 和 small-caps
- * line-height 必须跟在 font-size 后面，由 "/" 分隔，例如 "16px/3"
- * font-family 必须最后指定
- * @example cssFontStr -> "italic normal bold 16px/20px SimSun"
- * @returns {TextMetrics} canvas文本尺寸对象
- */
-export function measureTextMetrics(text, cssFontDescStr) {
+export const measureTextMetrics = ((text, cssFontDescStr) => {
     if (!text || !cssFontDescStr)
         throw new Error('text and cssFontDescStr is required');
-    const cas = document.createElement('canvas');
-    const ctx = cas.getContext('2d');
-    ctx.font = cssFontDescStr;
-    return ctx.measureText(text);
-}
+    if (!measureTextMetrics._cachedCtx) {
+        const cas = document.createElement('canvas');
+        measureTextMetrics._cachedCtx = cas.getContext('2d');
+    }
+    measureTextMetrics._cachedCtx.font = cssFontDescStr;
+    return measureTextMetrics._cachedCtx.measureText(text);
+});
 /**
  * 获取cssFont字体描述字符串
  *

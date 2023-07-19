@@ -50,15 +50,21 @@ export async function loadFont(
  * @example cssFontStr -> "italic normal bold 16px/20px SimSun"
  * @returns {TextMetrics} canvas文本尺寸对象
  */
-export function measureTextMetrics(text: string, cssFontDescStr: string): TextMetrics {
+export type IMeasureTextMetrics = {
+  (text: string, cssFontDescStr: string): TextMetrics
+  _cachedCtx: CanvasRenderingContext2D
+}
+export const measureTextMetrics = <IMeasureTextMetrics>((text, cssFontDescStr) => {
   if (!text || !cssFontDescStr) throw new Error('text and cssFontDescStr is required')
 
-  const cas = document.createElement('canvas')
-  const ctx = cas.getContext('2d')!
+  if (!measureTextMetrics._cachedCtx) {
+    const cas = document.createElement('canvas')
+    measureTextMetrics._cachedCtx = cas.getContext('2d')!
+  }
 
-  ctx.font = cssFontDescStr
-  return ctx.measureText(text)
-}
+  measureTextMetrics._cachedCtx.font = cssFontDescStr
+  return measureTextMetrics._cachedCtx.measureText(text)
+})
 
 export type FontDesc = {
   fontSize: number | string

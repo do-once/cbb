@@ -159,6 +159,12 @@ export function getStyle(el: HTMLElement): CSSStyleDeclaration;
 export function hasClass(el: HTMLElement, className: string): boolean;
 
 // @public
+export type IMeasureTextMetrics = {
+    (text: string, cssFontDescStr: string): TextMetrics;
+    _cachedCtx: CanvasRenderingContext2D;
+};
+
+// @public
 export const inBrowser: boolean;
 
 // @public
@@ -243,8 +249,8 @@ export function measureImgSize(src: string): Promise<{
     height: number;
 }>;
 
-// @public
-export function measureTextMetrics(text: string, cssFontDescStr: string): TextMetrics;
+// @public (undocumented)
+export const measureTextMetrics: IMeasureTextMetrics;
 
 // @public
 export function ms2h(ms: number): number;

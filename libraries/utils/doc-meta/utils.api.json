@@ -2296,6 +2296,50 @@
           "name": "hasClass"
         },
         {
+          "kind": "TypeAlias",
+          "canonicalReference": "@doonce/utils!IMeasureTextMetrics:type",
+          "docComment": "/**\n * 测量字符宽度\n *\n * @date 2023-07-17 23:51:16  @export\n *\n * @param text - 待测量字符\n *\n * @param cssFontDescStr - 和 cssFont 规范一样的字体描述字符串,参考https://developer.mozilla.org/zh-CN/docs/Web/CSS/font 必须包含以下值： <font-size><font-family> 可以选择性包含以下值： <font-style><font-variant><font-weight><line-height> font-style, font-variant 和 font-weight 必须在 font-size 之前 在 CSS 2.1 中 font-variant 只可以是 normal 和 small-caps line-height 必须跟在 font-size 后面，由 \"/\" 分隔，例如 \"16px/3\" font-family 必须最后指定\n *\n * @returns {TextMetrics} canvas文本尺寸对象\n *\n * @example\n *\n * cssFontStr -> \"italic normal bold 16px/20px SimSun\"\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type IMeasureTextMetrics = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    (text: string, cssFontDescStr: string): "
+            },
+            {
+              "kind": "Reference",
+              "text": "TextMetrics",
+              "canonicalReference": "!TextMetrics:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    _cachedCtx: "
+            },
+            {
+              "kind": "Reference",
+              "text": "CanvasRenderingContext2D",
+              "canonicalReference": "!CanvasRenderingContext2D:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "src/font.ts",
+          "releaseTag": "Public",
+          "name": "IMeasureTextMetrics",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 6
+          }
+        },
+        {
           "kind": "Variable",
           "canonicalReference": "@doonce/utils!inBrowser:var",
           "docComment": "/**\n * @author GuangHui  @description 浏览器判断\n */\n",
@@ -3467,66 +3511,28 @@
           "name": "measureImgSize"
         },
         {
-          "kind": "Function",
-          "canonicalReference": "@doonce/utils!measureTextMetrics:function(1)",
-          "docComment": "/**\n * 测量字符宽度\n *\n * @date 2023-07-17 23:51:16  @export\n *\n * @param text - 待测量字符\n *\n * @param cssFontDescStr - 和 cssFont 规范一样的字体描述字符串,参考https://developer.mozilla.org/zh-CN/docs/Web/CSS/font 必须包含以下值： <font-size><font-family> 可以选择性包含以下值： <font-style><font-variant><font-weight><line-height> font-style, font-variant 和 font-weight 必须在 font-size 之前 在 CSS 2.1 中 font-variant 只可以是 normal 和 small-caps line-height 必须跟在 font-size 后面，由 \"/\" 分隔，例如 \"16px/3\" font-family 必须最后指定\n *\n * @returns {TextMetrics} canvas文本尺寸对象\n *\n * @example\n *\n * cssFontStr -> \"italic normal bold 16px/20px SimSun\"\n */\n",
+          "kind": "Variable",
+          "canonicalReference": "@doonce/utils!measureTextMetrics:var",
+          "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare function measureTextMetrics(text: "
-            },
-            {
-              "kind": "Content",
-              "text": "string"
-            },
-            {
-              "kind": "Content",
-              "text": ", cssFontDescStr: "
-            },
-            {
-              "kind": "Content",
-              "text": "string"
-            },
-            {
-              "kind": "Content",
-              "text": "): "
+              "text": "measureTextMetrics: "
             },
             {
               "kind": "Reference",
-              "text": "TextMetrics",
-              "canonicalReference": "!TextMetrics:interface"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
+              "text": "IMeasureTextMetrics",
+              "canonicalReference": "@doonce/utils!IMeasureTextMetrics:type"
             }
           ],
           "fileUrlPath": "src/font.ts",
-          "returnTypeTokenRange": {
-            "startIndex": 5,
-            "endIndex": 6
-          },
+          "isReadonly": true,
           "releaseTag": "Public",
-          "overloadIndex": 1,
-          "parameters": [
-            {
-              "parameterName": "text",
-              "parameterTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isOptional": false
-            },
-            {
-              "parameterName": "cssFontDescStr",
-              "parameterTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "isOptional": false
-            }
-          ],
-          "name": "measureTextMetrics"
+          "name": "measureTextMetrics",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
         },
         {
           "kind": "Function",
