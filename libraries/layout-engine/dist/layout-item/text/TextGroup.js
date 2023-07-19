@@ -6,14 +6,15 @@ import { Base, LayoutItemTypeEnum } from '../base';
 export class TextGroup extends Base {
     layoutItemType = LayoutItemTypeEnum.TEXT_GROUP;
     canLineBreak = false;
-    groups = [];
+    childs = [];
     rawContent = '';
     content = '';
-    getPos() {
-        throw new Error('Method not implemented.');
-    }
-    getSize() {
-        throw new Error('Method not implemented.');
+    measureSize() {
+        return this.childs.reduce((acc, cur) => {
+            acc.width += cur.width;
+            acc.height = Math.max(acc.height, cur.height);
+            return acc;
+        }, { width: 0, height: 0 });
     }
 }
 //# sourceMappingURL=TextGroup.js.map

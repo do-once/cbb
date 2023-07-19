@@ -3,7 +3,7 @@
  * @description 单字符
  */
 
-import { getCssFontDesc, measureTextMetrics } from '@doonce/utils/*'
+import { getCssFontDesc, measureTextMetrics } from '@doonce/utils'
 import { GlobalFontOptions } from '../../DoonceLayoutEngine'
 import { Base, LayoutItemTypeEnum, IContent, IPos, ISize } from '../base'
 
@@ -25,11 +25,18 @@ export class Char extends Base implements IContent {
     this.globalFontOptions = globalFontOptions
   }
 
+  async init() {
+    const { width, height } = this.measureSize()
+    this.width = width
+    this.height = height
+  }
+
   measureSize(): ISize {
     const fontDescObj = {
       ...this.globalFontOptions,
       lineHeight: `${this.globalFontOptions.lineHeight}px`
     }
+
     const { width } = measureTextMetrics(this.content, getCssFontDesc(fontDescObj))
 
     return {

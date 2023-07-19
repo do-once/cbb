@@ -2,21 +2,29 @@
  * @author GuangHui
  * @description 图片标题类
  */
-import { Base, HorizontalAlignEnum, LayoutItemTypeEnum } from '../base';
+import { getCssFontDesc, measureTextMetrics } from '@doonce/utils';
+import { Base, LayoutItemTypeEnum } from '../base';
 export class GraphTitle extends Base {
     layoutItemType = LayoutItemTypeEnum.GRAPH_TITLE;
     canLineBreak = false;
-    rawContent = '';
+    rawContent;
     content = '';
-    horizontalAlign = HorizontalAlignEnum.MIDDLE;
-    getPos() {
-        return {
-            x: this.x,
-            y: this.y
-        };
+    globalFontOptions;
+    constructor(rawContent, globalFontOptions) {
+        super();
+        this.rawContent = rawContent;
+        this.globalFontOptions = globalFontOptions;
     }
-    async getSize() {
-        throw new Error('Method not implemented.');
+    measureSize() {
+        const fontDescObj = {
+            ...this.globalFontOptions,
+            lineHeight: `${this.globalFontOptions.lineHeight}px`
+        };
+        const { width } = measureTextMetrics(this.content, getCssFontDesc(fontDescObj));
+        return {
+            width,
+            height: this.globalFontOptions.lineHeight
+        };
     }
 }
 //# sourceMappingURL=GraphTitle.js.map

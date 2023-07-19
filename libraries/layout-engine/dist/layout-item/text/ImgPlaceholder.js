@@ -6,13 +6,18 @@ import { Base, LayoutItemTypeEnum } from '../base';
 export class ImgPlaceHolder extends Base {
     layoutItemType = LayoutItemTypeEnum.IMG_PLACEHOLDER;
     canLineBreak = false;
-    rawContent = '';
-    content = '';
-    getPos() {
-        throw new Error('Method not implemented.');
+    owner; /** 拥有占位符的组件 */
+    globalFontOptions;
+    constructor(owner, globalFontOptions) {
+        super();
+        this.owner = owner;
+        this.globalFontOptions = globalFontOptions;
     }
-    getSize() {
-        throw new Error('Method not implemented.');
+    measureSize() {
+        return {
+            width: this.owner.width,
+            height: this.globalFontOptions.lineHeight
+        };
     }
 }
 //# sourceMappingURL=ImgPlaceholder.js.map

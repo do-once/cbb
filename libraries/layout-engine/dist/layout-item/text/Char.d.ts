@@ -2,13 +2,15 @@
  * @author GuangHui
  * @description 单字符
  */
-import { Base, LayoutItemTypeEnum, IContent, IPos, ISize } from '../base';
+import { GlobalFontOptions } from '../../DoonceLayoutEngine';
+import { Base, LayoutItemTypeEnum, IContent, ISize } from '../base';
 export declare class Char extends Base implements IContent {
     layoutItemType: LayoutItemTypeEnum;
     canLineBreak: boolean;
     rawContent: string;
     content: string;
-    getPos(): IPos | Promise<IPos>;
-    getSize(): ISize | Promise<ISize>;
+    globalFontOptions: GlobalFontOptions;
+    constructor(rawContent: string, globalFontOptions: GlobalFontOptions);
+    measureSize(): ISize;
 }
 //# sourceMappingURL=Char.d.ts.map

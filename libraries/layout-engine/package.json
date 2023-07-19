@@ -36,7 +36,8 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "fonts"
   ],
   "scripts": {
     "_phase:build": "heft build --clean --verbose",
@@ -47,6 +48,7 @@
   },
   "dependencies": {
     "@doonce/html-parser": "workspace:*",
+    "@doonce/latex-svg-dataurl": "workspace:*",
     "@doonce/utils": "workspace:*"
   },
   "devDependencies": {

@@ -63,6 +63,10 @@ export interface IImgSurround {
   imgSurroundType: ImgSurrounTypeEnum
 }
 
+export interface ICache<K, V> {
+  cache: Map<K, V>
+}
+
 /**
  * 抽象基类
  *

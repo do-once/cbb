@@ -6,13 +6,21 @@ import { Base, LayoutItemTypeEnum } from '../base';
 export class Formula extends Base {
     layoutItemType = LayoutItemTypeEnum.FORMULA;
     canLineBreak = false;
-    rawContent = '';
+    rawContent;
     content = '';
-    getPos() {
-        throw new Error('Method not implemented.');
+    globalFontOptions;
+    constructor(rawContent, globalFontOptions) {
+        super();
+        this.rawContent = rawContent;
+        this.content = '123'; /** 需要获取公式的渲染内容 */
+        this.globalFontOptions = globalFontOptions;
     }
-    getSize() {
-        throw new Error('Method not implemented.');
+    measureSize() {
+        // TODO 需要获取完 content 后,再对 content 进行测量
+        return {
+            width: 0,
+            height: 0
+        };
     }
 }
 //# sourceMappingURL=Formula.js.map

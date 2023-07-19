@@ -4,3 +4,4 @@
  */
 
 export * from './DoonceLayoutEngine'
+export * from './layout-item'

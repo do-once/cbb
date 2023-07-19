@@ -4,9 +4,40 @@
 
 ```ts
 
-// @public
+// @public (undocumented)
 export class DoonceLayoutEngine {
+    constructor({ globalFontOptions }?: DoonceLayoutEngineCtrOptions);
+    // (undocumented)
+    font: FontFace;
+    // (undocumented)
+    globalFontOptions: GlobalFontOptions;
+    isFontLoaded(): boolean;
+    // (undocumented)
+    layout(layoutParams: LayoutMethodParams): void;
 }
+
+// @public (undocumented)
+export type DoonceLayoutEngineCtrOptions = {
+    globalFontOptions?: GlobalFontOptions;
+};
+
+// @public
+export type GlobalFontOptions = {
+    fontSize: number; /** 单位px */
+    fontFamily: string;
+    lineHeight: number; /** 单位px */
+    fontStyle: string;
+    fontWeight: string;
+    fontVariant: string;
+    source: string;
+};
+
+// @public (undocumented)
+export type LayoutMethodParams = {
+    maxWidth: number;
+    padding?: [number, number, number, number]; /** 上右下左 padding */
+    letterSpacing?: number; /** 字符间距 */
+};
 
 // (No @packageDocumentation comment for this package)
 

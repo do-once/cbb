@@ -9,14 +9,18 @@ const base_1 = require('../base')
 class TextGroup extends base_1.Base {
   layoutItemType = base_1.LayoutItemTypeEnum.TEXT_GROUP
   canLineBreak = false
-  groups = []
+  childs = []
   rawContent = ''
   content = ''
-  getPos() {
-    throw new Error('Method not implemented.')
-  }
-  getSize() {
-    throw new Error('Method not implemented.')
+  measureSize() {
+    return this.childs.reduce(
+      (acc, cur) => {
+        acc.width += cur.width
+        acc.height = Math.max(acc.height, cur.height)
+        return acc
+      },
+      { width: 0, height: 0 }
+    )
   }
 }
 exports.TextGroup = TextGroup

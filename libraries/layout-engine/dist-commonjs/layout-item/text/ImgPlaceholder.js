@@ -9,13 +9,18 @@ const base_1 = require('../base')
 class ImgPlaceHolder extends base_1.Base {
   layoutItemType = base_1.LayoutItemTypeEnum.IMG_PLACEHOLDER
   canLineBreak = false
-  rawContent = ''
-  content = ''
-  getPos() {
-    throw new Error('Method not implemented.')
+  owner /** 拥有占位符的组件 */
+  globalFontOptions
+  constructor(owner, globalFontOptions) {
+    super()
+    this.owner = owner
+    this.globalFontOptions = globalFontOptions
   }
-  getSize() {
-    throw new Error('Method not implemented.')
+  measureSize() {
+    return {
+      width: this.owner.width,
+      height: this.globalFontOptions.lineHeight
+    }
   }
 }
 exports.ImgPlaceHolder = ImgPlaceHolder

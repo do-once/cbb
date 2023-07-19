@@ -175,7 +175,7 @@
         {
           "kind": "Class",
           "canonicalReference": "@doonce/layout-engine!DoonceLayoutEngine:class",
-          "docComment": "/**\n * @author GuangHui  @description DoonceLayoutEngine 主体程序\n */\n",
+          "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -186,8 +186,267 @@
           "releaseTag": "Public",
           "name": "DoonceLayoutEngine",
           "preserveMemberOrder": false,
-          "members": [],
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "@doonce/layout-engine!DoonceLayoutEngine:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `DoonceLayoutEngine` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor({ globalFontOptions }?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DoonceLayoutEngineCtrOptions",
+                  "canonicalReference": "@doonce/layout-engine!DoonceLayoutEngineCtrOptions:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "{ globalFontOptions }",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": true
+                }
+              ]
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@doonce/layout-engine!DoonceLayoutEngine#font:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "font: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "FontFace",
+                  "canonicalReference": "!FontFace:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "font",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false,
+              "isProtected": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@doonce/layout-engine!DoonceLayoutEngine#globalFontOptions:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "globalFontOptions: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GlobalFontOptions",
+                  "canonicalReference": "@doonce/layout-engine!GlobalFontOptions:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "globalFontOptions",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false,
+              "isProtected": false
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@doonce/layout-engine!DoonceLayoutEngine#isFontLoaded:member(1)",
+              "docComment": "/**\n * 检查字体是否加载完成 参考:https://developer.mozilla.org/en-US/docs/Web/API/FontFaceSet/check#fonts_that_have_loaded 使用document.fonts.check()存在误检测,参考:https://developer.mozilla.org/en-US/docs/Web/API/FontFaceSet/check#nonexistent_fonts\n *\n * @date 2023-07-18 00:33:12\n *\n * @returns {boolean} 是否加载  @memberof DoonceLayoutEngine\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "isFontLoaded(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "name": "isFontLoaded"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@doonce/layout-engine!DoonceLayoutEngine#layout:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "layout(layoutParams: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "LayoutMethodParams",
+                  "canonicalReference": "@doonce/layout-engine!LayoutMethodParams:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "layoutParams",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ],
+              "isOptional": false,
+              "name": "layout"
+            }
+          ],
           "implementsTokenRanges": []
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@doonce/layout-engine!DoonceLayoutEngineCtrOptions:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type DoonceLayoutEngineCtrOptions = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    globalFontOptions?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "GlobalFontOptions",
+              "canonicalReference": "@doonce/layout-engine!GlobalFontOptions:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "src/DoonceLayoutEngine.ts",
+          "releaseTag": "Public",
+          "name": "DoonceLayoutEngineCtrOptions",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@doonce/layout-engine!GlobalFontOptions:type",
+          "docComment": "/**\n * @author GuangHui  @description DoonceLayoutEngine 主体程序\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type GlobalFontOptions = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    fontSize: number; /** 单位px */\n    fontFamily: string;\n    lineHeight: number; /** 单位px */\n    fontStyle: string;\n    fontWeight: string;\n    fontVariant: string;\n    source: string;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "src/DoonceLayoutEngine.ts",
+          "releaseTag": "Public",
+          "name": "GlobalFontOptions",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@doonce/layout-engine!LayoutMethodParams:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type LayoutMethodParams = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    maxWidth: number;\n    padding?: [number, number, number, number]; /** 上右下左 padding */\n    letterSpacing?: number; /** 字符间距 */\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "src/DoonceLayoutEngine.ts",
+          "releaseTag": "Public",
+          "name": "LayoutMethodParams",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
         }
       ]
     }

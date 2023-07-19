@@ -51,6 +51,10 @@
       "allowedCategories": [ "published" ]
     },
     {
+      "name": "@doonce/latex-svg-dataurl",
+      "allowedCategories": [ "published" ]
+    },
+    {
       "name": "@doonce/node-rig",
       "allowedCategories": [ "internal", "published" ]
     },
