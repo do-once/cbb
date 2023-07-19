@@ -18,8 +18,8 @@ function transformLatexToSVGStrAndDataUrl(params) {
   if (!window.MathJax) throw new Error('window.MathJax can not access')
   if (!params.latex) throw new Error('latex is required')
   const latex = params.latex
-  const retryInterval = params.retryInterval ?? 10
-  const retryMaxCount = params.retryMaxCount ?? 5
+  const retryInterval = params.retryInterval ?? 500
+  const retryMaxCount = params.retryMaxCount ?? 10
   const renderContainer = createRenderContainer()
   const scriptElWithLatex = createScriptElWithLatex(latex)
   renderContainer.appendChild(scriptElWithLatex)
