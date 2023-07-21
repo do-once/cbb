@@ -3,6 +3,8 @@
  * @description 基类
  */
 
+import { uuid } from '@doonce/utils'
+
 export interface ISize {
   width: number
   height: number
@@ -76,6 +78,8 @@ export interface ICache<K, V> {
  * @class Base
  */
 export abstract class Base implements IRect {
+  _id = uuid()
+
   x = -1
   y = -1
   width = -1

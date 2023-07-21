@@ -10,6 +10,12 @@ import { Char, Formula, ImgPlaceHolder, TextGroup } from './text'
 /** 限制行的 child 类型 */
 export type RowChild = Char | Formula | ImgPlaceHolder | TextGroup
 
+export type RowCtrOptions = {
+  globalFontOptions: GlobalFontOptions
+  rowNo: number
+  indent?: number
+}
+
 export class Row extends Base implements IRow, IChild {
   layoutItemType: LayoutItemTypeEnum = LayoutItemTypeEnum.ROW
   canLineBreak: boolean = false
@@ -20,10 +26,14 @@ export class Row extends Base implements IRow, IChild {
   childs: RowChild[] = []
   globalFontOptions: GlobalFontOptions
 
-  constructor(globalFontOptions: GlobalFontOptions) {
+  constructor({ globalFontOptions, rowNo, indent }: RowCtrOptions) {
     super()
 
+    if (!globalFontOptions || !rowNo) throw new Error('globalFontOptions and rowNo is required')
+
     this.globalFontOptions = globalFontOptions
+    this.rowNo = rowNo
+    this.indent = indent ?? 0
   }
 
   addChild(child: RowChild) {

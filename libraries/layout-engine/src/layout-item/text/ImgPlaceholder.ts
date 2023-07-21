@@ -4,31 +4,41 @@
  */
 
 import { GlobalFontOptions } from '../../DoonceLayoutEngine'
-import { Base, ISize, LayoutItemTypeEnum } from '../base'
+import { Base, IContent, ISize, LayoutItemTypeEnum } from '../base'
 import { Graph, Img } from '../img'
 
 /** 限制占位的owner类型 */
 export type Owner = Img | Graph
 
-export class ImgPlaceHolder extends Base {
+export type ImgPlaceHolderCtrOptions = {
+  owner: Owner
+  height: number
+}
+
+export class ImgPlaceHolder extends Base implements IContent {
   layoutItemType: LayoutItemTypeEnum = LayoutItemTypeEnum.IMG_PLACEHOLDER
   canLineBreak: boolean = false
 
-  owner: Owner /** 拥有占位符的组件 */
+  owner: Owner /** 拥有占位符的图形组件 */
 
-  globalFontOptions: GlobalFontOptions
+  rawContent: string = ''
+  content: string = ''
+  height = 0
 
-  constructor(owner: Owner, globalFontOptions: GlobalFontOptions) {
+  constructor({ owner, height }: ImgPlaceHolderCtrOptions) {
+    if (!owner) throw new Error('owner is required')
+
     super()
 
     this.owner = owner
-    this.globalFontOptions = globalFontOptions
+    this.height = height
   }
 
   measureSize(): ISize {
+    // TODO 似乎不需要实现
     return {
       width: this.owner.width,
-      height: this.globalFontOptions.lineHeight
+      height: this.height
     }
   }
 }

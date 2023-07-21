@@ -4,10 +4,10 @@
  */
 
 import { Base, IContent, IChild, ISize, LayoutItemTypeEnum } from '../base'
-import { ImgPlaceHolder, Char, Formula } from './'
+import { Char, Formula } from './'
 
 /** 限制下TextGroup的child 类型 */
-export type TextGroupChild = Char | Formula | ImgPlaceHolder
+export type TextGroupChild = Char | Formula
 
 export class TextGroup extends Base implements IChild, IContent {
   layoutItemType: LayoutItemTypeEnum = LayoutItemTypeEnum.TEXT_GROUP

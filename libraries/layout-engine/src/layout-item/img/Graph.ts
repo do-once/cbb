@@ -5,20 +5,34 @@
 
 import { measureImgSize } from '@doonce/utils'
 
-import { Base, ISize, LayoutItemTypeEnum } from '../base'
+import { Base, IImgSurround, ImgSurrounTypeEnum, ISize, LayoutItemTypeEnum } from '../base'
 
-export class Graph extends Base {
+export type GraphCtrParams = {
+  src: string
+  imgSurroundType: ImgSurrounTypeEnum
+}
+
+export class Graph extends Base implements IImgSurround {
   layoutItemType = LayoutItemTypeEnum.GRAPH
   canLineBreak = false
 
   src: string
 
-  constructor(src: string) {
+  imgSurroundType: ImgSurrounTypeEnum
+
+  constructor({ src, imgSurroundType }: GraphCtrParams) {
     super()
 
     if (!src) throw new Error('src is required')
 
     this.src = src
+    this.imgSurroundType = imgSurroundType
+  }
+
+  async init() {
+    const { width, height } = await this.measureSize()
+    this.width = width
+    this.height = height
   }
 
   async measureSize(): Promise<ISize> {

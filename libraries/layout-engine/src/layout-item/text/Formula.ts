@@ -67,6 +67,8 @@ export class Formula extends Base implements IContent {
         this.content = svgStr
         this.svgEl = svgEl
       } else {
+        // ? 兜底是否合适?如果不能反序列化为 svg 节点,那 mathjax 渲染为svg 就应该有问题了
+        // ? 此处值得再考虑下
         /**  svg 不支持,兜底使用图片形式渲染 */
         this.formulaRenderType = FormulaRenderTypeEnum.IMG
         this.content = dataUrl
