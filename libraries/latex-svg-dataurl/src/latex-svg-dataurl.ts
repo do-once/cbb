@@ -36,7 +36,7 @@ export function transformLatexToSVGStrAndDataUrl(
 
   const latex = params.latex
   const retryInterval = params.retryInterval ?? 500
-  const retryMaxCount = params.retryMaxCount ?? 10
+  const retryMaxCount = params.retryMaxCount ?? 20
 
   const renderContainer = createRenderContainer()
   const scriptElWithLatex = createScriptElWithLatex(latex)
@@ -73,6 +73,7 @@ export function transformLatexToSVGStrAndDataUrl(
             dataUrl: 'data:image/svg+xml; charset=utf8, ' + encodeURIComponent(svgStr)
           })
         } catch (error) {
+          console.log('error :>> ', error)
           retryCount++
 
           clearTimeout(timer)

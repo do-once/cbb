@@ -48,6 +48,7 @@ export function transformLatexToSVGStrAndDataUrl(params) {
                     });
                 }
                 catch (error) {
+                    console.log('error :>> ', error);
                     retryCount++;
                     clearTimeout(timer);
                     timer = setTimeout(display, retryInterval);
