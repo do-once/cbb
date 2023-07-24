@@ -3,6 +3,26 @@
  * @description 常用js工具函数
  */
 /**
+ * 矩形碰撞检测
+ *
+ * @date 2023-07-24 16:47:55
+ * @export
+ * @param rect1 矩形1
+ * @param rect2 矩形2
+ * @returns {boolean} 是否碰撞
+ */
+export declare function checkCollision(rect1: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}, rect2: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}): boolean;
+/**
  * 取一个区间的随机整数
  * @param {Number} min 最小值
  * @param {Number} max 最大值

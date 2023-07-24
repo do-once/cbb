@@ -35,6 +35,19 @@ export const canSupportCssVar: {
 };
 
 // @public
+export function checkCollision(rect1: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}, rect2: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}): boolean;
+
+// @public
 export function chunk(array: [], size: number): any[];
 
 // @public

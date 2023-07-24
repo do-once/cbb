@@ -4,6 +4,31 @@
  */
 
 /**
+ * 矩形碰撞检测
+ *
+ * @date 2023-07-24 16:47:55
+ * @export
+ * @param rect1 矩形1
+ * @param rect2 矩形2
+ * @returns {boolean} 是否碰撞
+ */
+export function checkCollision(
+  rect1: { x: number; y: number; width: number; height: number },
+  rect2: { x: number; y: number; width: number; height: number }
+) {
+  if (
+    rect1.x < rect2.x + rect2.width &&
+    rect1.x + rect1.width > rect2.x &&
+    rect1.y < rect2.y + rect2.height &&
+    rect1.y + rect1.height > rect2.y
+  ) {
+    return true // 矩形发生碰撞
+  } else {
+    return false // 矩形未发生碰撞
+  }
+}
+
+/**
  * 取一个区间的随机整数
  * @param {Number} min 最小值
  * @param {Number} max 最大值
