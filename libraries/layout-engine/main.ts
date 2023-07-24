@@ -6,21 +6,20 @@
 import { createApp } from 'vue'
 import {
   DoonceLayoutEngine,
-  Formula,
-  Char,
   FormulaRenderTypeEnum,
   InputLayoutItemDesc,
-  LayoutItemTypeEnum
+  LayoutItemTypeEnum,
+  ImgSurrounTypeEnum
 } from './src/'
 import { DoonceHtmlParser, IToken } from '@doonce/html-parser'
-import { getCssFontDesc } from '@doonce/utils'
 
 const htmlStrArr = [
   `<span>计算\\(1\\times 3\\times\\dfrac{1}{3}\\times(-2)\\)的结果是\\((\\quad)\\)</span>`,
   `<span>已知一个数的绝对值为\\(5\\)，另一个数的绝对值为\\(3\\)，且两数之积为负，则两数之差为 __________.</span>`,
   `<span>已知\\(A\\)，\\(B\\)，\\(C\\)是数轴上的三个点，点\\(A\\)，\\(B\\)表示的数分别是\\(1\\)，\\(3\\)，如图所示\\(.\\)若\\(BC=2AB\\)，则点\\(C\\)表示的数是__________.</span>\n<p><img src="/img-test.png" style="height: 49px; width: 200px; float: right;" /></p>`,
   `<span>如图，在点\\(M\\)，\\(N\\)，\\(P\\)，\\(Q\\)中，一次函数\\(y=kx+2\\left(k < 0\\right)\\)的图象不可能经过的点是\\((\\quad)\\)</span>
-<p><img bigger="https://bj.download.cycore.cn/question/2018/6/29/11/56/75af1d99-789f-4813-b444-df783dbe6bc4.png" h="126pxpx" src="http://bj.download.cycore.cn/question/2018/6/29/11/56/d160b798-ff47-4ae9-b25d-6a7284dc7de6.png" w="121pxpx" style="width: 120px; height: 126px;;max-width:100%;display:inline-block;vertical-align:middle;" height="126" data-cke-saved-src="http://bj.download.cycore.cn/question/2018/6/29/11/56/d160b798-ff47-4ae9-b25d-6a7284dc7de6.png" /></p>`
+<p><img bigger="https://bj.download.cycore.cn/question/2018/6/29/11/56/75af1d99-789f-4813-b444-df783dbe6bc4.png" h="126pxpx" src="https://static.zhixue.com/zhixue.png" w="121pxpx" style="width: 120px; height: 126px;;max-width:100%;display:inline-block;vertical-align:middle;" height="126" data-cke-saved-src="http://bj.download.cycore.cn/question/2018/6/29/11/56/d160b798-ff47-4ae9-b25d-6a7284dc7de6.png"/>这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本</p>`,
+  `<span>计算\\(-2 \\times (-3)\\)的结果是\\((\\quad)\\)</span>`
 ]
 
 // TODO 公式中的&lt;等特殊字符需要处理
@@ -75,10 +74,13 @@ let inputLayoutItemDescList = flatedText.reduce<InputLayoutItemDesc[]>((acc, cur
   return acc.concat(tempList)
 }, [])
 
-// TODO 临时不考虑有图片场景
-// inputLayoutItemDescList = inputLayoutItemDescList.concat(
-//   img.map(i => ({ layoutItemType: LayoutItemTypeEnum.GRAPH, rawContent: i?.content }))
-// )
+inputLayoutItemDescList = inputLayoutItemDescList.concat(
+  img.map(i => ({
+    layoutItemType: LayoutItemTypeEnum.GRAPH,
+    rawContent: i?.content,
+    imgSurroundType: ImgSurrounTypeEnum.FLOAT
+  }))
+)
 
 console.log('inputLayoutItemDescList :>> ', inputLayoutItemDescList)
 
@@ -86,7 +88,7 @@ const le = new DoonceLayoutEngine({
   globalFontOptions: {
     fontSize: 16,
     fontFamily: 'syst',
-    lineHeight: 20,
+    lineHeight: 24,
     fontStyle: 'normal',
     fontWeight: 'normal',
     fontVariant: 'normal',
@@ -99,12 +101,12 @@ const le = new DoonceLayoutEngine({
 
 await le.init()
 
-const layoutList = le.layout({
+const layoutListOrObj = le.layout({
   maxWidth: 500,
   padding: [10, 10, 10, 10],
   letterSpacing: 2
 })
-console.log('layoutList :>> ', layoutList)
+console.log('layoutListOrObj :>> ', layoutListOrObj)
 
 // canvas 渲染
 // const canvas = document.getElementById('stage') as HTMLCanvasElement
@@ -133,23 +135,25 @@ console.log('layoutList :>> ', layoutList)
 //   })
 // })
 
-const temp1 = `<div>
-<h1>DoonceLayoutEngine Example</h1>
-<div style="width: 800px; height: 800px; border: 1px solid blue; font-size:16px;line-height:20px;font-family:'syst'">
-  <div class="row" v-for='row in layoutList' :style="{display:'flex',alignItems:'center',border:'1px solid pink',width:row.width+'px',height:row.height+'px'}">
+const tempForHtml = `<div>
+<div style="position:relative;width: 500px; height: 800px; outline: 1px solid blue; font-size:16px;font-family:'syst';">
+
+  <div class="row" v-for='row in layoutList' :style="{display:'flex',alignItems:'center',outline:'1px solid pink',width:row.width+'px',height:row.height+'px',lineHeight:row.height+'px'}">
     <template v-for='c in row.childs'>
       <span  v-if="c.layoutItemType === 'CHAR'" v-text="c.content"></span>
       <img v-if="c.layoutItemType === 'FORMULA'" :src="c.content"  />
+      <span v-if="c.layoutItemType === 'IMG_PLACEHOLDER'" :style="{width:c.width+'px',height:c.height+'px'}"></span>
     </template>
   </div>
+  <img v-for="img in imgList" :src="img.src" :style="{position:'absolute',left:img.x+'px',top:img.y+'px',outline: '1px solid green'}"/>
 </div>
 </div>`
 
-const temp2 = `<div style="width: 800px; height: 800px; border: 1px solid blue; position: relative;font-size:16px;line-height:20px;font-family:'syst'">
+const tempForAbsolute = `<div style="width: 500px; height: 800px; outline: 1px solid blue; position: relative;font-size:16px;line-height:20px;font-family:'syst'">
 <div
   v-for="row in layoutList"
   class="row"
-  :style="{position: 'absolute',left:row.x+'px',top:row.y+'px',border:'1px solid pink',width:row.width+'px',height:row.height+'px'}"
+  :style="{position: 'absolute',left:row.x+'px',top:row.y+'px',outline:'1px solid pink',width:row.width+'px',height:row.height+'px',lineHeight:row.height+'px'}"
 >
   <template v-for="c in row.childs">
     <span
@@ -164,12 +168,21 @@ const temp2 = `<div style="width: 800px; height: 800px; border: 1px solid blue; 
     />
   </template>
 </div>
+<img v-for="img in imgList" :src="img.src" :style="{position:'absolute',left:img.x+'px',top:img.y+'px',outline: '1px solid green'}"/>
 </div>`
 const app = {
-  template: temp2,
+  template: tempForAbsolute,
   data() {
     return {
-      layoutList
+      layoutListOrObj
+    }
+  },
+  computed: {
+    layoutList() {
+      return Array.isArray(this.layoutListOrObj) ? layoutListOrObj : this.layoutListOrObj.rowList
+    },
+    imgList() {
+      return Array.isArray(this.layoutListOrObj) ? [] : this.layoutListOrObj.imgList
     }
   }
 }

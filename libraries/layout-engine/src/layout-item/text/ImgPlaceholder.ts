@@ -32,12 +32,13 @@ export class ImgPlaceHolder extends Base implements IContent {
 
     this.owner = owner
     this.height = height
+    this.width = this.owner.width
   }
 
   measureSize(): ISize {
     // TODO 似乎不需要实现
     return {
-      width: this.owner.width,
+      width: this.width,
       height: this.height
     }
   }

@@ -3,13 +3,14 @@
  * @description DoonceLayoutEngine 主体程序
  */
 
-import { loadFont } from '@doonce/utils'
+import { loadFont, checkCollision } from '@doonce/utils'
 import {
   Char,
   Formula,
   FormulaRenderTypeEnum,
   Graph,
   Img,
+  ImgPlaceHolder,
   ImgSurrounTypeEnum,
   LayoutItemTypeEnum,
   Row,
@@ -37,6 +38,7 @@ export type DoonceLayoutEngineCtrOptions = {
   globalFontOptions: GlobalFontOptions /** 字体 */
   inputLayoutItemDescList: InputLayoutItemDesc[] /** 用户传入的布局项描述对象列表 */
   formulaRenderType: FormulaRenderTypeEnum /** 公式渲染类型 */
+  debug?: false
 }
 
 export type LayoutMethodParams = {
@@ -56,10 +58,13 @@ export class DoonceLayoutEngine {
 
   formulaRenderType: FormulaRenderTypeEnum
 
+  debug: boolean
+
   constructor({
     globalFontOptions,
     inputLayoutItemDescList,
-    formulaRenderType
+    formulaRenderType,
+    debug
   }: DoonceLayoutEngineCtrOptions) {
     if (!globalFontOptions) throw new Error('globalFontOptions is required')
     if (!inputLayoutItemDescList || !inputLayoutItemDescList.length)
@@ -68,6 +73,7 @@ export class DoonceLayoutEngine {
     this.globalFontOptions = globalFontOptions
     this.inputLayoutItemDescList = inputLayoutItemDescList
     this.formulaRenderType = formulaRenderType ?? FormulaRenderTypeEnum.IMG
+    this.debug = !!debug
   }
 
   async init() {
@@ -84,7 +90,7 @@ export class DoonceLayoutEngine {
     /** 等待实例初始化尺寸和 content结束 */
     await Promise.all(this.inputLayoutItemInstanceList.map(instance => instance.init()))
 
-    console.log('this.inputLayoutItemInstanceList :>> ', this.inputLayoutItemInstanceList)
+    this.debug && console.log('this.inputLayoutItemInstanceList :>> ', this.inputLayoutItemInstanceList)
   }
 
   private instantiateInputLayoutItemDescList() {
@@ -134,7 +140,121 @@ export class DoonceLayoutEngine {
     maxWidth,
     padding,
     letterSpacing
-  }: { imgOrGraph: Img | Graph } & LayoutMethodParams) {}
+  }: { imgOrGraph: Img | Graph } & LayoutMethodParams) {
+    let rowList: Row[] = []
+
+    /** 环绕 */
+    if (imgOrGraph.imgSurroundType === ImgSurrounTypeEnum.FLOAT) {
+      /** 调试用,模拟图片位置 */
+      imgOrGraph.x = maxWidth - imgOrGraph.width - 100
+      imgOrGraph.y = 0
+
+      const textLayoutItemList = this.inputLayoutItemInstanceList.filter(
+        (instance): instance is Char | Formula =>
+          ![LayoutItemTypeEnum.GRAPH, LayoutItemTypeEnum.IMG].includes(instance.layoutItemType)
+      )
+
+      /** 首行 */
+      let curRow = new Row({
+        globalFontOptions: this.globalFontOptions,
+        rowNo: 1
+      })
+      curRow.x = 0
+      curRow.y = 0
+      curRow.width = 0
+      curRow.height = this.globalFontOptions.lineHeight
+
+      /** 记录之前行,用来计算当前行 y 坐标 */
+      let prevRow: Row | null = null
+
+      for (let i = 0, curItem: Char | Formula; i < textLayoutItemList.length; i++) {
+        curItem = textLayoutItemList[i]
+
+        /** 传入字符位置尺寸信息 同图片做碰撞检测 */
+        const isCollision = checkCollision(
+          {
+            width: curItem.width,
+            height: curItem.height,
+            x: curRow.width + curItem.x,
+            y: prevRow ? prevRow.y + prevRow.height : 0 /** 首行,prevRow 为空 */
+          },
+          imgOrGraph
+        )
+        this.debug && isCollision && console.log('collision curItem is :>> ', curItem)
+
+        /** 碰撞则添加图片占位,并更新当前行宽度 */
+        if (isCollision) {
+          curRow.addChild(
+            new ImgPlaceHolder({ owner: imgOrGraph, height: this.globalFontOptions.lineHeight })
+          )
+          curRow.width = imgOrGraph.x + imgOrGraph.width
+        }
+
+        if (
+          /** 超过容器宽度换行 */
+          curRow.width + curItem.width >
+          maxWidth
+        ) {
+          /** 加入行数组前更新当前行信息 */
+          this.updateCurRowInfo(curRow, prevRow)
+          /** 记录prevRow */
+          prevRow = curRow
+          /** 换行,将当前行塞入数组 */
+          rowList.push(curRow)
+
+          /** 创建新行 */
+          curRow = new Row({
+            globalFontOptions: this.globalFontOptions,
+            rowNo: curRow.rowNo + 1
+          })
+          /** 重置行宽和 x 坐标 */
+          curRow.width = 0
+          curRow.x = 0
+
+          /** 换行后,当前 item 的宽度大于图片左侧宽度,也需要绕开图片 */
+          if (curItem.width > imgOrGraph.x) {
+            curRow.addChild(
+              new ImgPlaceHolder({ owner: imgOrGraph, height: this.globalFontOptions.lineHeight })
+            )
+            curRow.width = imgOrGraph.x + imgOrGraph.width
+          }
+        }
+
+        /** 更新当前 item 的 x 坐标 ,其为塞入当前 item 前的行宽 */
+        curItem.x = curRow.width // TODO 可能还需要加上 letterSpacing
+        /** 将当前 item 塞入当前行 */
+        curRow.addChild(curItem)
+        /** 更新当前行信息 */
+        curRow.width += curItem.width
+      }
+
+      /** 最后行 */
+      /** 加入行数组前更新当前行信息 */
+      this.updateCurRowInfo(curRow, prevRow)
+      /** 记录prevRow */
+      prevRow = curRow
+      /** 换行,将当前行塞入数组 */
+      rowList.push(curRow)
+    } else if (imgOrGraph.imgSurroundType === ImgSurrounTypeEnum.ABSOLUTE) {
+      /** 绝对定位 */
+      rowList = this.layoutWithNoneImg({ maxWidth, padding, letterSpacing })
+
+      /** 绝对定位,首次进入时,也按下挂坐标处理 */
+      imgOrGraph.x = maxWidth - imgOrGraph.width
+
+      const lastRow = rowList[rowList.length - 1]
+      imgOrGraph.y = lastRow.width + imgOrGraph.width <= maxWidth ? lastRow.y : lastRow.y + lastRow.height
+    } else {
+      /** 默认下挂(图片渲染在题干的右下) */
+      rowList = this.layoutWithNoneImg({ maxWidth, padding, letterSpacing })
+      imgOrGraph.x = maxWidth - imgOrGraph.width
+
+      const lastRow = rowList[rowList.length - 1]
+      imgOrGraph.y = lastRow.width + imgOrGraph.width <= maxWidth ? lastRow.y : lastRow.y + lastRow.height
+    }
+
+    return { rowList, imgList: [imgOrGraph] }
+  }
 
   private layoutWithNoneImg({ maxWidth, padding, letterSpacing }: LayoutMethodParams) {
     const textLayoutItemList = this.inputLayoutItemInstanceList.filter(
@@ -148,16 +268,20 @@ export class DoonceLayoutEngine {
     let curRow = new Row({
       globalFontOptions: this.globalFontOptions,
       rowNo: 1
-      // indent: 2 * this.globalFontOptions.fontSize /** 首行缩进2个字符宽度 */
     })
     curRow.x = 0
-    curRow.width = curRow.indent /** 留出缩进距离 */
+
+    let prevRow: Row | null = null
 
     for (let i = 0, curItem: Char | Formula; i < textLayoutItemList.length; i++) {
       curItem = textLayoutItemList[i]
 
       /** 超宽 */
       if (curRow.width + curItem.width > maxWidth) {
+        /** 加入行数组前更新当前行信息 */
+        this.updateCurRowInfo(curRow, prevRow)
+        /** 记录prevRow */
+        prevRow = curRow
         /** 换行,将当前行塞入数组 */
         rowList.push(curRow)
 
@@ -175,45 +299,45 @@ export class DoonceLayoutEngine {
       curItem.x = curRow.width // TODO 可能还需要加上 letterSpacing
       /** 将当前 item 塞入当前行 */
       curRow.addChild(curItem)
-      /** 更新当前行信息 */
+      /** 更新当前行宽度 */
       curRow.width += curItem.width
     }
 
     /** 最后行 */
+    this.updateCurRowInfo(curRow, prevRow)
+    prevRow = curRow
     rowList.push(curRow)
-
-    /** 更新行高 & 行 y 坐标 */
-    rowList.forEach((row, index, arr) => {
-      row.height = Math.max(this.globalFontOptions.lineHeight, this.getHighestRowChildHeight(row.childs))
-
-      /** 行 y 坐标依赖上一个行的高度计算后才能计算 */
-      if (row.rowNo === 1) {
-        row.y = 0
-      } else {
-        const prevRow = arr[index - 1]
-        row.y = prevRow.y + prevRow.height
-      }
-    })
-
-    /** 水平居中行内item */
-    rowList.forEach(row => {
-      row.childs.forEach(c => {
-        c.y = (row.height - c.height) / 2
-      })
-    })
 
     return rowList
   }
 
-  getHighestRowChildHeight(rowChild: RowChild[]) {
-    let height = 0
-    rowChild.forEach(row => {
-      if (row.height > height) {
-        height = row.height
-      }
+  private updateCurRowInfo(curRow: Row, prevRow: Row | null) {
+    /** 更新当前行行高 */
+    curRow.height = Math.max(this.globalFontOptions.lineHeight, this.getHighestRowChildHeight(curRow.childs))
+    console.log('curRow.height :>> ', curRow.height)
+
+    /** 计算当前行 y 坐标,其依赖上一个行高计算后才能计算 */
+    curRow.y = prevRow ? prevRow.y + prevRow.height : 0
+
+    /** 水平居中行内item */
+    curRow.childs.forEach(child => {
+      child.y = Math.abs(curRow.height - child.height) / 2
     })
 
-    return height
+    return curRow
+  }
+
+  /**
+   * 获取最高 child 的高度
+   *
+   * @date 2023-07-21 16:43:37
+   * @private
+   * @param rowChild
+   * @returns {number} 高度
+   * @memberof DoonceLayoutEngine
+   */
+  private getHighestRowChildHeight(rowChild: RowChild[]): number {
+    return rowChild.reduce((acc, cur) => Math.max(cur.height, acc), 0)
   }
 
   /**
