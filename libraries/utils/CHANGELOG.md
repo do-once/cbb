@@ -1,6 +1,18 @@
 # Change Log - @doonce/utils
 
-This log was last generated on Mon, 17 Jul 2023 08:13:32 GMT and should not be manually modified.
+This log was last generated on Tue, 25 Jul 2023 12:14:28 GMT and should not be manually modified.
+
+## 1.1.0
+Tue, 25 Jul 2023 12:14:28 GMT
+
+### Minor changes
+
+- add font lib
+
+### Patches
+
+- add cache to measureText
+- rush build
 
 ## 1.0.0
 Mon, 17 Jul 2023 08:13:32 GMT

@@ -1,0 +1,39 @@
+{
+  "name": "@doonce/layout-engine",
+  "entries": [
+    {
+      "version": "0.0.2",
+      "tag": "@doonce/layout-engine_v0.0.2",
+      "date": "Tue, 25 Jul 2023 12:14:28 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "init"
+          },
+          {
+            "comment": "add example"
+          },
+          {
+            "comment": "impl img surround"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "rush build"
+          }
+        ],
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@doonce/html-parser\" to `3.0.0`"
+          },
+          {
+            "comment": "Updating dependency \"@doonce/latex-svg-dataurl\" to `6.0.0`"
+          },
+          {
+            "comment": "Updating dependency \"@doonce/utils\" to `1.1.0`"
+          }
+        ]
+      }
+    }
+  ]
+}

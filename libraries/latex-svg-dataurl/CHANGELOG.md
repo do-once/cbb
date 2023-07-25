@@ -1,6 +1,21 @@
 # Change Log - @doonce/latex-svg-dataurl
 
-This log was last generated on Tue, 18 Jul 2023 09:08:22 GMT and should not be manually modified.
+This log was last generated on Tue, 25 Jul 2023 12:14:28 GMT and should not be manually modified.
+
+## 6.0.0
+Tue, 25 Jul 2023 12:14:28 GMT
+
+### Breaking changes
+
+- combine api output object
+
+### Patches
+
+- fix id duplicate
+- update retryMaxCount and retryInterval
+- rush build
+- print err
+- rush build
 
 ## 5.0.0
 Tue, 18 Jul 2023 09:08:22 GMT

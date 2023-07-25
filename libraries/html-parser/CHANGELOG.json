@@ -2,6 +2,23 @@
   "name": "@doonce/html-parser",
   "entries": [
     {
+      "version": "3.0.0",
+      "tag": "@doonce/html-parser_v3.0.0",
+      "date": "Tue, 25 Jul 2023 12:14:28 GMT",
+      "comments": {
+        "major": [
+          {
+            "comment": "impl parse token list to ast and refactor attr impl"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "rush build"
+          }
+        ]
+      }
+    },
+    {
       "version": "2.0.0",
       "tag": "@doonce/html-parser_v2.0.0",
       "date": "Mon, 17 Jul 2023 08:13:32 GMT",
