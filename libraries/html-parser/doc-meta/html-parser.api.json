@@ -194,11 +194,11 @@
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "constructor({ debug }: "
+                  "text": "constructor({ debug }?: "
                 },
                 {
                   "kind": "Content",
-                  "text": "{\n        debug?: boolean;\n    }"
+                  "text": "{\n        debug?: boolean | undefined;\n    }"
                 },
                 {
                   "kind": "Content",
@@ -215,7 +215,7 @@
                     "startIndex": 1,
                     "endIndex": 2
                   },
-                  "isOptional": false
+                  "isOptional": true
                 }
               ]
             },

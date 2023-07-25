@@ -20,8 +20,8 @@ export interface IAstNode {
 export declare class DoonceHtmlParser {
     static State: Record<State, State>;
     debug: boolean;
-    constructor({ debug }: {
-        debug?: boolean;
+    constructor({ debug }?: {
+        debug?: boolean | undefined;
     });
     /**
      * 解析输入的 html 字符串,返回 tokenList

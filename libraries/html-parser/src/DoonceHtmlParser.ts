@@ -45,7 +45,7 @@ export class DoonceHtmlParser {
 
   debug: boolean
 
-  constructor({ debug }: { debug?: boolean }) {
+  constructor({ debug } = {} as { debug?: boolean }) {
     this.debug = !!debug
   }
 

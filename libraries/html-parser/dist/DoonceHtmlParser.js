@@ -15,7 +15,7 @@ export class DoonceHtmlParser {
         COMMENT: 'COMMENT'
     };
     debug;
-    constructor({ debug }) {
+    constructor({ debug } = {}) {
         this.debug = !!debug;
     }
     /**
