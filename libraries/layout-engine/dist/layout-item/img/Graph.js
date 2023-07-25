@@ -8,11 +8,18 @@ export class Graph extends Base {
     layoutItemType = LayoutItemTypeEnum.GRAPH;
     canLineBreak = false;
     src;
-    constructor(src) {
+    imgSurroundType;
+    constructor({ src, imgSurroundType }) {
         super();
         if (!src)
             throw new Error('src is required');
         this.src = src;
+        this.imgSurroundType = imgSurroundType;
+    }
+    async init() {
+        const { width, height } = await this.measureSize();
+        this.width = width;
+        this.height = height;
     }
     async measureSize() {
         return await measureImgSize(this.src);

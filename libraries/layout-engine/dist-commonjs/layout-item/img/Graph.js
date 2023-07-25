@@ -11,10 +11,17 @@ class Graph extends base_1.Base {
   layoutItemType = base_1.LayoutItemTypeEnum.GRAPH
   canLineBreak = false
   src
-  constructor(src) {
+  imgSurroundType
+  constructor({ src, imgSurroundType }) {
     super()
     if (!src) throw new Error('src is required')
     this.src = src
+    this.imgSurroundType = imgSurroundType
+  }
+  async init() {
+    const { width, height } = await this.measureSize()
+    this.width = width
+    this.height = height
   }
   async measureSize() {
     return await (0, utils_1.measureImgSize)(this.src)

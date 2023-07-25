@@ -40,10 +40,10 @@ export declare class DoonceLayoutEngine {
     constructor({ globalFontOptions, inputLayoutItemDescList, formulaRenderType, debug }: DoonceLayoutEngineCtrOptions);
     init(): Promise<void>;
     private instantiateInputLayoutItemDescList;
-    layout({ maxWidth, padding, letterSpacing }: LayoutMethodParams): {
+    layout({ maxWidth, padding, letterSpacing }: LayoutMethodParams): Row[] | {
         rowList: Row[];
         imgList: (Graph | Img)[];
-    } | Row[];
+    };
     private layoutWithImg;
     private layoutWithNoneImg;
     private updateCurRowInfo;
@@ -68,4 +68,4 @@ export declare class DoonceLayoutEngine {
      */
     isFontLoaded(): boolean;
 }
-//# sourceMappingURL=DoonceLayoutEngine.d.ts.map
+//# sourceMappingURL=DoonceLayoutEngine-backup.d.ts.map

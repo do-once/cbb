@@ -5,21 +5,34 @@
 ```ts
 
 // @public (undocumented)
-export type ContentModifyType = 'trim' | 'extractHtmlCommentContent';
-
-// @public (undocumented)
 export class DoonceHtmlParser {
-    constructor(debug?: boolean);
+    constructor({ debug }: {
+        debug: boolean;
+    });
     // (undocumented)
     debug: boolean;
-    // (undocumented)
     parse(input: string): IToken[];
+    parseTokenListToAst(tokenList: IToken[]): IAstNode;
     // (undocumented)
     static State: Record<State, State>;
 }
 
 // @public
 export function extractHtmlCommentContent(htmlComment: string): string;
+
+// @public (undocumented)
+export interface IAstNode {
+    // (undocumented)
+    attrText: string;
+    // (undocumented)
+    children: IAstNode[];
+    // (undocumented)
+    content: string;
+    // (undocumented)
+    nodeName: string;
+    // (undocumented)
+    nodeType: 'ELEMENT' | 'COMMENT' | 'TEXT' | 'ROOT';
+}
 
 // @public
 export function isLetter(char: string): boolean;
@@ -32,17 +45,13 @@ export interface IToken {
     // (undocumented)
     content: string;
     // (undocumented)
-    _contentModifyType?: ContentModifyType;
-    // (undocumented)
-    _originContent?: string;
-    // (undocumented)
     startIndex: number;
     // (undocumented)
-    type: State; /** 原始内容修改类型 */
+    type: State; /** 内容 */
 }
 
 // @public
-export type State = 'START' /** 初始状态 */ | 'TAG_OPEN' /** 标签开头< */ | 'TAG_NAME' /** 标签名 */ | 'TAG_ATTR_NAME' /** 属性名,例如<div id="app">中的 id */ | 'TAG_ATTR_NAME_VALUE_SPLIT' /** 属性名和值的分隔符号,例如<div id="app">中的= */ | 'TAG_ATTR_PRE_DOUBLE_QUOTE' /** 属性值前双引号 */ | 'TAG_ATTR_VALUE' /** 属性值 */ | 'TAG_ATTR_POST_DOUBLE_QUOTE' /** 属性值后双引号 */ | 'TAG_ATTR_SPLIT' /** 多属性分隔符(空格) */ | 'TAG_SELF_CLOSEING' /** 结束标签中的/ */ | 'POST_TAG_NAME' /** 结束标签名 */ | 'TAG_CLOSE' /** 标签结尾> */ | 'TEXT' /** 标签内容 */ | 'COMMENT';
+export type State = 'START' /** 初始状态 */ | 'TAG_OPEN' /** 标签开头< */ | 'TAG_NAME' /** 标签名 */ | 'TAG_ATTR_TEXT' /** 属性文本 */ | 'TAG_SELF_CLOSEING' /** 结束标签中的/ */ | 'POST_TAG_NAME' /** 结束标签名 */ | 'TAG_CLOSE' /** 标签结尾> */ | 'TEXT' /** 标签内容 */ | 'COMMENT';
 
 // (No @packageDocumentation comment for this package)
 

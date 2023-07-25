@@ -13,9 +13,12 @@ class Row extends base_1.Base {
   indent = 0
   childs = []
   globalFontOptions
-  constructor(globalFontOptions) {
+  constructor({ globalFontOptions, rowNo, indent }) {
     super()
+    if (!globalFontOptions || !rowNo) throw new Error('globalFontOptions and rowNo is required')
     this.globalFontOptions = globalFontOptions
+    this.rowNo = rowNo
+    this.indent = indent ?? 0
   }
   addChild(child) {
     this.childs.push(child)

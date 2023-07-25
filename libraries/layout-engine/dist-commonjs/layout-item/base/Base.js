@@ -5,6 +5,7 @@
  */
 Object.defineProperty(exports, '__esModule', { value: true })
 exports.Base = exports.ImgSurrounTypeEnum = exports.HorizontalAlignEnum = exports.LayoutItemTypeEnum = void 0
+const utils_1 = require('@doonce/utils')
 /** 布局项类型枚举 */
 var LayoutItemTypeEnum
 ;(function (LayoutItemTypeEnum) {
@@ -40,10 +41,15 @@ var ImgSurrounTypeEnum
  * @class Base
  */
 class Base {
-  x = -1
-  y = -1
-  width = -1
-  height = -1
+  _id = (0, utils_1.uuid)()
+  x = 0
+  y = 0
+  width = 0
+  height = 0
+  setPos({ x, y }) {
+    x != null && (this.x = x)
+    y != null && (this.y = y)
+  }
   getPos() {
     return {
       x: this.x,
@@ -55,6 +61,10 @@ class Base {
       width: this.width,
       height: this.height
     }
+  }
+  setSize({ width, height }) {
+    width != null && (this.width = width)
+    height != null && (this.height = height)
   }
 }
 exports.Base = Base

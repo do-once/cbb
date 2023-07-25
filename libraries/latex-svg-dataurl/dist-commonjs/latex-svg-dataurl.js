@@ -19,7 +19,7 @@ function transformLatexToSVGStrAndDataUrl(params) {
   if (!params.latex) throw new Error('latex is required')
   const latex = params.latex
   const retryInterval = params.retryInterval ?? 500
-  const retryMaxCount = params.retryMaxCount ?? 10
+  const retryMaxCount = params.retryMaxCount ?? 20
   const renderContainer = createRenderContainer()
   const scriptElWithLatex = createScriptElWithLatex(latex)
   renderContainer.appendChild(scriptElWithLatex)

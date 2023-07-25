@@ -2,6 +2,7 @@
  * @author GuangHui
  * @description 基类
  */
+import { uuid } from '@doonce/utils';
 /** 布局项类型枚举 */
 export var LayoutItemTypeEnum;
 (function (LayoutItemTypeEnum) {
@@ -37,10 +38,15 @@ export var ImgSurrounTypeEnum;
  * @class Base
  */
 export class Base {
-    x = -1;
-    y = -1;
-    width = -1;
-    height = -1;
+    _id = uuid();
+    x = 0;
+    y = 0;
+    width = 0;
+    height = 0;
+    setPos({ x, y }) {
+        x != null && (this.x = x);
+        y != null && (this.y = y);
+    }
     getPos() {
         return {
             x: this.x,
@@ -52,6 +58,10 @@ export class Base {
             width: this.width,
             height: this.height
         };
+    }
+    setSize({ width, height }) {
+        width != null && (this.width = width);
+        height != null && (this.height = height);
     }
 }
 //# sourceMappingURL=Base.js.map

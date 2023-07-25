@@ -56,20 +56,17 @@ export class DoonceLayoutEngine {
     layout({ maxWidth, padding = [0, 0, 0, 0], letterSpacing = 0 }) {
         if (!maxWidth)
             throw new Error('layoutParams is required');
-        const imgOrGraphLayoutItemList = this.inputLayoutItemInstanceList.filter((instance) => 
-        /** 此处声明需优化 */
-        [LayoutItemTypeEnum.GRAPH, LayoutItemTypeEnum.IMG].includes(instance.layoutItemType));
-        /** 存在图片 */
-        if (imgOrGraphLayoutItemList && imgOrGraphLayoutItemList.length) {
-            return this.layoutWithImg({
-                imgOrGraph: imgOrGraphLayoutItemList[0] /** 暂只考虑只有一张图的场景 */,
+        const imgOrGraphLayoutItemList = this.inputLayoutItemInstanceList.filter((instance) => [LayoutItemTypeEnum.GRAPH, LayoutItemTypeEnum.IMG].includes(instance.layoutItemType) /** 此处还要考虑 img */);
+        if (!imgOrGraphLayoutItemList || !imgOrGraphLayoutItemList.length) {
+            return this.layoutWithNoneImg({
                 maxWidth,
                 padding,
                 letterSpacing
             });
         }
         else {
-            return this.layoutWithNoneImg({
+            return this.layoutWithImg({
+                imgOrGraph: imgOrGraphLayoutItemList[0] /** 暂只考虑只有一张图的场景 */,
                 maxWidth,
                 padding,
                 letterSpacing
@@ -81,17 +78,18 @@ export class DoonceLayoutEngine {
         /** 环绕 */
         if (imgOrGraph.imgSurroundType === ImgSurrounTypeEnum.FLOAT) {
             /** 调试用,模拟图片位置 */
-            // imgOrGraph.x = 157
-            // imgOrGraph.y = 18
-            const textLayoutItemList = this.inputLayoutItemInstanceList.filter((instance) => [LayoutItemTypeEnum.CHAR, LayoutItemTypeEnum.FORMULA].includes(instance.layoutItemType));
+            imgOrGraph.x = 0;
+            imgOrGraph.y = 0;
+            const textLayoutItemList = this.inputLayoutItemInstanceList.filter((instance) => ![LayoutItemTypeEnum.GRAPH, LayoutItemTypeEnum.IMG].includes(instance.layoutItemType));
             /** 首行 */
             let curRow = new Row({
                 globalFontOptions: this.globalFontOptions,
                 rowNo: 1
             });
-            /** 所有行全部按固定行高计算 */
-            curRow.setSize({ width: 0, height: this.globalFontOptions.lineHeight });
-            curRow.setPos({ x: 0, y: 0 });
+            curRow.x = 0;
+            curRow.y = 0;
+            curRow.width = 0;
+            curRow.height = this.globalFontOptions.lineHeight;
             /** 记录之前行,用来计算当前行 y 坐标 */
             let prevRow = null;
             for (let i = 0, curItem; i < textLayoutItemList.length; i++) {
@@ -107,67 +105,39 @@ export class DoonceLayoutEngine {
                 /** 碰撞则添加图片占位,并更新当前行宽度 */
                 if (isCollision) {
                     curRow.addChild(new ImgPlaceholder({ owner: imgOrGraph, height: this.globalFontOptions.lineHeight }));
-                    /** 宽度到图片右侧 */
-                    curRow.setSize({ width: imgOrGraph.x + imgOrGraph.width });
+                    curRow.width = imgOrGraph.x + imgOrGraph.width;
                 }
-                /** 超宽,需要将 curItem 放在下行 */
-                if (curRow.width + curItem.width > maxWidth) {
-                    let rowNo = curRow.rowNo;
+                if (
+                /** 超过容器宽度换行 */
+                curRow.width + curItem.width >
+                    maxWidth) {
                     /** 加入行数组前更新当前行信息 */
                     this.updateCurRowInfo(curRow, prevRow);
+                    /** 记录prevRow */
                     prevRow = curRow;
+                    /** 换行,将当前行塞入数组 */
                     rowList.push(curRow);
                     /** 创建新行 */
                     curRow = new Row({
-                        rowNo: rowNo + 1,
-                        globalFontOptions: this.globalFontOptions
+                        globalFontOptions: this.globalFontOptions,
+                        rowNo: curRow.rowNo + 1
                     });
-                    curRow.setSize({ width: 0, height: this.globalFontOptions.lineHeight });
-                    curRow.setPos({ x: 0, y: prevRow ? prevRow.y + prevRow.height : 0 });
-                    /** 循环检测碰撞,直到找到图片左侧可以放下 curItem 的行 */
-                    while (
-                    /** 左侧碰撞,代表左侧无空间, */
-                    checkCollision({
-                        x: curRow.width,
-                        y: rowNo * this.globalFontOptions.lineHeight /** 下行 y 坐标 */,
-                        width: curItem.width,
-                        height: curItem.height
-                    }, imgOrGraph)) {
-                        /** 添加图片占位 */
-                        const ip = new ImgPlaceholder({
-                            owner: imgOrGraph,
-                            height: this.globalFontOptions.lineHeight
-                        });
-                        ip.setPos({ x: imgOrGraph.x, y: curRow.y });
-                        curRow.addChild(ip);
-                        curRow.setSize({ width: imgOrGraph.x + imgOrGraph.width });
-                        /** 右侧剩余空间不够,需放到下行 */
-                        if (curItem.width >= maxWidth - curRow.width) {
-                            rowNo++;
-                            /** 加入行数组前更新当前行信息 */
-                            this.updateCurRowInfo(curRow, prevRow);
-                            prevRow = curRow;
-                            rowList.push(curRow);
-                            /** 创建新行 */
-                            curRow = new Row({
-                                rowNo: rowNo,
-                                globalFontOptions: this.globalFontOptions
-                            });
-                            curRow.setSize({ width: 0, height: this.globalFontOptions.lineHeight });
-                            curRow.setPos({ x: 0, y: prevRow ? prevRow.y + prevRow.height : 0 });
-                        }
+                    /** 重置行宽和 x 坐标 */
+                    curRow.width = 0;
+                    curRow.x = 0;
+                    curRow.height = this.globalFontOptions.lineHeight;
+                    /** 换行后,当前 item 的宽度大于图片左侧宽度,也需要绕开图片 */
+                    if (curItem.width > imgOrGraph.x) {
+                        curRow.addChild(new ImgPlaceholder({ owner: imgOrGraph, height: this.globalFontOptions.lineHeight }));
+                        curRow.width = imgOrGraph.x + imgOrGraph.width;
                     }
-                    /** 图片左侧可放下 */
-                    curItem.x = curRow.width;
-                    curRow.addChild(curItem);
-                    curRow.setSize({ width: curRow.width + curItem.width });
                 }
-                else {
-                    /** 未超宽 */
-                    curItem.x = curRow.width;
-                    curRow.addChild(curItem);
-                    curRow.setSize({ width: curRow.width + curItem.width });
-                }
+                /** 更新当前 item 的 x 坐标 ,其为塞入当前 item 前的行宽 */
+                curItem.x = curRow.width; // TODO 可能还需要加上 letterSpacing
+                /** 将当前 item 塞入当前行 */
+                curRow.addChild(curItem);
+                /** 更新当前行信息 */
+                curRow.width += curItem.width;
             }
             /** 最后行 */
             /** 加入行数组前更新当前行信息 */
@@ -238,7 +208,7 @@ export class DoonceLayoutEngine {
     }
     updateCurRowInfo(curRow, prevRow) {
         /** 更新当前行行高 */
-        curRow.height = Math.max(this.globalFontOptions.lineHeight, this.getHighestRowChildHeight(curRow.childs));
+        // curRow.height = Math.max(this.globalFontOptions.lineHeight, this.getHighestRowChildHeight(curRow.childs))
         /** 计算当前行 y 坐标,其依赖上一个行高计算后才能计算 */
         curRow.y = prevRow ? prevRow.y + prevRow.height : 0;
         /** 水平居中行内item */
@@ -272,4 +242,4 @@ export class DoonceLayoutEngine {
         return this.font.status === 'loaded';
     }
 }
-//# sourceMappingURL=DoonceLayoutEngine.js.map
+//# sourceMappingURL=DoonceLayoutEngine-backup.js.map

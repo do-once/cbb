@@ -2,22 +2,56 @@
  * @author GuangHui
  * @description DoonceHtmlParser 主体程序
  */
-/** <         div       id            =                         "                         app             "                           >           hello   <           /                   div             >           */
-/** TAG_OPEN  TAG_NAME  TAG_ATTR_NAME TAG_ATTR_NAME_VALUE_SPLIT TAG_ATTR_PRE_DOUBLE_QUOTE TAG_ATTR_VALUE  TAG_ATTR_POST_DOUBLE_QUOTE  TAG_CLOSE   TEXT    TAG_OPEN    TAG_SELF_CLOSEING   POST_TAG_NAME   TAG_CLOSE   */
-export declare type State = 'START' /** 初始状态 */ | 'TAG_OPEN' /** 标签开头< */ | 'TAG_NAME' /** 标签名 */ | 'TAG_ATTR_NAME' /** 属性名,例如<div id="app">中的 id */ | 'TAG_ATTR_NAME_VALUE_SPLIT' /** 属性名和值的分隔符号,例如<div id="app">中的= */ | 'TAG_ATTR_PRE_DOUBLE_QUOTE' /** 属性值前双引号 */ | 'TAG_ATTR_VALUE' /** 属性值 */ | 'TAG_ATTR_POST_DOUBLE_QUOTE' /** 属性值后双引号 */ | 'TAG_ATTR_SPLIT' /** 多属性分隔符(空格) */ | 'TAG_SELF_CLOSEING' /** 结束标签中的/ */ | 'POST_TAG_NAME' /** 结束标签名 */ | 'TAG_CLOSE' /** 标签结尾> */ | 'TEXT' /** 标签内容 */ | 'COMMENT'; /** 注释信息 */
-export declare type ContentModifyType = 'trim' | 'extractHtmlCommentContent';
+/** <         div       id="app"      >           hello   <           /                   div             >           */
+/** TAG_OPEN  TAG_NAME  TAG_ATTR_TEXT TAG_CLOSE   TEXT    TAG_OPEN    TAG_SELF_CLOSEING   POST_TAG_NAME   TAG_CLOSE   */
+export declare type State = 'START' /** 初始状态 */ | 'TAG_OPEN' /** 标签开头< */ | 'TAG_NAME' /** 标签名 */ | 'TAG_ATTR_TEXT' /** 属性文本 */ | 'TAG_SELF_CLOSEING' /** 结束标签中的/ */ | 'POST_TAG_NAME' /** 结束标签名 */ | 'TAG_CLOSE' /** 标签结尾> */ | 'TEXT' /** 标签内容 */ | 'COMMENT'; /** 注释信息 */
 export interface IToken {
     type: State;
     startIndex: number; /** 相对输入字符串的开始索引位置 */
-    content: string; /** 内容(可能会进行trim/内容提取操作,所以用_originContent 保存原始内容) */
-    _originContent?: string; /** 原始 content,修改前的 content */
-    _contentModifyType?: ContentModifyType; /** 原始内容修改类型 */
+    content: string; /** 内容 */
+}
+export interface IAstNode {
+    nodeType: 'ELEMENT' | 'COMMENT' | 'TEXT' | 'ROOT';
+    nodeName: string;
+    content: string;
+    attrText: string;
+    children: IAstNode[];
 }
 export declare class DoonceHtmlParser {
     static State: Record<State, State>;
     debug: boolean;
-    constructor(debug?: boolean);
+    constructor({ debug }: {
+        debug: boolean;
+    });
+    /**
+     * 解析输入的 html 字符串,返回 tokenList
+     *
+     * @date 2023-07-25 19:46:40
+     * @param input
+     * @returns {IToken[]} tokenList
+     * @memberof DoonceHtmlParser
+     */
     parse(input: string): IToken[];
+    /**
+     * 将 tokenList 解析为 ast
+     *
+     * @date 2023-07-25 19:45:49
+     * @private
+     * @param tokenList
+     * @returns {IAstNode} ast对象
+     * @memberof DoonceHtmlParser
+     */
+    parseTokenListToAst(tokenList: IToken[]): IAstNode;
+    /**
+     * 找到 tokenList 中最后一个 TAG_NAME 对象
+     *
+     * @date 2023-07-25 19:40:18
+     * @private
+     * @param tokenList
+     * @returns {IToken} TAG_NAME 对象
+     * @memberof DoonceHtmlParser
+     */
+    private _findLastMatchedTagNameObj;
     /**
      * 给定字符串,从给定位置到首个>符号之前,是否存在<符号
      *

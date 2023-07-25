@@ -52,6 +52,9 @@ export declare enum ImgSurrounTypeEnum {
 export interface IImgSurround {
     imgSurroundType: ImgSurrounTypeEnum;
 }
+export interface ICache<K, V> {
+    cache: Map<K, V>;
+}
 /**
  * 抽象基类
  *
@@ -61,12 +64,15 @@ export interface IImgSurround {
  * @class Base
  */
 export declare abstract class Base implements IRect {
+    _id: string;
     x: number;
     y: number;
     width: number;
     height: number;
+    setPos({ x, y }: Partial<IPos>): void;
     getPos(): IPos;
     getSize(): ISize;
+    setSize({ width, height }: Partial<ISize>): void;
     abstract layoutItemType: LayoutItemTypeEnum;
     abstract canLineBreak: boolean;
     abstract measureSize(): ISize | Promise<ISize>;

@@ -173,32 +173,6 @@
       "preserveMemberOrder": false,
       "members": [
         {
-          "kind": "TypeAlias",
-          "canonicalReference": "@doonce/html-parser!ContentModifyType:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare type ContentModifyType = "
-            },
-            {
-              "kind": "Content",
-              "text": "'trim' | 'extractHtmlCommentContent'"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "src/DoonceHtmlParser.ts",
-          "releaseTag": "Public",
-          "name": "ContentModifyType",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
-        },
-        {
           "kind": "Class",
           "canonicalReference": "@doonce/html-parser!DoonceHtmlParser:class",
           "docComment": "",
@@ -220,11 +194,11 @@
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "constructor(debug?: "
+                  "text": "constructor({ debug }: "
                 },
                 {
                   "kind": "Content",
-                  "text": "boolean"
+                  "text": "{\n        debug: boolean;\n    }"
                 },
                 {
                   "kind": "Content",
@@ -236,12 +210,12 @@
               "overloadIndex": 1,
               "parameters": [
                 {
-                  "parameterName": "debug",
+                  "parameterName": "{ debug }",
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
                     "endIndex": 2
                   },
-                  "isOptional": true
+                  "isOptional": false
                 }
               ]
             },
@@ -277,7 +251,7 @@
             {
               "kind": "Method",
               "canonicalReference": "@doonce/html-parser!DoonceHtmlParser#parse:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * 解析输入的 html 字符串,返回 tokenList\n *\n * @date 2023-07-25 19:46:40\n *\n * @param input - \n *\n * @returns {IToken[]} tokenList  @memberof DoonceHtmlParser\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -325,6 +299,59 @@
               ],
               "isOptional": false,
               "name": "parse"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@doonce/html-parser!DoonceHtmlParser#parseTokenListToAst:member(1)",
+              "docComment": "/**\n * 将 tokenList 解析为 ast\n *\n * @date 2023-07-25 19:45:49  @private\n *\n * @param tokenList - \n *\n * @returns {IAstNode} ast对象  @memberof DoonceHtmlParser\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "parseTokenListToAst(tokenList: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "IToken",
+                  "canonicalReference": "@doonce/html-parser!IToken:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "IAstNode",
+                  "canonicalReference": "@doonce/html-parser!IAstNode:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 5
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "tokenList",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 3
+                  },
+                  "isOptional": false
+                }
+              ],
+              "isOptional": false,
+              "name": "parseTokenListToAst"
             },
             {
               "kind": "Property",
@@ -425,6 +452,164 @@
             }
           ],
           "name": "extractHtmlCommentContent"
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@doonce/html-parser!IAstNode:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface IAstNode "
+            }
+          ],
+          "fileUrlPath": "src/DoonceHtmlParser.ts",
+          "releaseTag": "Public",
+          "name": "IAstNode",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@doonce/html-parser!IAstNode#attrText:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "attrText: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "attrText",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@doonce/html-parser!IAstNode#children:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "children: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "IAstNode",
+                  "canonicalReference": "@doonce/html-parser!IAstNode:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "children",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@doonce/html-parser!IAstNode#content:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "content: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "content",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@doonce/html-parser!IAstNode#nodeName:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "nodeName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "nodeName",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@doonce/html-parser!IAstNode#nodeType:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "nodeType: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "'ELEMENT' | 'COMMENT' | 'TEXT' | 'ROOT'"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "nodeType",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
         },
         {
           "kind": "Function",
@@ -533,61 +718,6 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@doonce/html-parser!IToken#_contentModifyType:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "_contentModifyType?: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "ContentModifyType",
-                  "canonicalReference": "@doonce/html-parser!ContentModifyType:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "_contentModifyType",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@doonce/html-parser!IToken#_originContent:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "_originContent?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "_originContent",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
               "canonicalReference": "@doonce/html-parser!IToken#content:member",
               "docComment": "",
               "excerptTokens": [
@@ -674,7 +804,7 @@
         {
           "kind": "TypeAlias",
           "canonicalReference": "@doonce/html-parser!State:type",
-          "docComment": "/**\n * TAG_OPEN TAG_NAME TAG_ATTR_NAME TAG_ATTR_NAME_VALUE_SPLIT TAG_ATTR_PRE_DOUBLE_QUOTE TAG_ATTR_VALUE TAG_ATTR_POST_DOUBLE_QUOTE TAG_CLOSE TEXT TAG_OPEN TAG_SELF_CLOSEING POST_TAG_NAME TAG_CLOSE\n */\n",
+          "docComment": "/**\n * TAG_OPEN TAG_NAME TAG_ATTR_TEXT TAG_CLOSE TEXT TAG_OPEN TAG_SELF_CLOSEING POST_TAG_NAME TAG_CLOSE\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -682,7 +812,7 @@
             },
             {
               "kind": "Content",
-              "text": "'START' /** 初始状态 */ | 'TAG_OPEN' /** 标签开头< */ | 'TAG_NAME' /** 标签名 */ | 'TAG_ATTR_NAME' /** 属性名,例如<div id=\"app\">中的 id */ | 'TAG_ATTR_NAME_VALUE_SPLIT' /** 属性名和值的分隔符号,例如<div id=\"app\">中的= */ | 'TAG_ATTR_PRE_DOUBLE_QUOTE' /** 属性值前双引号 */ | 'TAG_ATTR_VALUE' /** 属性值 */ | 'TAG_ATTR_POST_DOUBLE_QUOTE' /** 属性值后双引号 */ | 'TAG_ATTR_SPLIT' /** 多属性分隔符(空格) */ | 'TAG_SELF_CLOSEING' /** 结束标签中的/ */ | 'POST_TAG_NAME' /** 结束标签名 */ | 'TAG_CLOSE' /** 标签结尾> */ | 'TEXT' /** 标签内容 */ | 'COMMENT'"
+              "text": "'START' /** 初始状态 */ | 'TAG_OPEN' /** 标签开头< */ | 'TAG_NAME' /** 标签名 */ | 'TAG_ATTR_TEXT' /** 属性文本 */ | 'TAG_SELF_CLOSEING' /** 结束标签中的/ */ | 'POST_TAG_NAME' /** 结束标签名 */ | 'TAG_CLOSE' /** 标签结尾> */ | 'TEXT' /** 标签内容 */ | 'COMMENT'"
             },
             {
               "kind": "Content",
