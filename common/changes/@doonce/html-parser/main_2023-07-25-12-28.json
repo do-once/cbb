@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/html-parser",
+      "comment": "make debug optional",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@doonce/html-parser"
+}
