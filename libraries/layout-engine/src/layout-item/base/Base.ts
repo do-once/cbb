@@ -80,10 +80,15 @@ export interface ICache<K, V> {
 export abstract class Base implements IRect {
   _id = uuid()
 
-  x = -1
-  y = -1
-  width = -1
-  height = -1
+  x = 0
+  y = 0
+  width = 0
+  height = 0
+
+  setPos({ x, y }: Partial<IPos>) {
+    x != null && (this.x = x)
+    y != null && (this.y = y)
+  }
 
   getPos(): IPos {
     return {
@@ -97,6 +102,11 @@ export abstract class Base implements IRect {
       width: this.width,
       height: this.height
     }
+  }
+
+  setSize({ width, height }: Partial<ISize>) {
+    width != null && (this.width = width)
+    height != null && (this.height = height)
   }
 
   abstract layoutItemType: LayoutItemTypeEnum

@@ -5,7 +5,7 @@
 
 import { measureImgSize } from '@doonce/utils'
 
-import { Base, IImgSurround, ImgSurrounTypeEnum, ISize, LayoutItemTypeEnum } from '../base'
+import { Base, IImgSurround, ImgSurrounTypeEnum, IPos, ISize, LayoutItemTypeEnum } from '../base'
 
 export type GraphCtrParams = {
   src: string

@@ -10,12 +10,12 @@ import { Graph, Img } from '../img'
 /** 限制占位的owner类型 */
 export type Owner = Img | Graph
 
-export type ImgPlaceHolderCtrOptions = {
+export type ImgPlaceholderCtrOptions = {
   owner: Owner
   height: number
 }
 
-export class ImgPlaceHolder extends Base implements IContent {
+export class ImgPlaceholder extends Base implements IContent {
   layoutItemType: LayoutItemTypeEnum = LayoutItemTypeEnum.IMG_PLACEHOLDER
   canLineBreak: boolean = false
 
@@ -23,9 +23,9 @@ export class ImgPlaceHolder extends Base implements IContent {
 
   rawContent: string = ''
   content: string = ''
-  height = 0
+  height: number
 
-  constructor({ owner, height }: ImgPlaceHolderCtrOptions) {
+  constructor({ owner, height }: ImgPlaceholderCtrOptions) {
     if (!owner) throw new Error('owner is required')
 
     super()
@@ -33,6 +33,7 @@ export class ImgPlaceHolder extends Base implements IContent {
     this.owner = owner
     this.height = height
     this.width = this.owner.width
+    this.x = this.owner.x
   }
 
   measureSize(): ISize {
