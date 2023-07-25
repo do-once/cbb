@@ -7,7 +7,7 @@
 // @public (undocumented)
 export class DoonceHtmlParser {
     constructor({ debug }: {
-        debug: boolean;
+        debug?: boolean;
     });
     // (undocumented)
     debug: boolean;

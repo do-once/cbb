@@ -21,7 +21,7 @@ export declare class DoonceHtmlParser {
     static State: Record<State, State>;
     debug: boolean;
     constructor({ debug }: {
-        debug: boolean;
+        debug?: boolean;
     });
     /**
      * 解析输入的 html 字符串,返回 tokenList

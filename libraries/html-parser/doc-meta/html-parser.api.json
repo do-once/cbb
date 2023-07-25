@@ -198,7 +198,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "{\n        debug: boolean;\n    }"
+                  "text": "{\n        debug?: boolean;\n    }"
                 },
                 {
                   "kind": "Content",
