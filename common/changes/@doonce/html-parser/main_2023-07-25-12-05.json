@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/html-parser",
+      "comment": "impl parse token list to ast and refactor attr impl",
+      "type": "major"
+    }
+  ],
+  "packageName": "@doonce/html-parser"
+}
