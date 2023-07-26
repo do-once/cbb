@@ -133,21 +133,28 @@ const app = {
       const REG_FORMULA = /(\\\(.+?\\\))/
 
       /** 解析html */
-      const input = htmlStrArr[5]
+      const input = htmlStrArr[3]
       console.log('object :>> ', input)
 
       const hp = new DoonceHtmlParser()
-      const output = hp.parse(input)
-      console.log('output :>> ', output)
+      const tokenList = hp.parse(input)
+      console.log('tokenList :>> ', tokenList)
+      const ast = hp.parseTokenListToAst(tokenList)
+      console.log('ast :>> ', ast)
       /** 解析html end */
 
       /** 过滤文本和图片 src */
-      const text = output.filter(
+      const text = tokenList.filter(
         token => token.type === DoonceHtmlParser.State.TEXT && !/^\s+$/.test(token.content)
       )
-      const img = output
-        .map((token, index, arr) => (token.content === 'src' ? arr[index + 1] : null))
-        .filter(item => !!item) as IToken[]
+
+      const img = tokenList
+        .map(token => {
+          const matched = token.content.match(/src="(.+?)"/)
+
+          return { content: matched ? matched[1] : '' }
+        })
+        .filter(i => !!i.content)
 
       console.log('text :>> ', text)
       console.log('img :>> ', img)
