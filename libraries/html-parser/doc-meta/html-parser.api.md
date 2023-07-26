@@ -23,6 +23,8 @@ export function extractHtmlCommentContent(htmlComment: string): string;
 // @public (undocumented)
 export interface IAstNode {
     // (undocumented)
+    attrObj: Record<string, unknown>;
+    // (undocumented)
     attrText: string;
     // (undocumented)
     children: IAstNode[];
@@ -49,6 +51,9 @@ export interface IToken {
     // (undocumented)
     type: State; /** 内容 */
 }
+
+// @public
+export function parseAttrTextToObj(attrText: string): Record<string, string>;
 
 // @public
 export type State = 'START' /** 初始状态 */ | 'TAG_OPEN' /** 标签开头< */ | 'TAG_NAME' /** 标签名 */ | 'TAG_ATTR_TEXT' /** 属性文本 */ | 'TAG_SELF_CLOSEING' /** 结束标签中的/ */ | 'POST_TAG_NAME' /** 结束标签名 */ | 'TAG_CLOSE' /** 标签结尾> */ | 'TEXT' /** 标签内容 */ | 'COMMENT';

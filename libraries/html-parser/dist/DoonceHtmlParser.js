@@ -217,6 +217,7 @@ export class DoonceHtmlParser {
                 nodeName: '',
                 content: '',
                 attrText: '',
+                attrObj: {},
                 children: []
             }
         ];
@@ -228,6 +229,7 @@ export class DoonceHtmlParser {
                     nodeName: content,
                     content: '',
                     attrText: '',
+                    attrObj: {},
                     children: []
                 });
             }
@@ -237,11 +239,14 @@ export class DoonceHtmlParser {
                     nodeName: '',
                     content,
                     attrText: '',
+                    attrObj: {},
                     children: []
                 });
             }
             else if (type === DoonceHtmlParser.State.TAG_ATTR_TEXT) {
-                nodeStack[nodeStack.length - 1].attrText = content;
+                const node = nodeStack[nodeStack.length - 1];
+                node.attrText = content;
+                node.attrObj = parseAttrTextToObj(content);
             }
             else if (type === DoonceHtmlParser.State.COMMENT) {
                 nodeStack[nodeStack.length - 1].children.push({
@@ -249,6 +254,7 @@ export class DoonceHtmlParser {
                     nodeName: '',
                     content,
                     attrText: '',
+                    attrObj: {},
                     children: []
                 });
             }
@@ -299,6 +305,27 @@ export class DoonceHtmlParser {
             return false;
         return afterStartIndexStr.slice(0, firstGreatThanSymbolIndex).indexOf('<') === -1;
     }
+}
+/**
+ * 将 attrText 解析为对象
+ *
+ * @date 2023-07-26 10:08:25
+ * @export
+ * @param attrText
+ * @returns {Record<string,string>}
+ */
+export function parseAttrTextToObj(attrText) {
+    if (typeof attrText !== 'string')
+        return {};
+    const attributeRegex = /(\S+)=["']?([^"'\s]+(?:\s+[^"'\s]+)*)["']?/g;
+    const attributes = {};
+    let match;
+    while ((match = attributeRegex.exec(attrText)) !== null) {
+        const attributeName = match[1];
+        const attributeValue = match[2];
+        attributes[attributeName] = attributeValue;
+    }
+    return attributes;
 }
 /**
  * 提取 htmlComment 中的内容

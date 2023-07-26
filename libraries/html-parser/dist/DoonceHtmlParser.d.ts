@@ -15,6 +15,7 @@ export interface IAstNode {
     nodeName: string;
     content: string;
     attrText: string;
+    attrObj: Record<string, unknown>;
     children: IAstNode[];
 }
 export declare class DoonceHtmlParser {
@@ -64,6 +65,15 @@ export declare class DoonceHtmlParser {
      */
     private _hasLessThanSymbolBetweenStartIndexAndFirstGreatThanSymbolIndex;
 }
+/**
+ * 将 attrText 解析为对象
+ *
+ * @date 2023-07-26 10:08:25
+ * @export
+ * @param attrText
+ * @returns {Record<string,string>}
+ */
+export declare function parseAttrTextToObj(attrText: string): Record<string, string>;
 /**
  * 提取 htmlComment 中的内容
  *
