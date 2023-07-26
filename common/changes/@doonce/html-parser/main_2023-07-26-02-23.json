@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/html-parser",
+      "comment": "impl attrText to attrObj",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@doonce/html-parser"
+}
