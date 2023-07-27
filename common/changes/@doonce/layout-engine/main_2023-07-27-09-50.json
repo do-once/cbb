@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/layout-engine",
+      "comment": "impl topic desc layout with small png",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@doonce/layout-engine"
+}
