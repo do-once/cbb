@@ -6,7 +6,7 @@
 import { transformLatexToSVGStrAndDataUrl } from '@doonce/latex-svg-dataurl'
 import { getCssFontDesc, measureImgSize } from '@doonce/utils'
 
-import { GlobalFontOptions } from '../../DoonceLayoutEngine'
+import { GlobalFontConfig } from '../../DoonceLayoutEngine'
 import { Base, IContent, ISize, LayoutItemTypeEnum } from '../base'
 
 export enum FormulaRenderTypeEnum {
@@ -14,9 +14,9 @@ export enum FormulaRenderTypeEnum {
   IMG = 'IMG'
 }
 
-export type FormulaCtrParams = {
+export type FormulaCtrOptions = {
   rawContent: string /** 公式原始内容 */
-  globalFontOptions: GlobalFontOptions /** 字体设置项 */
+  globalFontConfig: GlobalFontConfig /** 字体设置项 */
   formulaRenderType: FormulaRenderTypeEnum /** 公式渲染类型,SVG(dom 节点) 或 IMG */
   debug?: boolean /** 调试 */
 }
@@ -30,19 +30,19 @@ export class Formula extends Base implements IContent {
 
   /** 公式转换成的 svg 用什么方式渲染,svg 节点插入还是图片展示 */
   formulaRenderType: FormulaRenderTypeEnum
-  globalFontOptions: GlobalFontOptions
+  globalFontConfig: GlobalFontConfig
   debug: boolean
 
   svgEl: SVGSVGElement = null as unknown as SVGSVGElement
 
-  constructor({ rawContent, globalFontOptions, formulaRenderType, debug }: FormulaCtrParams) {
+  constructor({ rawContent, globalFontConfig, formulaRenderType, debug }: FormulaCtrOptions) {
     super()
 
-    if (!rawContent || !globalFontOptions || !formulaRenderType)
-      throw new Error('rawContent globalFontOptions and formulaRenderType is required')
+    if (!rawContent || !globalFontConfig || !formulaRenderType)
+      throw new Error('rawContent globalFontConfig and formulaRenderType is required')
 
     this.rawContent = rawContent
-    this.globalFontOptions = globalFontOptions
+    this.globalFontConfig = globalFontConfig
     this.formulaRenderType = formulaRenderType
     this.debug = debug ?? false
   }
@@ -92,13 +92,13 @@ export class Formula extends Base implements IContent {
   async measureSize(): Promise<ISize> {
     const { width, height } =
       this.formulaRenderType === FormulaRenderTypeEnum.SVG
-        ? this.measureSizeWithSvgEl(this.svgEl, this.globalFontOptions)
+        ? this.measureSizeWithSvgEl(this.svgEl, this.globalFontConfig)
         : await this.measureSizeWithSvgDataUrl(this.content)
 
     return { width, height }
   }
 
-  measureSizeWithSvgEl(svgEl: SVGSVGElement, globalFontOptions: GlobalFontOptions): ISize {
+  measureSizeWithSvgEl(svgEl: SVGSVGElement, globalFontConfig: GlobalFontConfig): ISize {
     if (!svgEl) throw new Error('svgEl is required')
 
     let frag = document.createDocumentFragment()
@@ -106,8 +106,8 @@ export class Formula extends Base implements IContent {
 
     /** 设置字体 */
     div.style.cssText = `font:${getCssFontDesc({
-      ...globalFontOptions,
-      lineHeight: globalFontOptions.lineHeight + 'px'
+      ...globalFontConfig,
+      lineHeight: globalFontConfig.lineHeight + 'px'
     })};visibility: hidden;position: absolute;left: -100vw;`
 
     div.appendChild(svgEl)

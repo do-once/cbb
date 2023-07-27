@@ -261,7 +261,7 @@ const app = {
       console.log('imgLayoutItemDescList :>> ', imgLayoutItemDescList)
 
       const le = new DoonceLayoutEngine({
-        globalFontOptions: {
+        globalFontConfig: {
           fontSize: 16,
           fontFamily: 'syst',
           lineHeight: 24,

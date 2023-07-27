@@ -3,7 +3,7 @@
  * @description 行
  */
 
-import { GlobalFontOptions } from '../DoonceLayoutEngine'
+import { GlobalFontConfig } from '../DoonceLayoutEngine'
 import { Base, IChild, IRow, ISize, LayoutItemTypeEnum } from './base'
 import { Graph } from './img'
 import { Char, Formula, ImgPlaceholder, TextGroup, CRLF } from './text'
@@ -12,7 +12,7 @@ import { Char, Formula, ImgPlaceholder, TextGroup, CRLF } from './text'
 export type RowChild = Char | Formula | ImgPlaceholder | TextGroup | CRLF | Graph
 
 export type RowCtrOptions = {
-  globalFontOptions: GlobalFontOptions
+  globalFontConfig: GlobalFontConfig
   rowNo: number
   indent?: number
 }
@@ -22,19 +22,17 @@ export class Row extends Base implements IRow, IChild {
   canLineBreak: boolean = false
 
   rowNo: number = -1
-  indent: number = 0
 
   childs: RowChild[] = []
-  globalFontOptions: GlobalFontOptions
+  globalFontConfig: GlobalFontConfig
 
-  constructor({ globalFontOptions, rowNo, indent }: RowCtrOptions) {
+  constructor({ globalFontConfig, rowNo, indent }: RowCtrOptions) {
     super()
 
-    if (!globalFontOptions || !rowNo) throw new Error('globalFontOptions and rowNo is required')
+    if (!globalFontConfig || !rowNo) throw new Error('globalFontConfig and rowNo is required')
 
-    this.globalFontOptions = globalFontOptions
+    this.globalFontConfig = globalFontConfig
     this.rowNo = rowNo
-    this.indent = indent ?? 0
   }
 
   addChild(child: RowChild) {
@@ -45,7 +43,7 @@ export class Row extends Base implements IRow, IChild {
     return this.childs.reduce<ISize>(
       (acc, cur) => {
         acc.width += cur.width
-        acc.height = Math.max(this.globalFontOptions.lineHeight, cur.height)
+        acc.height = Math.max(this.globalFontConfig.lineHeight, cur.height)
 
         return acc
       },

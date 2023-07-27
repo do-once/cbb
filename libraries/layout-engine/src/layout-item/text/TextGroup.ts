@@ -4,10 +4,11 @@
  */
 
 import { Base, IContent, IChild, ISize, LayoutItemTypeEnum } from '../base'
+import { Graph } from '../img'
 import { Char, Formula } from './'
 
 /** 限制下TextGroup的child 类型 */
-export type TextGroupChild = Char | Formula
+export type TextGroupChild = Char | Formula | Graph
 
 export class TextGroup extends Base implements IChild, IContent {
   layoutItemType: LayoutItemTypeEnum = LayoutItemTypeEnum.TEXT_GROUP
@@ -20,6 +21,10 @@ export class TextGroup extends Base implements IChild, IContent {
 
   async init() {
     // TODO 需要实现
+  }
+
+  addChild(child: TextGroupChild) {
+    this.childs.push(child)
   }
 
   measureSize(): ISize {

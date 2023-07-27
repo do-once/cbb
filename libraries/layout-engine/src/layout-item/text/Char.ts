@@ -1,15 +1,15 @@
 /**
  * @author GuangHui
- * @description 单字符
+ * @description 字符
  */
 
 import { getCssFontDesc, measureTextMetrics } from '@doonce/utils'
-import { GlobalFontOptions } from '../../DoonceLayoutEngine'
+import { GlobalFontConfig } from '../../DoonceLayoutEngine'
 import { Base, LayoutItemTypeEnum, IContent, IPos, ISize, ICache } from '../base'
 
-export type CharCtrParams = {
+export type CharOptions = {
   rawContent: string /** 原始内容 */
-  globalFontOptions: GlobalFontOptions /** 字体设置项 */
+  globalFontConfig: GlobalFontConfig /** 字体设置项 */
   debug?: boolean /** 调试 */
 }
 
@@ -20,15 +20,15 @@ export class Char extends Base implements IContent {
   rawContent: string
   content: string = ''
 
-  globalFontOptions: GlobalFontOptions
+  globalFontConfig: GlobalFontConfig
   debug = false
 
-  constructor({ rawContent, globalFontOptions, debug }: CharCtrParams) {
+  constructor({ rawContent, globalFontConfig, debug }: CharOptions) {
     super()
 
     this.rawContent = rawContent
 
-    this.globalFontOptions = globalFontOptions
+    this.globalFontConfig = globalFontConfig
     this.debug = !!debug
   }
 
@@ -42,15 +42,15 @@ export class Char extends Base implements IContent {
 
   measureSize(): ISize {
     const fontDescObj = {
-      ...this.globalFontOptions,
-      lineHeight: `${this.globalFontOptions.lineHeight}px`
+      ...this.globalFontConfig,
+      lineHeight: `${this.globalFontConfig.lineHeight}px`
     }
 
     const { width } = measureTextMetrics(this.content, getCssFontDesc(fontDescObj))
 
     return {
       width,
-      height: this.globalFontOptions.lineHeight
+      height: this.globalFontConfig.lineHeight
     }
   }
 }

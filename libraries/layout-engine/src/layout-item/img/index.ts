@@ -4,5 +4,4 @@
  */
 
 export * from './Graph'
-export * from './GraphTitle'
-export * from './Img'
+export * from './GraphWithTitle'

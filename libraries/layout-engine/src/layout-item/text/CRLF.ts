@@ -5,7 +5,7 @@
 
 import { Base, IContent, ISize, LayoutItemTypeEnum } from '../base'
 
-export type CRLFCtrParams = {
+export type CRLFOptions = {
   debug?: boolean
   rawContent?: string
 }
@@ -16,7 +16,7 @@ export class CRLF extends Base {
 
   debug = false
 
-  constructor({ debug } = {} as CRLFCtrParams) {
+  constructor({ debug } = {} as CRLFOptions) {
     super()
 
     this.debug = !!debug

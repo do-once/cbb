@@ -9,16 +9,16 @@ import {
   Formula,
   FormulaRenderTypeEnum,
   Graph,
-  Img,
   ImgPlaceholder,
   ImgSurrounTypeEnum,
   LayoutItemTypeEnum,
   Row,
   RowChild,
-  CRLF
+  CRLF,
+  GraphWithTitle
 } from './layout-item'
 
-export type GlobalFontOptions = {
+export type GlobalFontConfig = {
   fontSize: number /** 单位px */
   fontFamily: string
   lineHeight: number /** 单位px */
@@ -47,7 +47,7 @@ export type ImgLayoutItemDesc = {
 }
 
 export type DoonceLayoutEngineCtrOptions = {
-  globalFontOptions: GlobalFontOptions /** 字体 */
+  globalFontConfig: GlobalFontConfig /** 字体 */
   rowLayoutItemDescList: RowLayoutItemDesc[] /** 用户传入的参与行布局的描述对象 */
   imgLayoutItemDescList: ImgLayoutItemDesc[] /** 用户传入不参与行布局的图片描述对象 */
   formulaRenderType: FormulaRenderTypeEnum /** 公式渲染类型 */
@@ -60,8 +60,13 @@ export type LayoutMethodParams = {
   letterSpacing?: number /** 字符间距 */
 }
 
+export type LayoutMethodRet = {
+  rowList: Row[]
+  imgList: (Graph | GraphWithTitle)[]
+}
+
 export class DoonceLayoutEngine {
-  globalFontOptions: GlobalFontOptions
+  globalFontConfig: GlobalFontConfig
   font: FontFace = null as unknown as FontFace
 
   rowLayoutItemDescList: RowLayoutItemDesc[]
@@ -77,20 +82,20 @@ export class DoonceLayoutEngine {
   debug: boolean
 
   constructor({
-    globalFontOptions,
+    globalFontConfig,
     rowLayoutItemDescList,
     imgLayoutItemDescList,
     formulaRenderType,
     debug
   }: DoonceLayoutEngineCtrOptions) {
-    if (!globalFontOptions) throw new Error('globalFontOptions is required')
+    if (!globalFontConfig) throw new Error('globalFontConfig is required')
     if (
       (!imgLayoutItemDescList || !imgLayoutItemDescList.length) &&
       (!rowLayoutItemDescList || !rowLayoutItemDescList.length)
     )
       throw new Error('imgLayoutItemDescList and rowLayoutItemDescList is required at least one')
 
-    this.globalFontOptions = globalFontOptions
+    this.globalFontConfig = globalFontConfig
 
     this.rowLayoutItemDescList = rowLayoutItemDescList
     this.imgLayoutItemDescList = imgLayoutItemDescList
@@ -101,17 +106,16 @@ export class DoonceLayoutEngine {
 
   async init() {
     /** 字体不存在,则先加载 */
-    !this.font &&
-      (this.font = await loadFont(this.globalFontOptions.fontFamily, this.globalFontOptions.source))
+    !this.font && (this.font = await loadFont(this.globalFontConfig.fontFamily, this.globalFontConfig.source))
 
     /** 字体加载失败,阻塞流程 */
-    if (!this.isFontLoaded()) throw new Error(`font ${this.globalFontOptions.fontFamily} load faild`)
+    if (!this.isFontLoaded()) throw new Error(`font ${this.globalFontConfig.fontFamily} load faild`)
 
     /** 实例化描述对象 */
     this.rowLayoutItemInstanceList = this.instantiateRowLayoutItemDescList()
     this.imgLayoutItemInstanceList = this.instantiateImgLayoutItemDescList()
 
-    /** 等待实例初始化尺寸和 content结束 */
+    /** 等待实例初始化尺寸和 content 结束 */
     await Promise.all([
       ...this.rowLayoutItemInstanceList.map(instance => instance.init()),
       ...this.imgLayoutItemInstanceList.map(instance => instance.init())
@@ -126,7 +130,7 @@ export class DoonceLayoutEngine {
       if (layoutItemType === LayoutItemTypeEnum.FORMULA) {
         return new Formula({
           rawContent,
-          globalFontOptions: this.globalFontOptions,
+          globalFontConfig: this.globalFontConfig,
           formulaRenderType: this.formulaRenderType
         })
       } else if (layoutItemType === LayoutItemTypeEnum.GRAPH) {
@@ -134,7 +138,7 @@ export class DoonceLayoutEngine {
       } else if (layoutItemType === LayoutItemTypeEnum.CRLF) {
         return new CRLF()
       } else {
-        return new Char({ rawContent, globalFontOptions: this.globalFontOptions })
+        return new Char({ rawContent, globalFontConfig: this.globalFontConfig })
       }
     })
   }
@@ -145,13 +149,17 @@ export class DoonceLayoutEngine {
     })
   }
 
-  public layout({ maxWidth, padding = [0, 0, 0, 0], letterSpacing = 0 }: LayoutMethodParams) {
-    if (!maxWidth) throw new Error('layoutParams is required')
+  public layout({
+    maxWidth,
+    padding = [0, 0, 0, 0],
+    letterSpacing = 0
+  }: LayoutMethodParams): LayoutMethodRet {
+    if (!maxWidth) throw new Error('maxWidth is required')
 
     /** 存在图片 */
     if (this.imgLayoutItemInstanceList && this.imgLayoutItemInstanceList.length) {
       return this.layoutWithImg({
-        imgOrGraph: this.imgLayoutItemInstanceList[0] /** 暂只考虑只有一张图的场景 */,
+        graph: this.imgLayoutItemInstanceList[0] /** 暂只考虑只有一张图的场景 */,
         maxWidth,
         padding,
         letterSpacing
@@ -166,29 +174,26 @@ export class DoonceLayoutEngine {
   }
 
   private layoutWithImg({
-    imgOrGraph,
+    graph,
     maxWidth,
     padding,
     letterSpacing
-  }: { imgOrGraph: Img | Graph } & LayoutMethodParams): {
-    rowList: Row[]
-    imgList: (Graph | Img)[]
-  } {
+  }: { graph: GraphWithTitle | Graph } & LayoutMethodParams): LayoutMethodRet {
     let rowList: Row[] = []
 
     /** 环绕 */
-    if (imgOrGraph.imgSurroundType === ImgSurrounTypeEnum.FLOAT) {
+    if (graph.imgSurroundType === ImgSurrounTypeEnum.FLOAT) {
       /** 调试用,模拟图片位置 */
-      imgOrGraph.x = 157
-      imgOrGraph.y = 18
+      graph.x = 157
+      graph.y = 18
 
       /** 首行 */
       let curRow = new Row({
-        globalFontOptions: this.globalFontOptions,
+        globalFontConfig: this.globalFontConfig,
         rowNo: 1
       })
       /** 所有行全部按固定行高计算 */
-      curRow.setSize({ width: 0, height: this.globalFontOptions.lineHeight })
+      curRow.setSize({ width: 0, height: this.globalFontConfig.lineHeight })
       curRow.setPos({ x: 0, y: 0 })
 
       /** 记录之前行,用来计算当前行 y 坐标 */
@@ -207,9 +212,9 @@ export class DoonceLayoutEngine {
           /** 创建新行 */
           curRow = new Row({
             rowNo: rowNo + 1,
-            globalFontOptions: this.globalFontOptions
+            globalFontConfig: this.globalFontConfig
           })
-          curRow.setSize({ width: 0, height: this.globalFontOptions.lineHeight })
+          curRow.setSize({ width: 0, height: this.globalFontConfig.lineHeight })
           curRow.setPos({ x: 0, y: prevRow ? prevRow.y + prevRow.height : 0 })
         }
 
@@ -221,17 +226,15 @@ export class DoonceLayoutEngine {
             x: curRow.width + curItem.x,
             y: prevRow ? prevRow.y + prevRow.height : 0 /** 首行,prevRow 为空 */
           },
-          imgOrGraph
+          graph
         )
         this.debug && isCollision && console.log('collision curItem is :>> ', curItem)
 
         /** 碰撞则添加图片占位,并更新当前行宽度 */
         if (isCollision) {
-          curRow.addChild(
-            new ImgPlaceholder({ owner: imgOrGraph, height: this.globalFontOptions.lineHeight })
-          )
+          curRow.addChild(new ImgPlaceholder({ owner: graph, height: this.globalFontConfig.lineHeight }))
           /** 宽度到图片右侧 */
-          curRow.setSize({ width: imgOrGraph.x + imgOrGraph.width })
+          curRow.setSize({ width: graph.x + graph.width })
         }
 
         /** 超宽,需要将 curItem 放在下行 */
@@ -246,9 +249,9 @@ export class DoonceLayoutEngine {
           /** 创建新行 */
           curRow = new Row({
             rowNo: rowNo + 1,
-            globalFontOptions: this.globalFontOptions
+            globalFontConfig: this.globalFontConfig
           })
-          curRow.setSize({ width: 0, height: this.globalFontOptions.lineHeight })
+          curRow.setSize({ width: 0, height: this.globalFontConfig.lineHeight })
           curRow.setPos({ x: 0, y: prevRow ? prevRow.y + prevRow.height : 0 })
 
           /** 循环检测碰撞,直到找到图片左侧可以放下 curItem 的行 */
@@ -257,22 +260,22 @@ export class DoonceLayoutEngine {
             checkCollision(
               {
                 x: curRow.width,
-                y: rowNo * this.globalFontOptions.lineHeight /** 下行 y 坐标 */,
+                y: rowNo * this.globalFontConfig.lineHeight /** 下行 y 坐标 */,
                 width: curItem.width,
                 height: curItem.height
               },
-              imgOrGraph
+              graph
             )
           ) {
             /** 添加图片占位 */
             const ip = new ImgPlaceholder({
-              owner: imgOrGraph,
-              height: this.globalFontOptions.lineHeight
+              owner: graph,
+              height: this.globalFontConfig.lineHeight
             })
-            ip.setPos({ x: imgOrGraph.x, y: curRow.y })
+            ip.setPos({ x: graph.x, y: curRow.y })
 
             curRow.addChild(ip)
-            curRow.setSize({ width: imgOrGraph.x + imgOrGraph.width })
+            curRow.setSize({ width: graph.x + graph.width })
 
             /** 右侧剩余空间不够,需放到下行 */
             if (curItem.width >= maxWidth - curRow.width) {
@@ -285,9 +288,9 @@ export class DoonceLayoutEngine {
               /** 创建新行 */
               curRow = new Row({
                 rowNo: rowNo,
-                globalFontOptions: this.globalFontOptions
+                globalFontConfig: this.globalFontConfig
               })
-              curRow.setSize({ width: 0, height: this.globalFontOptions.lineHeight })
+              curRow.setSize({ width: 0, height: this.globalFontConfig.lineHeight })
               curRow.setPos({ x: 0, y: prevRow ? prevRow.y + prevRow.height : 0 })
             }
           }
@@ -313,28 +316,30 @@ export class DoonceLayoutEngine {
       prevRow = curRow
       /** 换行,将当前行塞入数组 */
       rowList.push(curRow)
-    } else if (imgOrGraph.imgSurroundType === ImgSurrounTypeEnum.ABSOLUTE) {
+    } else if (graph.imgSurroundType === ImgSurrounTypeEnum.ABSOLUTE) {
       /** 绝对定位 */
-      rowList = this.layoutWithNoneImg({ maxWidth, padding, letterSpacing })
+      const layoutWithNoneImgRet = this.layoutWithNoneImg({ maxWidth, padding, letterSpacing })
+      rowList = layoutWithNoneImgRet.rowList
 
       /** 绝对定位,首次进入时,也按下挂坐标处理 */
-      imgOrGraph.x = maxWidth - imgOrGraph.width
+      graph.x = maxWidth - graph.width
 
       const lastRow = rowList[rowList.length - 1]
-      imgOrGraph.y = lastRow.width + imgOrGraph.width <= maxWidth ? lastRow.y : lastRow.y + lastRow.height
+      graph.y = lastRow.width + graph.width <= maxWidth ? lastRow.y : lastRow.y + lastRow.height
     } else {
       /** 默认下挂(图片渲染在题干的右下) */
-      rowList = this.layoutWithNoneImg({ maxWidth, padding, letterSpacing })
-      imgOrGraph.x = maxWidth - imgOrGraph.width
+      const layoutWithNoneImgRet = this.layoutWithNoneImg({ maxWidth, padding, letterSpacing })
+      rowList = layoutWithNoneImgRet.rowList
+      graph.x = maxWidth - graph.width
 
       const lastRow = rowList[rowList.length - 1]
-      imgOrGraph.y = lastRow.width + imgOrGraph.width <= maxWidth ? lastRow.y : lastRow.y + lastRow.height
+      graph.y = lastRow.width + graph.width <= maxWidth ? lastRow.y : lastRow.y + lastRow.height
     }
 
-    return { rowList, imgList: [imgOrGraph] }
+    return { rowList, imgList: [graph] }
   }
 
-  private layoutWithNoneImg({ maxWidth, padding, letterSpacing }: LayoutMethodParams) {
+  private layoutWithNoneImg({ maxWidth, padding, letterSpacing }: LayoutMethodParams): LayoutMethodRet {
     const textLayoutItemList = this.rowLayoutItemInstanceList.filter(
       (instance): instance is Char | Formula =>
         ![LayoutItemTypeEnum.GRAPH, LayoutItemTypeEnum.IMG].includes(instance.layoutItemType)
@@ -344,7 +349,7 @@ export class DoonceLayoutEngine {
 
     /** 首行 */
     let curRow = new Row({
-      globalFontOptions: this.globalFontOptions,
+      globalFontConfig: this.globalFontConfig,
       rowNo: 1
     })
     curRow.x = 0
@@ -365,9 +370,9 @@ export class DoonceLayoutEngine {
         /** 创建新行 */
         curRow = new Row({
           rowNo: rowNo + 1,
-          globalFontOptions: this.globalFontOptions
+          globalFontConfig: this.globalFontConfig
         })
-        curRow.setSize({ width: 0, height: this.globalFontOptions.lineHeight })
+        curRow.setSize({ width: 0, height: this.globalFontConfig.lineHeight })
         curRow.setPos({ x: 0, y: prevRow ? prevRow.y + prevRow.height : 0 })
       }
 
@@ -382,10 +387,10 @@ export class DoonceLayoutEngine {
 
         /** 创建新行 */
         curRow = new Row({
-          globalFontOptions: this.globalFontOptions,
+          globalFontConfig: this.globalFontConfig,
           rowNo: curRow.rowNo + 1
         })
-        curRow.setSize({ width: 0, height: this.globalFontOptions.lineHeight })
+        curRow.setSize({ width: 0, height: this.globalFontConfig.lineHeight })
         curRow.setPos({ x: 0, y: prevRow ? prevRow.y + prevRow.height : 0 })
       }
 
@@ -402,12 +407,12 @@ export class DoonceLayoutEngine {
     prevRow = curRow
     rowList.push(curRow)
 
-    return rowList
+    return { rowList, imgList: [] }
   }
 
   private updateCurRowInfo(curRow: Row, prevRow: Row | null) {
     /** 更新当前行行高 */
-    curRow.height = Math.max(this.globalFontOptions.lineHeight, this.getHighestRowChildHeight(curRow.childs))
+    curRow.height = Math.max(this.globalFontConfig.lineHeight, this.getHighestRowChildHeight(curRow.childs))
 
     /** 计算当前行 y 坐标,其依赖上一个行高计算后才能计算 */
     curRow.y = prevRow ? prevRow.y + prevRow.height : 0

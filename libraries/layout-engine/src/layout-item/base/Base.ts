@@ -41,7 +41,6 @@ export interface IContent {
 
 export interface IRow {
   rowNo: number /** 行号 */
-  indent: number /** 缩进 */
 }
 
 /** 水平居中枚举 */

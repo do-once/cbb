@@ -7,7 +7,7 @@ import { measureImgSize } from '@doonce/utils'
 
 import { Base, IImgSurround, ImgSurrounTypeEnum, IPos, ISize, LayoutItemTypeEnum } from '../base'
 
-export type GraphCtrParams = {
+export type GraphOptions = {
   src: string
   imgSurroundType?: ImgSurrounTypeEnum
 }
@@ -20,7 +20,7 @@ export class Graph extends Base implements IImgSurround {
 
   imgSurroundType: ImgSurrounTypeEnum
 
-  constructor({ src, imgSurroundType }: GraphCtrParams) {
+  constructor({ src, imgSurroundType }: GraphOptions) {
     super()
 
     if (!src) throw new Error('src is required')
