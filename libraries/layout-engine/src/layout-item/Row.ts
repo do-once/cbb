@@ -5,10 +5,11 @@
 
 import { GlobalFontOptions } from '../DoonceLayoutEngine'
 import { Base, IChild, IRow, ISize, LayoutItemTypeEnum } from './base'
-import { Char, Formula, ImgPlaceholder, TextGroup } from './text'
+import { Graph } from './img'
+import { Char, Formula, ImgPlaceholder, TextGroup, CRLF } from './text'
 
 /** 限制行的 child 类型 */
-export type RowChild = Char | Formula | ImgPlaceholder | TextGroup
+export type RowChild = Char | Formula | ImgPlaceholder | TextGroup | CRLF | Graph
 
 export type RowCtrOptions = {
   globalFontOptions: GlobalFontOptions

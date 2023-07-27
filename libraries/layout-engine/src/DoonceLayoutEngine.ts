@@ -14,7 +14,8 @@ import {
   ImgSurrounTypeEnum,
   LayoutItemTypeEnum,
   Row,
-  RowChild
+  RowChild,
+  CRLF
 } from './layout-item'
 
 export type GlobalFontOptions = {
@@ -27,16 +28,28 @@ export type GlobalFontOptions = {
   source: string
 }
 
-export type InputLayoutItemDesc = {
-  layoutItemType: LayoutItemTypeEnum.CHAR | LayoutItemTypeEnum.FORMULA | LayoutItemTypeEnum.GRAPH
-  // | LayoutItemTypeEnum.TEXT_GROUP // ? 后期考虑
+export type RowLayoutItemDesc = {
+  layoutItemType:
+    | LayoutItemTypeEnum.CHAR
+    | LayoutItemTypeEnum.FORMULA
+    | LayoutItemTypeEnum.GRAPH
+    | LayoutItemTypeEnum.CRLF
+  rawContent: string
+}
+
+export type ImgLayoutItemDesc = {
+  // TODO 考虑img
+  layoutItemType: LayoutItemTypeEnum.GRAPH
   rawContent: string
   imgSurroundType?: ImgSurrounTypeEnum
+  width?: number
+  height?: number
 }
 
 export type DoonceLayoutEngineCtrOptions = {
   globalFontOptions: GlobalFontOptions /** 字体 */
-  inputLayoutItemDescList: InputLayoutItemDesc[] /** 用户传入的布局项描述对象列表 */
+  rowLayoutItemDescList: RowLayoutItemDesc[] /** 用户传入的参与行布局的描述对象 */
+  imgLayoutItemDescList: ImgLayoutItemDesc[] /** 用户传入不参与行布局的图片描述对象 */
   formulaRenderType: FormulaRenderTypeEnum /** 公式渲染类型 */
   debug?: boolean
 }
@@ -51,10 +64,13 @@ export class DoonceLayoutEngine {
   globalFontOptions: GlobalFontOptions
   font: FontFace = null as unknown as FontFace
 
-  /** 用户传入的布局项描述列表 */
-  inputLayoutItemDescList: InputLayoutItemDesc[]
-  /** 实例化后的用户布局项列表 */
-  inputLayoutItemInstanceList: (Char | Formula | Graph)[] = []
+  rowLayoutItemDescList: RowLayoutItemDesc[]
+  imgLayoutItemDescList: ImgLayoutItemDesc[]
+
+  /** 实例化后的参与行布局的描述对象 */
+  rowLayoutItemInstanceList: RowChild[] = []
+  /** 实例化后的不参与行布局的图片描述对象 */
+  imgLayoutItemInstanceList: Graph[] = []
 
   formulaRenderType: FormulaRenderTypeEnum
 
@@ -62,16 +78,23 @@ export class DoonceLayoutEngine {
 
   constructor({
     globalFontOptions,
-    inputLayoutItemDescList,
+    rowLayoutItemDescList,
+    imgLayoutItemDescList,
     formulaRenderType,
     debug
   }: DoonceLayoutEngineCtrOptions) {
     if (!globalFontOptions) throw new Error('globalFontOptions is required')
-    if (!inputLayoutItemDescList || !inputLayoutItemDescList.length)
-      throw new Error('layoutItemDescList is required')
+    if (
+      (!imgLayoutItemDescList || !imgLayoutItemDescList.length) &&
+      (!rowLayoutItemDescList || !rowLayoutItemDescList.length)
+    )
+      throw new Error('imgLayoutItemDescList and rowLayoutItemDescList is required at least one')
 
     this.globalFontOptions = globalFontOptions
-    this.inputLayoutItemDescList = inputLayoutItemDescList
+
+    this.rowLayoutItemDescList = rowLayoutItemDescList
+    this.imgLayoutItemDescList = imgLayoutItemDescList
+
     this.formulaRenderType = formulaRenderType ?? FormulaRenderTypeEnum.IMG
     this.debug = !!debug
   }
@@ -84,17 +107,22 @@ export class DoonceLayoutEngine {
     /** 字体加载失败,阻塞流程 */
     if (!this.isFontLoaded()) throw new Error(`font ${this.globalFontOptions.fontFamily} load faild`)
 
-    /** 实例化用户传入的布局项 */
-    this.inputLayoutItemInstanceList = this.instantiateInputLayoutItemDescList()
+    /** 实例化描述对象 */
+    this.rowLayoutItemInstanceList = this.instantiateRowLayoutItemDescList()
+    this.imgLayoutItemInstanceList = this.instantiateImgLayoutItemDescList()
 
     /** 等待实例初始化尺寸和 content结束 */
-    await Promise.all(this.inputLayoutItemInstanceList.map(instance => instance.init()))
+    await Promise.all([
+      ...this.rowLayoutItemInstanceList.map(instance => instance.init()),
+      ...this.imgLayoutItemInstanceList.map(instance => instance.init())
+    ])
 
-    this.debug && console.log('this.inputLayoutItemInstanceList :>> ', this.inputLayoutItemInstanceList)
+    this.debug && console.log('this.rowLayoutItemInstanceList :>> ', this.rowLayoutItemInstanceList)
+    this.debug && console.log('this.imgLayoutItemInstanceList :>> ', this.imgLayoutItemInstanceList)
   }
 
-  private instantiateInputLayoutItemDescList() {
-    return this.inputLayoutItemDescList.map(({ layoutItemType, rawContent, imgSurroundType }) => {
+  private instantiateRowLayoutItemDescList(): RowChild[] {
+    return this.rowLayoutItemDescList.map(({ layoutItemType, rawContent }) => {
       if (layoutItemType === LayoutItemTypeEnum.FORMULA) {
         return new Formula({
           rawContent,
@@ -102,25 +130,28 @@ export class DoonceLayoutEngine {
           formulaRenderType: this.formulaRenderType
         })
       } else if (layoutItemType === LayoutItemTypeEnum.GRAPH) {
-        return new Graph({ src: rawContent, imgSurroundType: imgSurroundType ?? ImgSurrounTypeEnum.NONE })
+        return new Graph({ src: rawContent })
+      } else if (layoutItemType === LayoutItemTypeEnum.CRLF) {
+        return new CRLF()
       } else {
         return new Char({ rawContent, globalFontOptions: this.globalFontOptions })
       }
     })
   }
 
+  private instantiateImgLayoutItemDescList() {
+    return this.imgLayoutItemDescList.map(({ rawContent, imgSurroundType }) => {
+      return new Graph({ src: rawContent, imgSurroundType: imgSurroundType ?? ImgSurrounTypeEnum.NONE })
+    })
+  }
+
   public layout({ maxWidth, padding = [0, 0, 0, 0], letterSpacing = 0 }: LayoutMethodParams) {
     if (!maxWidth) throw new Error('layoutParams is required')
 
-    const imgOrGraphLayoutItemList = this.inputLayoutItemInstanceList.filter((instance): instance is Graph =>
-      /** 此处声明需优化 */
-      [LayoutItemTypeEnum.GRAPH, LayoutItemTypeEnum.IMG].includes(instance.layoutItemType)
-    )
-
     /** 存在图片 */
-    if (imgOrGraphLayoutItemList && imgOrGraphLayoutItemList.length) {
+    if (this.imgLayoutItemInstanceList && this.imgLayoutItemInstanceList.length) {
       return this.layoutWithImg({
-        imgOrGraph: imgOrGraphLayoutItemList[0] /** 暂只考虑只有一张图的场景 */,
+        imgOrGraph: this.imgLayoutItemInstanceList[0] /** 暂只考虑只有一张图的场景 */,
         maxWidth,
         padding,
         letterSpacing
@@ -148,13 +179,8 @@ export class DoonceLayoutEngine {
     /** 环绕 */
     if (imgOrGraph.imgSurroundType === ImgSurrounTypeEnum.FLOAT) {
       /** 调试用,模拟图片位置 */
-      // imgOrGraph.x = 157
-      // imgOrGraph.y = 18
-
-      const textLayoutItemList = this.inputLayoutItemInstanceList.filter(
-        (instance): instance is Char | Formula =>
-          [LayoutItemTypeEnum.CHAR, LayoutItemTypeEnum.FORMULA].includes(instance.layoutItemType)
-      )
+      imgOrGraph.x = 157
+      imgOrGraph.y = 18
 
       /** 首行 */
       let curRow = new Row({
@@ -168,8 +194,24 @@ export class DoonceLayoutEngine {
       /** 记录之前行,用来计算当前行 y 坐标 */
       let prevRow: Row | null = null
 
-      for (let i = 0, curItem: Char | Formula; i < textLayoutItemList.length; i++) {
-        curItem = textLayoutItemList[i]
+      for (let i = 0, curItem; i < this.rowLayoutItemInstanceList.length; i++) {
+        curItem = this.rowLayoutItemInstanceList[i]
+        if (curItem.layoutItemType === LayoutItemTypeEnum.CRLF) {
+          let rowNo = curRow.rowNo
+
+          /** 加入行数组前更新当前行信息 */
+          this.updateCurRowInfo(curRow, prevRow)
+          prevRow = curRow
+          rowList.push(curRow)
+
+          /** 创建新行 */
+          curRow = new Row({
+            rowNo: rowNo + 1,
+            globalFontOptions: this.globalFontOptions
+          })
+          curRow.setSize({ width: 0, height: this.globalFontOptions.lineHeight })
+          curRow.setPos({ x: 0, y: prevRow ? prevRow.y + prevRow.height : 0 })
+        }
 
         /** 传入字符位置尺寸信息 同图片做碰撞检测 */
         const isCollision = checkCollision(
@@ -293,7 +335,7 @@ export class DoonceLayoutEngine {
   }
 
   private layoutWithNoneImg({ maxWidth, padding, letterSpacing }: LayoutMethodParams) {
-    const textLayoutItemList = this.inputLayoutItemInstanceList.filter(
+    const textLayoutItemList = this.rowLayoutItemInstanceList.filter(
       (instance): instance is Char | Formula =>
         ![LayoutItemTypeEnum.GRAPH, LayoutItemTypeEnum.IMG].includes(instance.layoutItemType)
     )
@@ -312,6 +354,23 @@ export class DoonceLayoutEngine {
     for (let i = 0, curItem: Char | Formula; i < textLayoutItemList.length; i++) {
       curItem = textLayoutItemList[i]
 
+      if (curItem.layoutItemType === LayoutItemTypeEnum.CRLF) {
+        let rowNo = curRow.rowNo
+
+        /** 加入行数组前更新当前行信息 */
+        this.updateCurRowInfo(curRow, prevRow)
+        prevRow = curRow
+        rowList.push(curRow)
+
+        /** 创建新行 */
+        curRow = new Row({
+          rowNo: rowNo + 1,
+          globalFontOptions: this.globalFontOptions
+        })
+        curRow.setSize({ width: 0, height: this.globalFontOptions.lineHeight })
+        curRow.setPos({ x: 0, y: prevRow ? prevRow.y + prevRow.height : 0 })
+      }
+
       /** 超宽 */
       if (curRow.width + curItem.width > maxWidth) {
         /** 加入行数组前更新当前行信息 */
@@ -326,9 +385,8 @@ export class DoonceLayoutEngine {
           globalFontOptions: this.globalFontOptions,
           rowNo: curRow.rowNo + 1
         })
-        /** 重置行宽和 x 坐标 */
-        curRow.width = 0
-        curRow.x = 0
+        curRow.setSize({ width: 0, height: this.globalFontOptions.lineHeight })
+        curRow.setPos({ x: 0, y: prevRow ? prevRow.y + prevRow.height : 0 })
       }
 
       /** 更新当前 item 的 x 坐标 ,其为塞入当前 item 前的行宽 */

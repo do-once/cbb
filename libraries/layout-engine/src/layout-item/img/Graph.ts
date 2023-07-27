@@ -9,7 +9,7 @@ import { Base, IImgSurround, ImgSurrounTypeEnum, IPos, ISize, LayoutItemTypeEnum
 
 export type GraphCtrParams = {
   src: string
-  imgSurroundType: ImgSurrounTypeEnum
+  imgSurroundType?: ImgSurrounTypeEnum
 }
 
 export class Graph extends Base implements IImgSurround {
@@ -26,7 +26,7 @@ export class Graph extends Base implements IImgSurround {
     if (!src) throw new Error('src is required')
 
     this.src = src
-    this.imgSurroundType = imgSurroundType
+    this.imgSurroundType = imgSurroundType ?? ImgSurrounTypeEnum.NONE
   }
 
   async init() {

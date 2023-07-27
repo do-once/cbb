@@ -7,11 +7,13 @@ import { createApp } from 'vue'
 import {
   DoonceLayoutEngine,
   FormulaRenderTypeEnum,
-  InputLayoutItemDesc,
   LayoutItemTypeEnum,
-  ImgSurrounTypeEnum
+  ImgSurrounTypeEnum,
+  ImgLayoutItemDesc,
+  RowLayoutItemDesc
 } from './src/'
 import { DoonceHtmlParser, IToken } from '@doonce/html-parser'
+import { measureImgSize } from '@doonce/utils'
 
 // canvas 渲染
 // const canvas = document.getElementById('stage') as HTMLCanvasElement
@@ -59,7 +61,7 @@ const tempForAbsolute = `<div style="width: 500px; height: 800px; outline: 1px s
 <div
   v-for="row in layoutList"
   class="row"
-  :style="{position: 'absolute',left:row.x+'px',top:row.y+'px',outline:'1px solid pink',width:row.width+'px',height:row.height+'px',lineHeight:row.height+'px'}"
+  :style="{position: 'absolute',left:row.x+'px',top:row.y+'px',outline:'1px solid pink',width:row.width+'px',height:row.height+'px',lineHeight:row.height+'px',width:row.width+'px'}"
 >
   <template v-for="c in row.childs">
     <span
@@ -72,6 +74,11 @@ const tempForAbsolute = `<div style="width: 500px; height: 800px; outline: 1px s
       :style="{position: 'absolute',left:c.x+'px',top:c.y+'px'}"
       :src="c.content"
     />
+    <img
+    v-if="c.layoutItemType === 'GRAPH'"
+    :style="{position: 'absolute',left:c.x+'px',top:c.y+'px'}"
+    :src="c.src"
+  />
   </template>
 </div>
 <img v-for="img in imgList" :src="img.src" :style="{position:'absolute',left:img.x+'px',top:img.y+'px',outline: '1px solid green'}"/>
@@ -98,7 +105,7 @@ const app = {
       const htmlStrArr = [
         `<span>计算\\(1\\times 3\\times\\dfrac{1}{3}\\times(-2)\\)的结果是\\((\\quad)\\)</span>`,
         `<span>已知一个数的绝对值为\\(5\\)，另一个数的绝对值为\\(3\\)，且两数之积为负，则两数之差为 __________.</span>`,
-        `<span>已知\\(A\\)，\\(B\\)，\\(C\\)是数轴上的三个点，点\\(A\\)，\\(B\\)表示的数分别是\\(1\\)，\\(3\\)，如图所示\\(.\\)若\\(BC=2AB\\)，则点\\(C\\)表示的数是__________.</span>\n<p><img src="/img-test.png" style="height: 49px; width: 200px; float: right;" /></p>`,
+        `<span>已知\\(A\\)，\\(B\\)，\\(C\\)是数轴上的三个点，点\\(A\\)，\\(B\\)表示的数分别是\\(1\\)，\\(3\\)，如图所示\\(.\\)<p>此文本前需要换行;</p>若\\(BC=2AB\\)，则点\\(C\\)表示的数是__________.</span>\n`,
         `<span>如图，在点\\(M\\)，\\(N\\)，\\(P\\)，\\(Q\\)中，一次函数\\(y=kx+2\\left(k < 0\\right)\\)的图象不可能经过的点是\\((\\quad)\\)</span>
     <p><img bigger="https://bj.download.cycore.cn/question/2018/6/29/11/56/75af1d99-789f-4813-b444-df783dbe6bc4.png" h="126pxpx" src="https://static.zhixue.com/zhixue.png" w="121pxpx" style="width: 120px; height: 126px;;max-width:100%;display:inline-block;vertical-align:middle;" height="126" data-cke-saved-src="http://bj.download.cycore.cn/question/2018/6/29/11/56/d160b798-ff47-4ae9-b25d-6a7284dc7de6.png"/>这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本</p>`,
         `<span>计算\\(-2 \\times (-3)\\)的结果是\\((\\quad)\\)</span>`,
@@ -125,16 +132,17 @@ const app = {
           </tr>
          </tbody>
         </table>
-        <p>其中表格中“\\(-2.5\\)”表示的是\\((\\quad)\\)</p>`
+        <p>其中表格中“\\(-2.5\\)”表示的是\\((\\quad)\\)</p>`,
+        `<span class="head">下列说法正确的有\\((\\quad)\\)</span>
+        <p>①正有理数是正整数和正分数的统称；<img src="/assets/small.png" />②整数是正整数和负整数的统称；③有理数是正整数、负整数、正分数、负分数的统称；④\\(0\\)是偶数，但不是自然数；⑤偶数包括正偶数、负偶数和零．</p><img src="/assets/big.png" />`
       ]
 
       // TODO 公式中的&lt;等特殊字符需要处理
-
       const REG_FORMULA = /(\\\(.+?\\\))/
 
       /** 解析html */
-      const input = htmlStrArr[3]
-      console.log('object :>> ', input)
+      const input = htmlStrArr[2]
+      console.log('input :>> ', input)
 
       const hp = new DoonceHtmlParser()
       const tokenList = hp.parse(input)
@@ -143,59 +151,114 @@ const app = {
       console.log('ast :>> ', ast)
       /** 解析html end */
 
-      /** 过滤文本和图片 src */
-      const text = tokenList.filter(
-        token => token.type === DoonceHtmlParser.State.TEXT && !/^\s+$/.test(token.content)
-      )
+      /** 过滤文本&换行标签&图片src */
+      const filteredTokenList = tokenList.filter((token, index, arr) => {
+        return (
+          /** 非空文本 */
+          (token.type === 'TEXT' && !/^\s+$/.test(token.content)) ||
+          /** 换行标签 */
+          (token.type === 'TAG_NAME' && ['p', 'br', 'div'].includes(token.content)) ||
+          /** 图片 */
+          (token.type === 'TAG_ATTR_TEXT' &&
+            /src=["'](.+?)["']/.test(token.content) &&
+            arr[index - 1] &&
+            arr[index - 1].type === 'TAG_NAME' &&
+            arr[index - 1].content === 'img')
+        )
+      })
 
-      const img = tokenList
-        .map(token => {
-          const matched = token.content.match(/src="(.+?)"/)
+      console.log('filteredTokenList :>> ', filteredTokenList)
+      /** 过滤文本&换行标签&图片src end */
 
-          return { content: matched ? matched[1] : '' }
-        })
-        .filter(i => !!i.content)
-
-      console.log('text :>> ', text)
-      console.log('img :>> ', img)
-      /** 过滤文本和图片 src end */
-
-      /** 切分公式 */
-      /** 按公式标识\\\(.+?\\\)拆分并保留分隔符正则中的捕获组 */
-      /** 参考:developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/split#使用_regexp_来分割使结果中包含分割符 */
-      const flatedText = text.map(t => t.content.split(REG_FORMULA)).flat()
-
-      console.log('flatedText :>> ', flatedText)
-      /** 切分公式 end */
-
-      let inputLayoutItemDescList = flatedText.reduce<InputLayoutItemDesc[]>((acc, cur) => {
-        const matched = cur.match(/^\\\((.+?)\\\)$/)
-
-        let tempList: InputLayoutItemDesc[] = []
-        if (matched && matched.length) {
-          tempList = [
-            {
-              layoutItemType: LayoutItemTypeEnum.FORMULA,
-              rawContent: matched[1]
-            }
-          ]
-        } else {
-          /** 将字符串切分为字符,实例化 Char 对象 */
-          tempList = cur.split('').map(c => ({ layoutItemType: LayoutItemTypeEnum.CHAR, rawContent: c }))
-        }
-
-        return acc.concat(tempList)
-      }, [])
-
-      inputLayoutItemDescList = inputLayoutItemDescList.concat(
-        img.map(i => ({
+      /** 创建 layoutItemDesc */
+      const getCharDescObj = (content: string) => {
+        return { layoutItemType: LayoutItemTypeEnum.CHAR, rawContent: content } as RowLayoutItemDesc
+      }
+      const getFormulaDescObj = (content: string) => {
+        return {
+          layoutItemType: LayoutItemTypeEnum.FORMULA,
+          rawContent: content
+        } as RowLayoutItemDesc
+      }
+      const getCRLFDescObj = () => {
+        return {
+          layoutItemType: 'CRLF',
+          rawContent: ''
+        } as RowLayoutItemDesc
+      }
+      const getGraphDescObj = (content: string) => {
+        const matched = content.match(/src="(.+?)"/)
+        return {
           layoutItemType: LayoutItemTypeEnum.GRAPH,
-          rawContent: i?.content,
-          imgSurroundType: ImgSurrounTypeEnum.FLOAT
-        }))
+          rawContent: matched ? matched[1] : ''
+        } as RowLayoutItemDesc
+      }
+
+      let descList: (RowLayoutItemDesc | Pick<ImgLayoutItemDesc, 'layoutItemType' | 'rawContent'>)[] = []
+      filteredTokenList.forEach(token => {
+        if (token.type === 'TAG_ATTR_TEXT') {
+          descList.push(getGraphDescObj(token.content))
+        } else if (token.type === 'TAG_NAME') {
+          descList.push(getCRLFDescObj())
+        } else {
+          /** 切分公式 */
+          /** 按公式标识\\\(.+?\\\)拆分并保留分隔符正则中的捕获组 */
+          /** 参考:developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/split#使用_regexp_来分割使结果中包含分割符 */
+          const splitedTextListByFormulaReg = token.content.split(REG_FORMULA)
+
+          const charAndFormulaDescList = splitedTextListByFormulaReg.reduce<RowLayoutItemDesc[]>(
+            (acc, cur) => {
+              const matched = cur.match(/^\\\((.+?)\\\)$/)
+
+              let tempList: RowLayoutItemDesc[] =
+                matched && matched.length
+                  ? /** 创建 formula desc 对象 */
+                    [getFormulaDescObj(matched[1])]
+                  : /** 将字符串切分为字符,创建char desc对象 */
+                    cur.split('').map(getCharDescObj)
+
+              return acc.concat(tempList)
+            },
+            []
+          )
+          descList = descList.concat(charAndFormulaDescList)
+        }
+      })
+
+      console.log('descList :>> ', descList)
+      /**  创建layoutItemDesc end */
+
+      /** 通过图片尺寸,判断哪些是题干中的图片(width<=50),哪些非题干图片 */
+      const maybeGraphDescList = descList.filter(desc => desc.layoutItemType === 'GRAPH')
+      const graphDescWithSize = await Promise.all(
+        maybeGraphDescList.map(async desc => {
+          const { width, height } = await measureImgSize(desc.rawContent)
+          return {
+            ...desc,
+            width,
+            height
+          }
+        })
       )
 
-      console.log('inputLayoutItemDescList :>> ', inputLayoutItemDescList)
+      const widthOver50Graph = graphDescWithSize.filter(desc => desc.width >= 50)
+      const rowLayoutItemDescList = descList.filter((desc): desc is RowLayoutItemDesc => {
+        return !widthOver50Graph.map(g => g.rawContent).includes(desc.rawContent)
+      })
+      const tempImgLayoutItemDescList = descList.filter(
+        (desc): desc is Pick<ImgLayoutItemDesc, 'rawContent' | 'layoutItemType'> => {
+          return widthOver50Graph.map(g => g.rawContent).includes(desc.rawContent)
+        }
+      )
+      const imgLayoutItemDescList = tempImgLayoutItemDescList.map(desc => {
+        return {
+          ...desc,
+          imgSurroundType: ImgSurrounTypeEnum.FLOAT
+        }
+      })
+
+      console.log('rowLayoutItemDescList :>> ', rowLayoutItemDescList)
+      console.log('imgLayoutItemDescList :>> ', imgLayoutItemDescList)
 
       const le = new DoonceLayoutEngine({
         globalFontOptions: {
@@ -208,7 +271,8 @@ const app = {
           /** 字体加载地址,和@font-face 中的声明格式一样 */
           source: 'url(/fonts/SourceHanSerif-VF.ttf.ttc)'
         },
-        inputLayoutItemDescList,
+        rowLayoutItemDescList,
+        imgLayoutItemDescList,
         formulaRenderType: FormulaRenderTypeEnum.IMG,
         debug: true
       })
@@ -216,7 +280,7 @@ const app = {
       await le.init()
 
       const layoutListOrObj = le.layout({
-        maxWidth: 400,
+        maxWidth: 500,
         padding: [10, 10, 10, 10],
         letterSpacing: 2
       })

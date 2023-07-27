@@ -26,7 +26,8 @@ export enum LayoutItemTypeEnum {
   CHAR = 'CHAR' /** 单字符 */,
   FORMULA = 'FORMULA' /** 公式 */,
   IMG_PLACEHOLDER = 'IMG_PLACEHOLDER' /** 图片占位 */,
-  TEXT_GROUP = 'TEXT_GROUP' /** 文本组 */
+  TEXT_GROUP = 'TEXT_GROUP' /** 文本组 */,
+  CRLF = 'CRLF' /** 人工插入的换行 */
 }
 
 export interface IChild {
@@ -56,7 +57,7 @@ export interface IHorizontalAlign {
 
 /** 图片环绕类型枚举 */
 export enum ImgSurrounTypeEnum {
-  NONE = 'NONE',
+  NONE = 'NONE' /** 默认下挂到题干下方 */,
   FLOAT = 'FLOAT',
   ABSOLUTE = 'ABSOLUTE'
 }

@@ -18,6 +18,10 @@ export class TextGroup extends Base implements IChild, IContent {
   rawContent: string = ''
   content: string = ''
 
+  async init() {
+    // TODO 需要实现
+  }
+
   measureSize(): ISize {
     return this.childs.reduce<ISize>(
       (acc, cur) => {

@@ -32,6 +32,9 @@ export class ImgPlaceholder extends Base implements IContent {
 
     this.owner = owner
     this.height = height
+  }
+
+  async init() {
     this.width = this.owner.width
     this.x = this.owner.x
   }
