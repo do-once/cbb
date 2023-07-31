@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/layout-engine",
+      "comment": "impl symbol hange",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@doonce/layout-engine"
+}
