@@ -458,7 +458,7 @@ export class DoonceLayoutEngine {
 
     /** 居中RowLayoutItemGroup中的元素 */
     curRow.childs
-      .filter(c => c.layoutItemType === LayoutItemTypeEnum.ROW_LAYOUT_ITEM_GROUP)
+      .filter((c): c is RowLayoutItemGroup => c.layoutItemType === LayoutItemTypeEnum.ROW_LAYOUT_ITEM_GROUP)
       .forEach(group => {
         group.childs.forEach((groupChild: RowLayoutItemGroupChild) => {
           groupChild.y = Math.abs(group.height - groupChild.height) / 2
