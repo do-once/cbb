@@ -30,6 +30,7 @@ export class Graph extends Base implements IImgSurround {
   }
 
   async init() {
+    // TODO 多次初始化时,可根据是否强制初始化来做缓存优化
     const { width, height } = await this.measureSize()
     this.width = width
     this.height = height

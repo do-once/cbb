@@ -1,6 +1,6 @@
 /**
  * @author GuangHui
- * @description 带标题的图片类
+ * @description 带标题的图片类(不应该用在题干中)
  */
 
 import { getCssFontDesc, measureTextMetrics } from '@doonce/utils'
@@ -17,7 +17,7 @@ export type GraphWithTitleOptions = {
 }
 
 export class GraphWithTitle extends Base {
-  layoutItemType = LayoutItemTypeEnum.GRAPH_TITLE
+  layoutItemType = LayoutItemTypeEnum.GRAPH_WITH_TITLE
   canLineBreak = false
 
   globalFontConfig: GlobalFontConfig
@@ -37,7 +37,7 @@ export class GraphWithTitle extends Base {
   }
 
   async init() {
-    /** 初始化graph 实例后可获取 graph 尺寸信息 */
+    /** graph实例初始化后可获取到尺寸信息 */
     await this.graphInstance.init()
 
     const { width, height } = await this.measureSize()

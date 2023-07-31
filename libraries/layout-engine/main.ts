@@ -54,7 +54,14 @@ const tempForAbsolute = `<div style="width: 500px; height: 800px; outline: 1px s
   />
   </template>
 </div>
-<img v-for="img in imgList" :src="img.src" :style="{position:'absolute',left:img.x+'px',top:img.y+'px',outline: '1px solid green'}"/>
+
+<template v-for="img in imgList">
+  <img v-if="img.layoutItemType === 'GRAPH'" :src="img.src" :style="{position:'absolute',left:img.x+'px',top:img.y+'px',outline: '1px solid green'}"/>
+  <div v-else :style="{position:'absolute',left:img.x+'px',top:img.y+'px',outline: '1px solid green',width:img.width+'px',height:img.height+'px'}">
+    <img :src="img.graphInstance.src" style="display:block;"/>
+    <p v-text="img.title" style="margin:0;text-align:center"></p>
+  </div>
+</template>
 
 <button type="button" @click="start" style="position:fixed;left:50vw;top:50vh;">start</button>
 </div>`
@@ -107,14 +114,14 @@ const app = {
         </table>
         <p>其中表格中“\\(-2.5\\)”表示的是\\((\\quad)\\)</p>`,
         `<span class="head">下列说法正确的有\\((\\quad)\\)</span>
-        <p>①正有理数是正整数和正分数的统称；<img src="/assets/small.png" />②整数是正整数和负整数的统称；③有理数是正整数、负整数、正分数、负分数的统称；④\\(0\\)是偶数，但不是自然数；⑤偶数包括正偶数、负偶数和零．</p><img src="/assets/big.png" />`
+        <p>①正有理数是正整数和正分数的统称；<img src="/assets/small.png" />②整数是正整数和负整数的统称；③有理数是正整数、负整数、正分数、负分数的统称；④\\(0\\)是偶数，但不是自然数；⑤偶数包括正偶数、负偶数和零．</p><img src="/assets/big2.png" />这是测试文本这是测试文本这是测试文本这是测试文本这是测试文本这是测试文本这是测试文本这是测试文本`
       ]
 
       // TODO 公式中的&lt;等特殊字符需要处理
       const REG_FORMULA = /(\\\(.+?\\\))/
 
       /** 解析html */
-      const input = htmlStrArr[2]
+      const input = htmlStrArr[6]
       console.log('input :>> ', input)
 
       const hp = new DoonceHtmlParser()
@@ -215,18 +222,22 @@ const app = {
       )
 
       const widthOver50Graph = graphDescWithSize.filter(desc => desc.width >= 50)
+      /** 过滤宽度<50的图片 */
       const rowLayoutItemDescList = descList.filter((desc): desc is RowLayoutItemDesc => {
         return !widthOver50Graph.map(g => g.rawContent).includes(desc.rawContent)
       })
-      const tempImgLayoutItemDescList = descList.filter(
-        (desc): desc is Pick<ImgLayoutItemDesc, 'rawContent' | 'layoutItemType'> => {
-          return widthOver50Graph.map(g => g.rawContent).includes(desc.rawContent)
-        }
-      )
-      const imgLayoutItemDescList = tempImgLayoutItemDescList.map(desc => {
+
+      /** 过滤宽度>=50的图片 */
+      const tempImgLayoutItemDescList = descList.filter((desc): desc is ImgLayoutItemDesc => {
+        return widthOver50Graph.map(g => g.rawContent).includes(desc.rawContent)
+      })
+      const imgLayoutItemDescList = tempImgLayoutItemDescList.map<ImgLayoutItemDesc>(desc => {
         return {
           ...desc,
-          imgSurroundType: ImgSurrounTypeEnum.FLOAT
+          /** 追加额外信息 */
+          imgSurroundType: ImgSurrounTypeEnum.FLOAT,
+          layoutItemType: LayoutItemTypeEnum.GRAPH_WITH_TITLE,
+          title: '这是标题'
         }
       })
 

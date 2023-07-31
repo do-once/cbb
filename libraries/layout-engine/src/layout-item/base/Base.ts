@@ -22,11 +22,11 @@ export enum LayoutItemTypeEnum {
   ROW = 'ROW' /** 行 */,
   IMG = 'IMG' /** 图片(图形+图形标题) */,
   GRAPH = 'GRAPH' /** 图形 */,
-  GRAPH_TITLE = 'GRAPH_TITLE' /** 图形标题 */,
+  GRAPH_WITH_TITLE = 'GRAPH_WITH_TITLE' /** 带标题的图形 */,
   CHAR = 'CHAR' /** 单字符 */,
   FORMULA = 'FORMULA' /** 公式 */,
   IMG_PLACEHOLDER = 'IMG_PLACEHOLDER' /** 图片占位 */,
-  TEXT_GROUP = 'TEXT_GROUP' /** 文本组 */,
+  ROW_LAYOUT_ITEM_GROUP = 'ROW_LAYOUT_ITEM_GROUP' /** 行布局item组 */,
   CRLF = 'CRLF' /** 人工插入的换行 */
 }
 

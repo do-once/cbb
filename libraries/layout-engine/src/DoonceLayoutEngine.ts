@@ -38,9 +38,9 @@ export type RowLayoutItemDesc = {
 }
 
 export type ImgLayoutItemDesc = {
-  // TODO 考虑img
-  layoutItemType: LayoutItemTypeEnum.GRAPH
+  layoutItemType: LayoutItemTypeEnum.GRAPH | LayoutItemTypeEnum.GRAPH_WITH_TITLE
   rawContent: string
+  title?: string
   imgSurroundType?: ImgSurrounTypeEnum
   width?: number
   height?: number
@@ -75,7 +75,7 @@ export class DoonceLayoutEngine {
   /** 实例化后的参与行布局的描述对象 */
   rowLayoutItemInstanceList: RowChild[] = []
   /** 实例化后的不参与行布局的图片描述对象 */
-  imgLayoutItemInstanceList: Graph[] = []
+  imgLayoutItemInstanceList: (Graph | GraphWithTitle)[] = []
 
   formulaRenderType: FormulaRenderTypeEnum
 
@@ -144,8 +144,19 @@ export class DoonceLayoutEngine {
   }
 
   private instantiateImgLayoutItemDescList() {
-    return this.imgLayoutItemDescList.map(({ rawContent, imgSurroundType }) => {
-      return new Graph({ src: rawContent, imgSurroundType: imgSurroundType ?? ImgSurrounTypeEnum.NONE })
+    return this.imgLayoutItemDescList.map(({ rawContent, imgSurroundType, title }) => {
+      const graphInstance = new Graph({
+        src: rawContent,
+        imgSurroundType: imgSurroundType ?? ImgSurrounTypeEnum.NONE
+      })
+      return title
+        ? new GraphWithTitle({
+            title,
+            globalFontConfig: this.globalFontConfig,
+            graphInstance,
+            imgSurroundType: imgSurroundType ?? ImgSurrounTypeEnum.NONE
+          })
+        : graphInstance
     })
   }
 

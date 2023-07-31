@@ -6,10 +6,10 @@
 import { GlobalFontConfig } from '../DoonceLayoutEngine'
 import { Base, IChild, IRow, ISize, LayoutItemTypeEnum } from './base'
 import { Graph } from './img'
-import { Char, Formula, ImgPlaceholder, TextGroup, CRLF } from './text'
+import { Char, Formula, ImgPlaceholder, LayoutGroup, CRLF } from './text'
 
 /** 限制行的 child 类型 */
-export type RowChild = Char | Formula | ImgPlaceholder | TextGroup | CRLF | Graph
+export type RowChild = Char | Formula | ImgPlaceholder | LayoutGroup | CRLF | Graph
 
 export type RowCtrOptions = {
   globalFontConfig: GlobalFontConfig
