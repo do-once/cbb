@@ -15,37 +15,10 @@ import {
 import { DoonceHtmlParser, IToken } from '@doonce/html-parser'
 import { measureImgSize } from '@doonce/utils'
 
-// canvas 渲染
-// const canvas = document.getElementById('stage') as HTMLCanvasElement
-// const ctx = canvas.getContext('2d')!
-// ctx.font = getCssFontDesc({
-//   fontSize: 16,
-//   fontFamily: 'Microsoft YaHei',
-//   lineHeight: 20,
-//   fontStyle: 'normal',
-//   fontWeight: 'normal',
-//   fontVariant: 'normal'
-// })
-
-// layoutList!.forEach(row => {
-//   const { x, y, childs } = row
-//   childs.forEach(c => {
-//     if (c.layoutItemType === LayoutItemTypeEnum.CHAR) {
-//       ctx.fillText(c.content, x + c.x, y + c.y + c.height)
-//     } else {
-//       const img = new Image()
-//       img.src = c.content
-//       img.onload = () => {
-//         ctx.drawImage(img, c.x, y + c.y)
-//       }
-//     }
-//   })
-// })
-
 const tempForHtml = `<div>
 <div style="position:relative;width: 500px; height: 800px; outline: 1px solid blue; font-size:16px;font-family:'syst';">
 
-  <div class="row" v-for='row in layoutList' :style="{display:'flex',alignItems:'center',outline:'1px solid pink',width:row.width+'px',height:row.height+'px',lineHeight:row.height+'px'}">
+  <div class="row" v-for='row in rowList' :style="{display:'flex',alignItems:'center',outline:'1px solid pink',width:row.width+'px',height:row.height+'px',lineHeight:row.height+'px'}">
     <template v-for='c in row.childs'>
       <span  v-if="c.layoutItemType === 'CHAR'" v-text="c.content"></span>
       <img v-if="c.layoutItemType === 'FORMULA'" :src="c.content"  />
@@ -59,7 +32,7 @@ const tempForHtml = `<div>
 
 const tempForAbsolute = `<div style="width: 500px; height: 800px; outline: 1px solid blue; position: relative;font-size:16px;line-height:20px;font-family:'syst'">
 <div
-  v-for="row in layoutList"
+  v-for="row in rowList"
   class="row"
   :style="{position: 'absolute',left:row.x+'px',top:row.y+'px',outline:'1px solid pink',width:row.width+'px',height:row.height+'px',lineHeight:row.height+'px',width:row.width+'px'}"
 >
@@ -89,15 +62,15 @@ const app = {
   template: tempForAbsolute,
   data() {
     return {
-      layoutListOrObj: {}
+      layoutObj: {}
     }
   },
   computed: {
-    layoutList() {
-      return Array.isArray(this.layoutListOrObj) ? this.layoutListOrObj : this.layoutListOrObj.rowList
+    rowList() {
+      return this.layoutObj.rowList
     },
     imgList() {
-      return Array.isArray(this.layoutListOrObj) ? [] : this.layoutListOrObj.imgList
+      return this.layoutObj.imgList
     }
   },
   methods: {
@@ -279,14 +252,14 @@ const app = {
 
       await le.init()
 
-      const layoutListOrObj = le.layout({
+      const layoutObj = le.layout({
         maxWidth: 500,
         padding: [10, 10, 10, 10],
         letterSpacing: 2
       })
-      console.log('layoutListOrObj :>> ', layoutListOrObj)
+      console.log('layoutObj :>> ', layoutObj)
 
-      this.layoutListOrObj = layoutListOrObj
+      this.layoutObj = layoutObj
     }
   }
 }
