@@ -5,7 +5,7 @@
 
 import { getCssFontDesc, measureTextMetrics } from '@doonce/utils'
 import { GlobalFontConfig } from '../../DoonceLayoutEngine'
-import { Base, LayoutItemTypeEnum, IContent, IPos, ISize, ICache } from '../base'
+import { Base, LayoutItemTypeEnum, IContent, ISize } from '../base'
 
 export type CharOptions = {
   rawContent: string /** 原始内容 */

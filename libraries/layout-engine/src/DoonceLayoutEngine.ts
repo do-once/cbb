@@ -218,8 +218,7 @@ export class DoonceLayoutEngine {
     /** 环绕 */
     if (graph.imgSurroundType === ImgSurrounTypeEnum.FLOAT) {
       /** 调试用,模拟图片位置 */
-      graph.x = 174
-      graph.y = 14
+      this.debug && graph.setPos({ x: 174, y: 14 })
 
       /** 首行 */
       let curRow = new Row({

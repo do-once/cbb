@@ -3,11 +3,10 @@
  * @description 手动换行
  */
 
-import { Base, IContent, ISize, LayoutItemTypeEnum } from '../base'
+import { Base, ISize, LayoutItemTypeEnum } from '../base'
 
-export type CRLFOptions = {
+export type CRLFCtrOptions = {
   debug?: boolean
-  rawContent?: string
 }
 
 export class CRLF extends Base {
@@ -16,7 +15,7 @@ export class CRLF extends Base {
 
   debug = false
 
-  constructor({ debug } = {} as CRLFOptions) {
+  constructor({ debug } = {} as CRLFCtrOptions) {
     super()
 
     this.debug = !!debug

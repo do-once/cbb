@@ -16,19 +16,18 @@ export type RowChild = Char | Formula | ImgPlaceholder | RowLayoutItemGroup | CR
 export type RowCtrOptions = {
   globalFontConfig: GlobalFontConfig
   rowNo: number
-  indent?: number
 }
 
 export class Row extends Base implements IRow, IChild {
   layoutItemType: LayoutItemTypeEnum = LayoutItemTypeEnum.ROW
   canLineBreak: boolean = false
 
-  rowNo: number = -1
+  rowNo: number
 
   childs: RowChild[] = []
   globalFontConfig: GlobalFontConfig
 
-  constructor({ globalFontConfig, rowNo, indent }: RowCtrOptions) {
+  constructor({ globalFontConfig, rowNo }: RowCtrOptions) {
     super()
 
     if (!globalFontConfig || !rowNo) throw new Error('globalFontConfig and rowNo is required')
