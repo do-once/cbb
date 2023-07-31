@@ -51,7 +51,18 @@ const tempForAbsolute = `<div style="width: 500px; height: 800px; outline: 1px s
     v-if="c.layoutItemType === 'GRAPH'"
     :style="{position: 'absolute',left:c.x+'px',top:c.y+'px'}"
     :src="c.src"
-  />
+    />
+
+    <template v-if="c.layoutItemType === 'ROW_LAYOUT_ITEM_GROUP'">
+      <span :style="{position: 'absolute',left:c.x+'px',top:c.y+'px',display: 'inline-flex',
+      'align-items': 'center'}">
+        <template v-for="groupChild in  c.childs">
+          <span v-if="groupChild.layoutItemType === 'CHAR'" v-text="groupChild.content"></span>
+          <img  v-if="groupChild.layoutItemType === 'FORMULA'" :src="groupChild.content" />
+          <img  v-if="groupChild.layoutItemType === 'GRAPH'" :src="groupChild.src" />
+        </template>
+      </span>
+    </template>
   </template>
 </div>
 
@@ -87,7 +98,7 @@ const app = {
         `<span>已知一个数的绝对值为\\(5\\)，另一个数的绝对值为\\(3\\)，且两数之积为负，则两数之差为 __________.</span>`,
         `<span>已知\\(A\\)，\\(B\\)，\\(C\\)是数轴上的三个点，点\\(A\\)，\\(B\\)表示的数分别是\\(1\\)，\\(3\\)，如图所示\\(.\\)<p>此文本前需要换行;</p>若\\(BC=2AB\\)，则点\\(C\\)表示的数是__________.</span>\n`,
         `<span>如图，在点\\(M\\)，\\(N\\)，\\(P\\)，\\(Q\\)中，一次函数\\(y=kx+2\\left(k < 0\\right)\\)的图象不可能经过的点是\\((\\quad)\\)</span>
-    <p><img bigger="https://bj.download.cycore.cn/question/2018/6/29/11/56/75af1d99-789f-4813-b444-df783dbe6bc4.png" h="126pxpx" src="https://static.zhixue.com/zhixue.png" w="121pxpx" style="width: 120px; height: 126px;;max-width:100%;display:inline-block;vertical-align:middle;" height="126" data-cke-saved-src="http://bj.download.cycore.cn/question/2018/6/29/11/56/d160b798-ff47-4ae9-b25d-6a7284dc7de6.png"/>这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本</p>`,
+    <p><img bigger="https://bj.download.cycore.cn/question/2018/6/29/11/56/75af1d99-789f-4813-b444-df783dbe6bc4.png" h="126pxpx" src="https://static.zhixue.com/zhixue.png" w="121pxpx" style="width: 120px; height: 126px;;max-width:100%;display:inline-block;vertical-align:middle;" height="126" data-cke-saved-src="http://bj.download.cycore.cn/question/2018/6/29/11/56/d160b798-ff47-4ae9-b25d-6a7284dc7de6.png"/>我这需要换行 这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本</p>`,
         `<span>计算\\(-2 \\times (-3)\\)的结果是\\((\\quad)\\)</span>`,
         `<span>小明积极配合小区进行垃圾分类，并把可回收物拿到废品收购站回收换钱，这样既保护了环境，又可以为自己积攒一些零花钱．如表是他\\(12\\)月份的部分收支情况\\((\\)单位：元\\().\\)</span>
         <table border="1px solid" style="max-width: 98%;">
@@ -121,7 +132,7 @@ const app = {
       const REG_FORMULA = /(\\\(.+?\\\))/
 
       /** 解析html */
-      const input = htmlStrArr[6]
+      const input = htmlStrArr[3]
       console.log('input :>> ', input)
 
       const hp = new DoonceHtmlParser()
@@ -241,6 +252,26 @@ const app = {
         }
       })
 
+      /** 将逗号和前一个 item 绑定,实现类似标点悬挂效果 */
+      const newRowLayoutItemDescList: RowLayoutItemDesc[] = []
+      for (let i = 0, curDesc, nextDesc; i < rowLayoutItemDescList.length; i++) {
+        curDesc = rowLayoutItemDescList[i]
+        nextDesc = rowLayoutItemDescList[i + 1]
+
+        if (nextDesc && nextDesc.rawContent === '，') {
+          newRowLayoutItemDescList.push({
+            layoutItemType: LayoutItemTypeEnum.ROW_LAYOUT_ITEM_GROUP,
+            rawContent: '',
+            childs: [curDesc, nextDesc]
+          })
+          i++
+        } else {
+          newRowLayoutItemDescList.push(curDesc)
+          continue
+        }
+      }
+      console.log('newRowLayoutItemDescList :>> ', newRowLayoutItemDescList)
+
       console.log('rowLayoutItemDescList :>> ', rowLayoutItemDescList)
       console.log('imgLayoutItemDescList :>> ', imgLayoutItemDescList)
 
@@ -255,7 +286,7 @@ const app = {
           /** 字体加载地址,和@font-face 中的声明格式一样 */
           source: 'url(/fonts/SourceHanSerif-VF.ttf.ttc)'
         },
-        rowLayoutItemDescList,
+        rowLayoutItemDescList: newRowLayoutItemDescList,
         imgLayoutItemDescList,
         formulaRenderType: FormulaRenderTypeEnum.IMG,
         debug: true

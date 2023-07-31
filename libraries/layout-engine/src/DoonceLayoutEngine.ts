@@ -17,6 +17,7 @@ import {
   CRLF,
   GraphWithTitle
 } from './layout-item'
+import { RowLayoutItemGroup, RowLayoutItemGroupChild } from './layout-item/RowLayoutItemGroup'
 
 export type GlobalFontConfig = {
   fontSize: number /** 单位px */
@@ -34,7 +35,12 @@ export type RowLayoutItemDesc = {
     | LayoutItemTypeEnum.FORMULA
     | LayoutItemTypeEnum.GRAPH
     | LayoutItemTypeEnum.CRLF
+    | LayoutItemTypeEnum.ROW_LAYOUT_ITEM_GROUP
   rawContent: string
+  childs?: {
+    layoutItemType: LayoutItemTypeEnum.CHAR | LayoutItemTypeEnum.FORMULA | LayoutItemTypeEnum.GRAPH
+    rawContent: string
+  }[]
 }
 
 export type ImgLayoutItemDesc = {
@@ -126,7 +132,7 @@ export class DoonceLayoutEngine {
   }
 
   private instantiateRowLayoutItemDescList(): RowChild[] {
-    return this.rowLayoutItemDescList.map(({ layoutItemType, rawContent }) => {
+    return this.rowLayoutItemDescList.map(({ layoutItemType, rawContent, childs = [] }) => {
       if (layoutItemType === LayoutItemTypeEnum.FORMULA) {
         return new Formula({
           rawContent,
@@ -137,6 +143,23 @@ export class DoonceLayoutEngine {
         return new Graph({ src: rawContent })
       } else if (layoutItemType === LayoutItemTypeEnum.CRLF) {
         return new CRLF()
+      } else if (layoutItemType === LayoutItemTypeEnum.ROW_LAYOUT_ITEM_GROUP) {
+        const childsInstance = childs.map(({ layoutItemType, rawContent }) => {
+          if (layoutItemType === LayoutItemTypeEnum.FORMULA) {
+            return new Formula({
+              rawContent,
+              globalFontConfig: this.globalFontConfig,
+              formulaRenderType: this.formulaRenderType
+            })
+          } else if (layoutItemType === LayoutItemTypeEnum.GRAPH) {
+            return new Graph({ src: rawContent })
+          } else {
+            return new Char({ rawContent, globalFontConfig: this.globalFontConfig })
+          }
+        })
+        return new RowLayoutItemGroup({
+          childs: childsInstance
+        })
       } else {
         return new Char({ rawContent, globalFontConfig: this.globalFontConfig })
       }
@@ -195,8 +218,8 @@ export class DoonceLayoutEngine {
     /** 环绕 */
     if (graph.imgSurroundType === ImgSurrounTypeEnum.FLOAT) {
       /** 调试用,模拟图片位置 */
-      graph.x = 157
-      graph.y = 18
+      graph.x = 174
+      graph.y = 14
 
       /** 首行 */
       let curRow = new Row({
@@ -432,6 +455,15 @@ export class DoonceLayoutEngine {
     curRow.childs.forEach(child => {
       child.y = Math.abs(curRow.height - child.height) / 2
     })
+
+    /** 居中RowLayoutItemGroup中的元素 */
+    curRow.childs
+      .filter(c => c.layoutItemType === LayoutItemTypeEnum.ROW_LAYOUT_ITEM_GROUP)
+      .forEach(group => {
+        group.childs.forEach((groupChild: RowLayoutItemGroupChild) => {
+          groupChild.y = Math.abs(group.height - groupChild.height) / 2
+        })
+      })
 
     return curRow
   }

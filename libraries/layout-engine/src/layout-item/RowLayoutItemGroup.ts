@@ -1,6 +1,6 @@
 /**
  * @author GuangHui
- * @description 可以将参与行排版的 item 打成一个组,当成一个 item 参与排版(实现类似标点悬挂效果)
+ * @description 将参与行排版的 item 打成一个组,当成一个 item 参与排版(实现类似标点悬挂效果)
  */
 
 import { Base, IChild, ISize, LayoutItemTypeEnum } from './base'
@@ -31,15 +31,13 @@ export class RowLayoutItemGroup extends Base implements IChild {
     /** 初始化所有 child 后,才能拿到尺寸信息 */
     await this._initChilds()
 
-    this.measureSize()
+    const { width, height } = this.measureSize()
+    this.width = width
+    this.height = height
   }
 
   private async _initChilds() {
     await Promise.all(this.childs.map(instance => instance.init()))
-  }
-
-  addChild(child: RowLayoutItemGroupChild) {
-    this.childs.push(child)
   }
 
   measureSize(): ISize {
