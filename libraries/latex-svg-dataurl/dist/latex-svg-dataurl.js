@@ -11,7 +11,7 @@ import { uuid } from '@doonce/utils';
  * @param params 入参
  * @returns {TransformLatexToSVGStrAndDataUrlRet} 转换后的 svgStr 和 dataUrl 结果对象
  */
-export function transformLatexToSVGStrAndDataUrl(params) {
+export async function transformLatexToSVGStrAndDataUrl(params) {
     if (!window.MathJax)
         throw new Error('window.MathJax can not access');
     if (!params.latex)
@@ -24,7 +24,7 @@ export function transformLatexToSVGStrAndDataUrl(params) {
     renderContainer.appendChild(scriptElWithLatex);
     document.body.appendChild(renderContainer);
     return new Promise((resolve, reject) => {
-        window.MathJax.Hub.Process(scriptElWithLatex, () => {
+        window.MathJax.Hub.Queue(['Typeset', MathJax.Hub, scriptElWithLatex], () => {
             /** Mathjax 处理后,会生成一个 span 元素,其 id 为script.id + `-Frame` */
             /** 此 frame 包含生成后的 svg,此 svg通过 use 使用了MathJax_SVG_glyphs中的 def */
             /** 生成 dataurl 需要将 MathJax_SVG_glyphs中的 def 拷贝到 frame 下进行生成*/
