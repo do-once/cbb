@@ -19,6 +19,10 @@ export abstract class Base implements IRect {
     // (undocumented)
     _id: string;
     // (undocumented)
+    abstract init(force: boolean): void;
+    // (undocumented)
+    initialized: boolean;
+    // (undocumented)
     abstract layoutItemType: LayoutItemTypeEnum;
     // (undocumented)
     abstract measureSize(): ISize | Promise<ISize>;
@@ -35,80 +39,105 @@ export abstract class Base implements IRect {
 }
 
 // @public (undocumented)
-export class Char extends Base implements IContent {
-    constructor({ rawContent, globalFontOptions, debug }: CharCtrParams);
+export class Char extends Base implements IContent, IRow {
+    constructor({ rawContent, globalFontConfig, debug, rowNo }: CharCtrOptions);
     // (undocumented)
     canLineBreak: boolean;
     // (undocumented)
-    content: string;
+    content: IContent['content'];
     // (undocumented)
     debug: boolean;
     // (undocumented)
-    globalFontOptions: GlobalFontOptions;
+    globalFontConfig: GlobalFontConfig;
     // (undocumented)
-    init(): Promise<void>;
+    init(force?: boolean): Promise<void>;
     // (undocumented)
     layoutItemType: LayoutItemTypeEnum;
     // (undocumented)
     measureSize(): ISize;
     // (undocumented)
-    rawContent: string;
+    rawContent: IContent['rawContent'];
+    // (undocumented)
+    rowNo: IRow['rowNo'];
 }
 
 // @public (undocumented)
-export type CharCtrParams = {
-    rawContent: string; /** 原始内容 */
-    globalFontOptions: GlobalFontOptions; /** 字体设置项 */
+export type CharCtrOptions = {
+    rawContent: IContent['rawContent']; /** 原始内容 */
+    globalFontConfig: GlobalFontConfig; /** 字体设置项 */
     debug?: boolean; /** 调试 */
+    rowNo: IRow['rowNo'];
+};
+
+// @public (undocumented)
+export class CRLF extends Base implements IRow {
+    constructor({ debug, because, rowNo }: CRLFCtrOptions);
+    // (undocumented)
+    because: string;
+    // (undocumented)
+    canLineBreak: boolean;
+    // (undocumented)
+    debug: boolean;
+    // (undocumented)
+    init(force?: boolean): Promise<void>;
+    // (undocumented)
+    layoutItemType: LayoutItemTypeEnum;
+    // (undocumented)
+    measureSize(): ISize;
+    // (undocumented)
+    rowNo: IRow['rowNo'];
+}
+
+// @public (undocumented)
+export type CRLFCtrOptions = {
+    debug?: boolean;
+    because: string; /** 手动换行原因 */
+    rowNo: IRow['rowNo'];
 };
 
 // @public (undocumented)
 export class DoonceLayoutEngine {
-    constructor({ globalFontOptions, inputLayoutItemDescList, formulaRenderType, debug }: DoonceLayoutEngineCtrOptions);
+    constructor({ globalFontConfig, inputRowLayoutItemInstanceList, inputImgLayoutItemInstanceList, debug }: DoonceLayoutEngineCtrOptions);
     // (undocumented)
     debug: boolean;
     // (undocumented)
     font: FontFace;
     // (undocumented)
-    formulaRenderType: FormulaRenderTypeEnum;
-    // (undocumented)
-    globalFontOptions: GlobalFontOptions;
+    globalFontConfig: GlobalFontConfig;
     // (undocumented)
     init(): Promise<void>;
-    inputLayoutItemDescList: InputLayoutItemDesc[];
-    inputLayoutItemInstanceList: (Char | Formula | Graph)[];
-    isFontLoaded(): boolean;
     // (undocumented)
-    layout({ maxWidth, padding, letterSpacing }: LayoutMethodParams): {
-        rowList: Row[];
-        imgList: (Graph | Img)[];
-    } | Row[];
+    inputImgLayoutItemInstanceList: InputImgLayouItemInstance[];
+    // (undocumented)
+    inputRowLayoutItemInstanceList: InputRowLayoutItemInstance[];
+    isFontLoaded(): boolean;
+    layout({ maxWidth }: LayoutMethodParams): LayoutMethodRet;
 }
 
 // @public (undocumented)
 export type DoonceLayoutEngineCtrOptions = {
-    globalFontOptions: GlobalFontOptions; /** 字体 */
-    inputLayoutItemDescList: InputLayoutItemDesc[]; /** 用户传入的布局项描述对象列表 */
-    formulaRenderType: FormulaRenderTypeEnum; /** 公式渲染类型 */
+    globalFontConfig: GlobalFontConfig; /** 字体 */
+    inputRowLayoutItemInstanceList: InputRowLayoutItemInstance[]; /** 用户传入的参与行布局的实例 */
+    inputImgLayoutItemInstanceList: InputImgLayouItemInstance[]; /** 用户传入的参与图片布局的实例 */
     debug?: boolean;
 };
 
 // @public (undocumented)
-export class Formula extends Base implements IContent {
-    constructor({ rawContent, globalFontOptions, formulaRenderType, debug }: FormulaCtrParams);
+export class Formula extends Base implements IContent, IRow {
+    constructor({ rawContent, globalFontConfig, formulaRenderType, debug, rowNo }: FormulaCtrOptions);
     // (undocumented)
     canLineBreak: boolean;
     // (undocumented)
-    content: string;
+    content: IContent['content'];
     // (undocumented)
     debug: boolean;
     formulaRenderType: FormulaRenderTypeEnum;
     // (undocumented)
     getSvgStrAndDataUrl(): Promise<TransformLatexToSVGStrAndDataUrlRet>;
     // (undocumented)
-    globalFontOptions: GlobalFontOptions;
+    globalFontConfig: GlobalFontConfig;
     // (undocumented)
-    init(): Promise<void>;
+    init(force?: boolean): Promise<void>;
     // (undocumented)
     layoutItemType: LayoutItemTypeEnum;
     // (undocumented)
@@ -116,21 +145,24 @@ export class Formula extends Base implements IContent {
     // (undocumented)
     measureSizeWithSvgDataUrl(svgDataUrl: string): Promise<ISize>;
     // (undocumented)
-    measureSizeWithSvgEl(svgEl: SVGSVGElement, globalFontOptions: GlobalFontOptions): ISize;
+    measureSizeWithSvgEl(svgEl: SVGSVGElement, globalFontConfig: GlobalFontConfig): ISize;
     // (undocumented)
     parse2SvgEl(svgStr: string): SVGSVGElement | null;
     // (undocumented)
-    rawContent: string;
+    rawContent: IContent['rawContent'];
+    // (undocumented)
+    rowNo: IRow['rowNo'];
     // (undocumented)
     svgEl: SVGSVGElement;
 }
 
 // @public (undocumented)
-export type FormulaCtrParams = {
+export type FormulaCtrOptions = {
     rawContent: string; /** 公式原始内容 */
-    globalFontOptions: GlobalFontOptions; /** 字体设置项 */
+    globalFontConfig: GlobalFontConfig; /** 字体设置项 */
     formulaRenderType: FormulaRenderTypeEnum; /** 公式渲染类型,SVG(dom 节点) 或 IMG */
     debug?: boolean; /** 调试 */
+    rowNo: IRow['rowNo'];
 };
 
 // @public (undocumented)
@@ -141,8 +173,8 @@ export enum FormulaRenderTypeEnum {
     SVG = "SVG"
 }
 
-// @public (undocumented)
-export type GlobalFontOptions = {
+// @public
+export type GlobalFontConfig = {
     fontSize: number; /** 单位px */
     fontFamily: string;
     lineHeight: number; /** 单位px */
@@ -151,46 +183,6 @@ export type GlobalFontOptions = {
     fontVariant: string;
     source: string;
 };
-
-// @public (undocumented)
-export class Graph extends Base implements IImgSurround {
-    constructor({ src, imgSurroundType }: GraphCtrParams);
-    // (undocumented)
-    canLineBreak: boolean;
-    // (undocumented)
-    imgSurroundType: ImgSurrounTypeEnum;
-    // (undocumented)
-    init(): Promise<void>;
-    // (undocumented)
-    layoutItemType: LayoutItemTypeEnum;
-    // (undocumented)
-    measureSize(): Promise<ISize>;
-    // (undocumented)
-    src: string;
-}
-
-// @public (undocumented)
-export type GraphCtrParams = {
-    src: string;
-    imgSurroundType: ImgSurrounTypeEnum;
-};
-
-// @public (undocumented)
-export class GraphTitle extends Base implements IContent {
-    constructor(rawContent: string, globalFontOptions: GlobalFontOptions);
-    // (undocumented)
-    canLineBreak: boolean;
-    // (undocumented)
-    content: string;
-    // (undocumented)
-    globalFontOptions: GlobalFontOptions;
-    // (undocumented)
-    layoutItemType: LayoutItemTypeEnum;
-    // (undocumented)
-    measureSize(): ISize;
-    // (undocumented)
-    rawContent: string;
-}
 
 // @public
 export enum HorizontalAlignEnum {
@@ -235,66 +227,92 @@ export interface IImgSurround {
 }
 
 // @public (undocumented)
-export class Img extends Base implements IChild, IImgSurround {
-    constructor(childs: ImgChildsTuple);
+export class Img extends Base implements IContent, IRow {
+    constructor({ title, globalFontConfig, imgSurroundType, rawContent, rowNo }: ImgCtrOptions);
     // (undocumented)
     canLineBreak: boolean;
     // (undocumented)
-    childs: ImgChildsTuple;
+    content: IContent['content'];
     // (undocumented)
-    haveTitle(): boolean;
+    globalFontConfig: GlobalFontConfig;
     // (undocumented)
     imgSurroundType: ImgSurrounTypeEnum;
     // (undocumented)
+    init(force?: boolean): Promise<void>;
+    // (undocumented)
     layoutItemType: LayoutItemTypeEnum;
     // (undocumented)
-    measureSize(): ISize;
+    measureSize(): Promise<ISize>;
+    // (undocumented)
+    measureTitleSize(): {
+        width: number;
+        height: number;
+    };
+    // (undocumented)
+    rawContent: IContent['rawContent'];
+    // (undocumented)
+    rowNo: IRow['rowNo'];
+    // (undocumented)
+    title: string;
 }
 
-// @public
-export type ImgChildsTuple = [Graph, GraphTitle] | [Graph];
+// @public (undocumented)
+export type ImgCtrOptions = {
+    title?: string;
+    rowNo: IRow['rowNo'];
+    rawContent: IContent['rawContent'];
+    globalFontConfig: GlobalFontConfig;
+    imgSurroundType: ImgSurrounTypeEnum;
+};
 
 // @public (undocumented)
-export class ImgPlaceholder extends Base implements IContent {
-    constructor({ owner, height }: ImgPlaceholderCtrOptions);
+export class ImgPlaceholder extends Base implements IContent, IRow {
+    constructor({ ownerImg, height, rowNo, y }: ImgPlaceholderCtrOptions);
     // (undocumented)
     canLineBreak: boolean;
     // (undocumented)
-    content: string;
+    content: IContent['content'];
     // (undocumented)
     height: number;
+    // (undocumented)
+    init(force?: boolean): void;
     // (undocumented)
     layoutItemType: LayoutItemTypeEnum;
     // (undocumented)
     measureSize(): ISize;
     // (undocumented)
-    owner: Owner;
+    ownerImg: Owner;
     // (undocumented)
-    rawContent: string;
+    rawContent: IContent['rawContent'];
+    // (undocumented)
+    rowNo: IRow['rowNo'];
 }
 
 // @public (undocumented)
 export type ImgPlaceholderCtrOptions = {
-    owner: Owner;
+    ownerImg: Owner;
     height: number;
+    y: number;
+    rowNo: IRow['rowNo'];
 };
 
 // @public
 export enum ImgSurrounTypeEnum {
     // (undocumented)
-    ABSOLUTE = "ABSOLUTE",
+    ABSOLUTE = "ABSOLUTE" /** 默认下挂到题干下方 */,
     // (undocumented)
-    FLOAT = "FLOAT",
+    FLOAT = "FLOAT" /** 默认下挂到题干下方 */,
     // (undocumented)
     NONE = "NONE"
 }
 
-// @public (undocumented)
-export type InputLayoutItemDesc = {
-    layoutItemType: LayoutItemTypeEnum.CHAR | LayoutItemTypeEnum.FORMULA | LayoutItemTypeEnum.GRAPH;
-    rawContent: string;
-    imgSurroundType?: ImgSurrounTypeEnum;
-};
+// @public
+export type InputImgLayouItemInstance = Img;
+
+// Warning: (ae-forgotten-export) The symbol "RowLayoutItemGroup" needs to be exported by the entry point index.d.ts
+//
+// @public
+export type InputRowLayoutItemInstance = Char | Formula | Img | RowLayoutItemGroup | CRLF;
 
 // @public (undocumented)
 export interface IPos {
@@ -311,9 +329,7 @@ export interface IRect extends ISize, IPos {
 // @public (undocumented)
 export interface IRow {
     // (undocumented)
-    indent: number; /** 行号 */
-    // (undocumented)
-    rowNo: number; /** 缩进 */
+    rowNo: number; /** 行号 */
 }
 
 // @public
@@ -329,11 +345,13 @@ export enum LayoutItemTypeEnum {
     // (undocumented)
     CHAR = "CHAR" /** 行 */,
     // (undocumented)
+    CRLF = "CRLF" /** 行 */,
+    // (undocumented)
     FORMULA = "FORMULA" /** 行 */,
     // (undocumented)
     GRAPH = "GRAPH" /** 行 */,
     // (undocumented)
-    GRAPH_TITLE = "GRAPH_TITLE" /** 行 */,
+    GRAPH_WITH_TITLE = "GRAPH_WITH_TITLE" /** 行 */,
     // (undocumented)
     IMG = "IMG" /** 行 */,
     // (undocumented)
@@ -341,22 +359,26 @@ export enum LayoutItemTypeEnum {
     // (undocumented)
     ROW = "ROW" /** 行 */,
     // (undocumented)
-    TEXT_GROUP = "TEXT_GROUP" /** 文本组 */
+    ROW_LAYOUT_ITEM_GROUP = "ROW_LAYOUT_ITEM_GROUP" /** 人工插入的换行 */
 }
 
-// @public (undocumented)
+// @public
 export type LayoutMethodParams = {
     maxWidth: number; /** 单位px */
-    padding?: [number, number, number, number]; /** 上右下左 padding */
-    letterSpacing?: number; /** 字符间距 */
 };
 
 // @public
-export type Owner = Img | Graph;
+export type LayoutMethodRet = {
+    rowList: Row[];
+    imgList: Img[];
+};
+
+// @public
+export type Owner = Img;
 
 // @public (undocumented)
 export class Row extends Base implements IRow, IChild {
-    constructor({ globalFontOptions, rowNo, indent }: RowCtrOptions);
+    constructor({ globalFontConfig, rowNo }: RowCtrOptions);
     // (undocumented)
     addChild(child: RowChild): void;
     // (undocumented)
@@ -364,45 +386,25 @@ export class Row extends Base implements IRow, IChild {
     // (undocumented)
     childs: RowChild[];
     // (undocumented)
-    globalFontOptions: GlobalFontOptions;
+    globalFontConfig: GlobalFontConfig;
     // (undocumented)
-    indent: number;
+    init(force: boolean): void;
     // (undocumented)
     layoutItemType: LayoutItemTypeEnum;
     // (undocumented)
     measureSize(): ISize;
     // (undocumented)
-    rowNo: number;
+    rowNo: IRow['rowNo'];
 }
 
 // @public
-export type RowChild = Char | Formula | ImgPlaceholder | TextGroup;
+export type RowChild = Char | Formula | ImgPlaceholder | RowLayoutItemGroup | CRLF | Img;
 
 // @public (undocumented)
 export type RowCtrOptions = {
-    globalFontOptions: GlobalFontOptions;
-    rowNo: number;
-    indent?: number;
+    globalFontConfig: GlobalFontConfig;
+    rowNo: IRow['rowNo'];
 };
-
-// @public (undocumented)
-export class TextGroup extends Base implements IChild, IContent {
-    // (undocumented)
-    canLineBreak: boolean;
-    // (undocumented)
-    childs: TextGroupChild[];
-    // (undocumented)
-    content: string;
-    // (undocumented)
-    layoutItemType: LayoutItemTypeEnum;
-    // (undocumented)
-    measureSize(): ISize;
-    // (undocumented)
-    rawContent: string;
-}
-
-// @public
-export type TextGroupChild = Char | Formula;
 
 // (No @packageDocumentation comment for this package)
 

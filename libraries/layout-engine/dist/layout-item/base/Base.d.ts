@@ -17,11 +17,12 @@ export declare enum LayoutItemTypeEnum {
     ROW = "ROW" /** 行 */,
     IMG = "IMG" /** 图片(图形+图形标题) */,
     GRAPH = "GRAPH" /** 图形 */,
-    GRAPH_TITLE = "GRAPH_TITLE" /** 图形标题 */,
+    GRAPH_WITH_TITLE = "GRAPH_WITH_TITLE" /** 带标题的图形 */,
     CHAR = "CHAR" /** 单字符 */,
     FORMULA = "FORMULA" /** 公式 */,
     IMG_PLACEHOLDER = "IMG_PLACEHOLDER" /** 图片占位 */,
-    TEXT_GROUP = "TEXT_GROUP" /** 文本组 */
+    ROW_LAYOUT_ITEM_GROUP = "ROW_LAYOUT_ITEM_GROUP" /** 行布局item组 */,
+    CRLF = "CRLF" /** 人工插入的换行 */
 }
 export interface IChild {
     childs: Base[];
@@ -32,7 +33,6 @@ export interface IContent {
 }
 export interface IRow {
     rowNo: number; /** 行号 */
-    indent: number; /** 缩进 */
 }
 /** 水平居中枚举 */
 export declare enum HorizontalAlignEnum {
@@ -45,7 +45,7 @@ export interface IHorizontalAlign {
 }
 /** 图片环绕类型枚举 */
 export declare enum ImgSurrounTypeEnum {
-    NONE = "NONE",
+    NONE = "NONE" /** 默认下挂到题干下方 */,
     FLOAT = "FLOAT",
     ABSOLUTE = "ABSOLUTE"
 }
@@ -69,12 +69,14 @@ export declare abstract class Base implements IRect {
     y: number;
     width: number;
     height: number;
+    initialized: boolean;
     setPos({ x, y }: Partial<IPos>): void;
     getPos(): IPos;
     getSize(): ISize;
     setSize({ width, height }: Partial<ISize>): void;
     abstract layoutItemType: LayoutItemTypeEnum;
     abstract canLineBreak: boolean;
+    abstract init(force: boolean): void;
     abstract measureSize(): ISize | Promise<ISize>;
 }
 //# sourceMappingURL=Base.d.ts.map

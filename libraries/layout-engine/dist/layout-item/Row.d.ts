@@ -2,24 +2,25 @@
  * @author GuangHui
  * @description 行
  */
-import { GlobalFontOptions } from '../DoonceLayoutEngine';
+import { GlobalFontConfig } from '../DoonceLayoutEngine';
 import { Base, IChild, IRow, ISize, LayoutItemTypeEnum } from './base';
-import { Char, Formula, ImgPlaceholder, TextGroup } from './text';
+import { Char, Formula, ImgPlaceholder, CRLF } from './text';
+import { RowLayoutItemGroup } from './RowLayoutItemGroup';
+import { Img } from './img';
 /** 限制行的 child 类型 */
-export declare type RowChild = Char | Formula | ImgPlaceholder | TextGroup;
+export declare type RowChild = Char | Formula | ImgPlaceholder | RowLayoutItemGroup | CRLF | Img;
 export declare type RowCtrOptions = {
-    globalFontOptions: GlobalFontOptions;
-    rowNo: number;
-    indent?: number;
+    globalFontConfig: GlobalFontConfig;
+    rowNo: IRow['rowNo'];
 };
 export declare class Row extends Base implements IRow, IChild {
     layoutItemType: LayoutItemTypeEnum;
     canLineBreak: boolean;
-    rowNo: number;
-    indent: number;
+    rowNo: IRow['rowNo'];
     childs: RowChild[];
-    globalFontOptions: GlobalFontOptions;
-    constructor({ globalFontOptions, rowNo, indent }: RowCtrOptions);
+    globalFontConfig: GlobalFontConfig;
+    constructor({ globalFontConfig, rowNo }: RowCtrOptions);
+    init(force: boolean): void;
     addChild(child: RowChild): void;
     measureSize(): ISize;
 }

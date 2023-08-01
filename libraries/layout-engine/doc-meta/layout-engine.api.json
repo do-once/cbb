@@ -346,6 +346,82 @@
               "isProtected": false
             },
             {
+              "kind": "Method",
+              "canonicalReference": "@doonce/layout-engine!Base#init:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "abstract init(force: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "force",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ],
+              "isOptional": false,
+              "name": "init"
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@doonce/layout-engine!Base#initialized:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "initialized: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "initialized",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false,
+              "isProtected": false
+            },
+            {
               "kind": "Property",
               "canonicalReference": "@doonce/layout-engine!Base#layoutItemType:member",
               "docComment": "",
@@ -670,6 +746,15 @@
             },
             {
               "kind": "Content",
+              "text": ", "
+            },
+            {
+              "kind": "Reference",
+              "text": "IRow",
+              "canonicalReference": "@doonce/layout-engine!IRow:interface"
+            },
+            {
+              "kind": "Content",
               "text": " "
             }
           ],
@@ -685,12 +770,12 @@
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "constructor({ rawContent, globalFontOptions, debug }: "
+                  "text": "constructor({ rawContent, globalFontConfig, debug, rowNo }: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "CharCtrParams",
-                  "canonicalReference": "@doonce/layout-engine!CharCtrParams:type"
+                  "text": "CharCtrOptions",
+                  "canonicalReference": "@doonce/layout-engine!CharCtrOptions:type"
                 },
                 {
                   "kind": "Content",
@@ -702,7 +787,7 @@
               "overloadIndex": 1,
               "parameters": [
                 {
-                  "parameterName": "{ rawContent, globalFontOptions, debug }",
+                  "parameterName": "{ rawContent, globalFontConfig, debug, rowNo }",
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
                     "endIndex": 2
@@ -750,8 +835,13 @@
                   "text": "content: "
                 },
                 {
+                  "kind": "Reference",
+                  "text": "IContent",
+                  "canonicalReference": "@doonce/layout-engine!IContent:interface"
+                },
+                {
                   "kind": "Content",
-                  "text": "string"
+                  "text": "['content']"
                 },
                 {
                   "kind": "Content",
@@ -764,7 +854,7 @@
               "name": "content",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 2
+                "endIndex": 3
               },
               "isStatic": false,
               "isProtected": false
@@ -800,17 +890,17 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!Char#globalFontOptions:member",
+              "canonicalReference": "@doonce/layout-engine!Char#globalFontConfig:member",
               "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "globalFontOptions: "
+                  "text": "globalFontConfig: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "GlobalFontOptions",
-                  "canonicalReference": "@doonce/layout-engine!GlobalFontOptions:type"
+                  "text": "GlobalFontConfig",
+                  "canonicalReference": "@doonce/layout-engine!GlobalFontConfig:type"
                 },
                 {
                   "kind": "Content",
@@ -820,7 +910,7 @@
               "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
-              "name": "globalFontOptions",
+              "name": "globalFontConfig",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -835,7 +925,15 @@
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "init(): "
+                  "text": "init(force?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
                 },
                 {
                   "kind": "Reference",
@@ -853,13 +951,22 @@
               ],
               "isStatic": false,
               "returnTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
+                "startIndex": 3,
+                "endIndex": 5
               },
               "releaseTag": "Public",
               "isProtected": false,
               "overloadIndex": 1,
-              "parameters": [],
+              "parameters": [
+                {
+                  "parameterName": "force",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": true
+                }
+              ],
               "isOptional": false,
               "name": "init"
             },
@@ -934,8 +1041,13 @@
                   "text": "rawContent: "
                 },
                 {
+                  "kind": "Reference",
+                  "text": "IContent",
+                  "canonicalReference": "@doonce/layout-engine!IContent:interface"
+                },
+                {
                   "kind": "Content",
-                  "text": "string"
+                  "text": "['rawContent']"
                 },
                 {
                   "kind": "Content",
@@ -948,7 +1060,410 @@
               "name": "rawContent",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
+                "endIndex": 3
+              },
+              "isStatic": false,
+              "isProtected": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@doonce/layout-engine!Char#rowNo:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "rowNo: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "IRow",
+                  "canonicalReference": "@doonce/layout-engine!IRow:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "['rowNo']"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "rowNo",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isStatic": false,
+              "isProtected": false
+            }
+          ],
+          "extendsTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "implementsTokenRanges": [
+            {
+              "startIndex": 3,
+              "endIndex": 4
+            },
+            {
+              "startIndex": 5,
+              "endIndex": 6
+            }
+          ]
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@doonce/layout-engine!CharCtrOptions:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type CharCtrOptions = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    rawContent: "
+            },
+            {
+              "kind": "Reference",
+              "text": "IContent",
+              "canonicalReference": "@doonce/layout-engine!IContent:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "['rawContent']; /** 原始内容 */\n    globalFontConfig: "
+            },
+            {
+              "kind": "Reference",
+              "text": "GlobalFontConfig",
+              "canonicalReference": "@doonce/layout-engine!GlobalFontConfig:type"
+            },
+            {
+              "kind": "Content",
+              "text": "; /** 字体设置项 */\n    debug?: boolean; /** 调试 */\n    rowNo: "
+            },
+            {
+              "kind": "Reference",
+              "text": "IRow",
+              "canonicalReference": "@doonce/layout-engine!IRow:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "['rowNo'];\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "src/layout-item/text/Char.ts",
+          "releaseTag": "Public",
+          "name": "CharCtrOptions",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 8
+          }
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "@doonce/layout-engine!CRLF:class",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class CRLF extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "Base",
+              "canonicalReference": "@doonce/layout-engine!Base:class"
+            },
+            {
+              "kind": "Content",
+              "text": " implements "
+            },
+            {
+              "kind": "Reference",
+              "text": "IRow",
+              "canonicalReference": "@doonce/layout-engine!IRow:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "fileUrlPath": "src/layout-item/text/CRLF.ts",
+          "releaseTag": "Public",
+          "name": "CRLF",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "@doonce/layout-engine!CRLF:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `CRLF` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor({ debug, because, rowNo }: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "CRLFCtrOptions",
+                  "canonicalReference": "@doonce/layout-engine!CRLFCtrOptions:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "{ debug, because, rowNo }",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ]
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@doonce/layout-engine!CRLF#because:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "because: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "because",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
                 "endIndex": 2
+              },
+              "isStatic": false,
+              "isProtected": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@doonce/layout-engine!CRLF#canLineBreak:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "canLineBreak: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "canLineBreak",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false,
+              "isProtected": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@doonce/layout-engine!CRLF#debug:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "debug: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "debug",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false,
+              "isProtected": false
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@doonce/layout-engine!CRLF#init:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "init(force?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "force",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "name": "init"
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@doonce/layout-engine!CRLF#layoutItemType:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "layoutItemType: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "LayoutItemTypeEnum",
+                  "canonicalReference": "@doonce/layout-engine!LayoutItemTypeEnum:enum"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "layoutItemType",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false,
+              "isProtected": false
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@doonce/layout-engine!CRLF#measureSize:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "measureSize(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ISize",
+                  "canonicalReference": "@doonce/layout-engine!ISize:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "name": "measureSize"
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@doonce/layout-engine!CRLF#rowNo:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "rowNo: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "IRow",
+                  "canonicalReference": "@doonce/layout-engine!IRow:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "['rowNo']"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "rowNo",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
               },
               "isStatic": false,
               "isProtected": false
@@ -967,34 +1482,34 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@doonce/layout-engine!CharCtrParams:type",
+          "canonicalReference": "@doonce/layout-engine!CRLFCtrOptions:type",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare type CharCtrParams = "
+              "text": "export declare type CRLFCtrOptions = "
             },
             {
               "kind": "Content",
-              "text": "{\n    rawContent: string; /** 原始内容 */\n    globalFontOptions: "
+              "text": "{\n    debug?: boolean;\n    because: string; /** 手动换行原因 */\n    rowNo: "
             },
             {
               "kind": "Reference",
-              "text": "GlobalFontOptions",
-              "canonicalReference": "@doonce/layout-engine!GlobalFontOptions:type"
+              "text": "IRow",
+              "canonicalReference": "@doonce/layout-engine!IRow:interface"
             },
             {
               "kind": "Content",
-              "text": "; /** 字体设置项 */\n    debug?: boolean; /** 调试 */\n}"
+              "text": "['rowNo'];\n}"
             },
             {
               "kind": "Content",
               "text": ";"
             }
           ],
-          "fileUrlPath": "src/layout-item/text/Char.ts",
+          "fileUrlPath": "src/layout-item/text/CRLF.ts",
           "releaseTag": "Public",
-          "name": "CharCtrParams",
+          "name": "CRLFCtrOptions",
           "typeTokenRange": {
             "startIndex": 1,
             "endIndex": 4
@@ -1022,7 +1537,7 @@
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "constructor({ globalFontOptions, inputLayoutItemDescList, formulaRenderType, debug }: "
+                  "text": "constructor({ globalFontConfig, inputRowLayoutItemInstanceList, inputImgLayoutItemInstanceList, debug }: "
                 },
                 {
                   "kind": "Reference",
@@ -1039,7 +1554,7 @@
               "overloadIndex": 1,
               "parameters": [
                 {
-                  "parameterName": "{ globalFontOptions, inputLayoutItemDescList, formulaRenderType, debug }",
+                  "parameterName": "{ globalFontConfig, inputRowLayoutItemInstanceList, inputImgLayoutItemInstanceList, debug }",
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
                     "endIndex": 2
@@ -1109,17 +1624,17 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!DoonceLayoutEngine#formulaRenderType:member",
+              "canonicalReference": "@doonce/layout-engine!DoonceLayoutEngine#globalFontConfig:member",
               "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "formulaRenderType: "
+                  "text": "globalFontConfig: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "FormulaRenderTypeEnum",
-                  "canonicalReference": "@doonce/layout-engine!FormulaRenderTypeEnum:enum"
+                  "text": "GlobalFontConfig",
+                  "canonicalReference": "@doonce/layout-engine!GlobalFontConfig:type"
                 },
                 {
                   "kind": "Content",
@@ -1129,37 +1644,7 @@
               "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
-              "name": "formulaRenderType",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!DoonceLayoutEngine#globalFontOptions:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "globalFontOptions: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "GlobalFontOptions",
-                  "canonicalReference": "@doonce/layout-engine!GlobalFontOptions:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "globalFontOptions",
+              "name": "globalFontConfig",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -1204,17 +1689,17 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!DoonceLayoutEngine#inputLayoutItemDescList:member",
-              "docComment": "/**\n * 用户传入的布局项描述列表\n */\n",
+              "canonicalReference": "@doonce/layout-engine!DoonceLayoutEngine#inputImgLayoutItemInstanceList:member",
+              "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "inputLayoutItemDescList: "
+                  "text": "inputImgLayoutItemInstanceList: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "InputLayoutItemDesc",
-                  "canonicalReference": "@doonce/layout-engine!InputLayoutItemDesc:type"
+                  "text": "InputImgLayouItemInstance",
+                  "canonicalReference": "@doonce/layout-engine!InputImgLayouItemInstance:type"
                 },
                 {
                   "kind": "Content",
@@ -1228,7 +1713,7 @@
               "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
-              "name": "inputLayoutItemDescList",
+              "name": "inputImgLayoutItemInstanceList",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 3
@@ -1238,43 +1723,21 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!DoonceLayoutEngine#inputLayoutItemInstanceList:member",
-              "docComment": "/**\n * 实例化后的用户布局项列表\n */\n",
+              "canonicalReference": "@doonce/layout-engine!DoonceLayoutEngine#inputRowLayoutItemInstanceList:member",
+              "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "inputLayoutItemInstanceList: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "("
+                  "text": "inputRowLayoutItemInstanceList: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "Char",
-                  "canonicalReference": "@doonce/layout-engine!Char:class"
+                  "text": "InputRowLayoutItemInstance",
+                  "canonicalReference": "@doonce/layout-engine!InputRowLayoutItemInstance:type"
                 },
                 {
                   "kind": "Content",
-                  "text": " | "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Formula",
-                  "canonicalReference": "@doonce/layout-engine!Formula:class"
-                },
-                {
-                  "kind": "Content",
-                  "text": " | "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Graph",
-                  "canonicalReference": "@doonce/layout-engine!Graph:class"
-                },
-                {
-                  "kind": "Content",
-                  "text": ")[]"
+                  "text": "[]"
                 },
                 {
                   "kind": "Content",
@@ -1284,10 +1747,10 @@
               "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
-              "name": "inputLayoutItemInstanceList",
+              "name": "inputRowLayoutItemInstanceList",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 8
+                "endIndex": 3
               },
               "isStatic": false,
               "isProtected": false
@@ -1325,11 +1788,11 @@
             {
               "kind": "Method",
               "canonicalReference": "@doonce/layout-engine!DoonceLayoutEngine#layout:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * 布局\n *\n * @date 2023-08-01 10:40:15\n *\n * @param  - { maxWidth } 容器宽度\n *\n * @returns {LayoutMethodRet} 布局对象  @memberof DoonceLayoutEngine\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "layout({ maxWidth, padding, letterSpacing }: "
+                  "text": "layout({ maxWidth }: "
                 },
                 {
                   "kind": "Reference",
@@ -1341,44 +1804,9 @@
                   "text": "): "
                 },
                 {
-                  "kind": "Content",
-                  "text": "{\n        rowList: "
-                },
-                {
                   "kind": "Reference",
-                  "text": "Row",
-                  "canonicalReference": "@doonce/layout-engine!Row:class"
-                },
-                {
-                  "kind": "Content",
-                  "text": "[];\n        imgList: ("
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Graph",
-                  "canonicalReference": "@doonce/layout-engine!Graph:class"
-                },
-                {
-                  "kind": "Content",
-                  "text": " | "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Img",
-                  "canonicalReference": "@doonce/layout-engine!Img:class"
-                },
-                {
-                  "kind": "Content",
-                  "text": ")[];\n    } | "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Row",
-                  "canonicalReference": "@doonce/layout-engine!Row:class"
-                },
-                {
-                  "kind": "Content",
-                  "text": "[]"
+                  "text": "LayoutMethodRet",
+                  "canonicalReference": "@doonce/layout-engine!LayoutMethodRet:type"
                 },
                 {
                   "kind": "Content",
@@ -1388,14 +1816,14 @@
               "isStatic": false,
               "returnTypeTokenRange": {
                 "startIndex": 3,
-                "endIndex": 12
+                "endIndex": 4
               },
               "releaseTag": "Public",
               "isProtected": false,
               "overloadIndex": 1,
               "parameters": [
                 {
-                  "parameterName": "{ maxWidth, padding, letterSpacing }",
+                  "parameterName": "{ maxWidth }",
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
                     "endIndex": 2
@@ -1420,34 +1848,34 @@
             },
             {
               "kind": "Content",
-              "text": "{\n    globalFontOptions: "
+              "text": "{\n    globalFontConfig: "
             },
             {
               "kind": "Reference",
-              "text": "GlobalFontOptions",
-              "canonicalReference": "@doonce/layout-engine!GlobalFontOptions:type"
+              "text": "GlobalFontConfig",
+              "canonicalReference": "@doonce/layout-engine!GlobalFontConfig:type"
             },
             {
               "kind": "Content",
-              "text": "; /** 字体 */\n    inputLayoutItemDescList: "
+              "text": "; /** 字体 */\n    inputRowLayoutItemInstanceList: "
             },
             {
               "kind": "Reference",
-              "text": "InputLayoutItemDesc",
-              "canonicalReference": "@doonce/layout-engine!InputLayoutItemDesc:type"
+              "text": "InputRowLayoutItemInstance",
+              "canonicalReference": "@doonce/layout-engine!InputRowLayoutItemInstance:type"
             },
             {
               "kind": "Content",
-              "text": "[]; /** 用户传入的布局项描述对象列表 */\n    formulaRenderType: "
+              "text": "[]; /** 用户传入的参与行布局的实例 */\n    inputImgLayoutItemInstanceList: "
             },
             {
               "kind": "Reference",
-              "text": "FormulaRenderTypeEnum",
-              "canonicalReference": "@doonce/layout-engine!FormulaRenderTypeEnum:enum"
+              "text": "InputImgLayouItemInstance",
+              "canonicalReference": "@doonce/layout-engine!InputImgLayouItemInstance:type"
             },
             {
               "kind": "Content",
-              "text": "; /** 公式渲染类型 */\n    debug?: boolean;\n}"
+              "text": "[]; /** 用户传入的参与图片布局的实例 */\n    debug?: boolean;\n}"
             },
             {
               "kind": "Content",
@@ -1487,6 +1915,15 @@
             },
             {
               "kind": "Content",
+              "text": ", "
+            },
+            {
+              "kind": "Reference",
+              "text": "IRow",
+              "canonicalReference": "@doonce/layout-engine!IRow:interface"
+            },
+            {
+              "kind": "Content",
               "text": " "
             }
           ],
@@ -1502,12 +1939,12 @@
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "constructor({ rawContent, globalFontOptions, formulaRenderType, debug }: "
+                  "text": "constructor({ rawContent, globalFontConfig, formulaRenderType, debug, rowNo }: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "FormulaCtrParams",
-                  "canonicalReference": "@doonce/layout-engine!FormulaCtrParams:type"
+                  "text": "FormulaCtrOptions",
+                  "canonicalReference": "@doonce/layout-engine!FormulaCtrOptions:type"
                 },
                 {
                   "kind": "Content",
@@ -1519,7 +1956,7 @@
               "overloadIndex": 1,
               "parameters": [
                 {
-                  "parameterName": "{ rawContent, globalFontOptions, formulaRenderType, debug }",
+                  "parameterName": "{ rawContent, globalFontConfig, formulaRenderType, debug, rowNo }",
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
                     "endIndex": 2
@@ -1567,8 +2004,13 @@
                   "text": "content: "
                 },
                 {
+                  "kind": "Reference",
+                  "text": "IContent",
+                  "canonicalReference": "@doonce/layout-engine!IContent:interface"
+                },
+                {
                   "kind": "Content",
-                  "text": "string"
+                  "text": "['content']"
                 },
                 {
                   "kind": "Content",
@@ -1581,7 +2023,7 @@
               "name": "content",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 2
+                "endIndex": 3
               },
               "isStatic": false,
               "isProtected": false
@@ -1691,17 +2133,17 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!Formula#globalFontOptions:member",
+              "canonicalReference": "@doonce/layout-engine!Formula#globalFontConfig:member",
               "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "globalFontOptions: "
+                  "text": "globalFontConfig: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "GlobalFontOptions",
-                  "canonicalReference": "@doonce/layout-engine!GlobalFontOptions:type"
+                  "text": "GlobalFontConfig",
+                  "canonicalReference": "@doonce/layout-engine!GlobalFontConfig:type"
                 },
                 {
                   "kind": "Content",
@@ -1711,7 +2153,7 @@
               "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
-              "name": "globalFontOptions",
+              "name": "globalFontConfig",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -1726,7 +2168,15 @@
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "init(): "
+                  "text": "init(force?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
                 },
                 {
                   "kind": "Reference",
@@ -1744,13 +2194,22 @@
               ],
               "isStatic": false,
               "returnTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
+                "startIndex": 3,
+                "endIndex": 5
               },
               "releaseTag": "Public",
               "isProtected": false,
               "overloadIndex": 1,
-              "parameters": [],
+              "parameters": [
+                {
+                  "parameterName": "force",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": true
+                }
+              ],
               "isOptional": false,
               "name": "init"
             },
@@ -1905,12 +2364,12 @@
                 },
                 {
                   "kind": "Content",
-                  "text": ", globalFontOptions: "
+                  "text": ", globalFontConfig: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "GlobalFontOptions",
-                  "canonicalReference": "@doonce/layout-engine!GlobalFontOptions:type"
+                  "text": "GlobalFontConfig",
+                  "canonicalReference": "@doonce/layout-engine!GlobalFontConfig:type"
                 },
                 {
                   "kind": "Content",
@@ -1944,7 +2403,7 @@
                   "isOptional": false
                 },
                 {
-                  "parameterName": "globalFontOptions",
+                  "parameterName": "globalFontConfig",
                   "parameterTypeTokenRange": {
                     "startIndex": 3,
                     "endIndex": 4
@@ -2017,8 +2476,13 @@
                   "text": "rawContent: "
                 },
                 {
+                  "kind": "Reference",
+                  "text": "IContent",
+                  "canonicalReference": "@doonce/layout-engine!IContent:interface"
+                },
+                {
                   "kind": "Content",
-                  "text": "string"
+                  "text": "['rawContent']"
                 },
                 {
                   "kind": "Content",
@@ -2031,7 +2495,41 @@
               "name": "rawContent",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 2
+                "endIndex": 3
+              },
+              "isStatic": false,
+              "isProtected": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@doonce/layout-engine!Formula#rowNo:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "rowNo: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "IRow",
+                  "canonicalReference": "@doonce/layout-engine!IRow:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "['rowNo']"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "rowNo",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
               },
               "isStatic": false,
               "isProtected": false
@@ -2075,26 +2573,30 @@
             {
               "startIndex": 3,
               "endIndex": 4
+            },
+            {
+              "startIndex": 5,
+              "endIndex": 6
             }
           ]
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@doonce/layout-engine!FormulaCtrParams:type",
+          "canonicalReference": "@doonce/layout-engine!FormulaCtrOptions:type",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare type FormulaCtrParams = "
+              "text": "export declare type FormulaCtrOptions = "
             },
             {
               "kind": "Content",
-              "text": "{\n    rawContent: string; /** 公式原始内容 */\n    globalFontOptions: "
+              "text": "{\n    rawContent: string; /** 公式原始内容 */\n    globalFontConfig: "
             },
             {
               "kind": "Reference",
-              "text": "GlobalFontOptions",
-              "canonicalReference": "@doonce/layout-engine!GlobalFontOptions:type"
+              "text": "GlobalFontConfig",
+              "canonicalReference": "@doonce/layout-engine!GlobalFontConfig:type"
             },
             {
               "kind": "Content",
@@ -2107,7 +2609,16 @@
             },
             {
               "kind": "Content",
-              "text": "; /** 公式渲染类型,SVG(dom 节点) 或 IMG */\n    debug?: boolean; /** 调试 */\n}"
+              "text": "; /** 公式渲染类型,SVG(dom 节点) 或 IMG */\n    debug?: boolean; /** 调试 */\n    rowNo: "
+            },
+            {
+              "kind": "Reference",
+              "text": "IRow",
+              "canonicalReference": "@doonce/layout-engine!IRow:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "['rowNo'];\n}"
             },
             {
               "kind": "Content",
@@ -2116,10 +2627,10 @@
           ],
           "fileUrlPath": "src/layout-item/text/Formula.ts",
           "releaseTag": "Public",
-          "name": "FormulaCtrParams",
+          "name": "FormulaCtrOptions",
           "typeTokenRange": {
             "startIndex": 1,
-            "endIndex": 6
+            "endIndex": 8
           }
         },
         {
@@ -2183,12 +2694,12 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@doonce/layout-engine!GlobalFontOptions:type",
-          "docComment": "",
+          "canonicalReference": "@doonce/layout-engine!GlobalFontConfig:type",
+          "docComment": "/**\n * 参考https://developer.mozilla.org/zh-CN/docs/Web/CSS/font\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare type GlobalFontOptions = "
+              "text": "export declare type GlobalFontConfig = "
             },
             {
               "kind": "Content",
@@ -2201,593 +2712,11 @@
           ],
           "fileUrlPath": "src/DoonceLayoutEngine.ts",
           "releaseTag": "Public",
-          "name": "GlobalFontOptions",
+          "name": "GlobalFontConfig",
           "typeTokenRange": {
             "startIndex": 1,
             "endIndex": 2
           }
-        },
-        {
-          "kind": "Class",
-          "canonicalReference": "@doonce/layout-engine!Graph:class",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare class Graph extends "
-            },
-            {
-              "kind": "Reference",
-              "text": "Base",
-              "canonicalReference": "@doonce/layout-engine!Base:class"
-            },
-            {
-              "kind": "Content",
-              "text": " implements "
-            },
-            {
-              "kind": "Reference",
-              "text": "IImgSurround",
-              "canonicalReference": "@doonce/layout-engine!IImgSurround:interface"
-            },
-            {
-              "kind": "Content",
-              "text": " "
-            }
-          ],
-          "fileUrlPath": "src/layout-item/img/Graph.ts",
-          "releaseTag": "Public",
-          "name": "Graph",
-          "preserveMemberOrder": false,
-          "members": [
-            {
-              "kind": "Constructor",
-              "canonicalReference": "@doonce/layout-engine!Graph:constructor(1)",
-              "docComment": "/**\n * Constructs a new instance of the `Graph` class\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "constructor({ src, imgSurroundType }: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "GraphCtrParams",
-                  "canonicalReference": "@doonce/layout-engine!GraphCtrParams:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": ");"
-                }
-              ],
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "{ src, imgSurroundType }",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ]
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!Graph#canLineBreak:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "canLineBreak: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "boolean"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "canLineBreak",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!Graph#imgSurroundType:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "imgSurroundType: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "ImgSurrounTypeEnum",
-                  "canonicalReference": "@doonce/layout-engine!ImgSurrounTypeEnum:enum"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "imgSurroundType",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@doonce/layout-engine!Graph#init:member(1)",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "init(): "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Promise",
-                  "canonicalReference": "!Promise:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [],
-              "isOptional": false,
-              "name": "init"
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!Graph#layoutItemType:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "layoutItemType: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "LayoutItemTypeEnum",
-                  "canonicalReference": "@doonce/layout-engine!LayoutItemTypeEnum:enum"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "layoutItemType",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@doonce/layout-engine!Graph#measureSize:member(1)",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "measureSize(): "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Promise",
-                  "canonicalReference": "!Promise:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<"
-                },
-                {
-                  "kind": "Reference",
-                  "text": "ISize",
-                  "canonicalReference": "@doonce/layout-engine!ISize:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ">"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 5
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [],
-              "isOptional": false,
-              "name": "measureSize"
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!Graph#src:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "src: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "src",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false
-            }
-          ],
-          "extendsTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          },
-          "implementsTokenRanges": [
-            {
-              "startIndex": 3,
-              "endIndex": 4
-            }
-          ]
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@doonce/layout-engine!GraphCtrParams:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare type GraphCtrParams = "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    src: string;\n    imgSurroundType: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ImgSurrounTypeEnum",
-              "canonicalReference": "@doonce/layout-engine!ImgSurrounTypeEnum:enum"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n}"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "src/layout-item/img/Graph.ts",
-          "releaseTag": "Public",
-          "name": "GraphCtrParams",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
-        },
-        {
-          "kind": "Class",
-          "canonicalReference": "@doonce/layout-engine!GraphTitle:class",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare class GraphTitle extends "
-            },
-            {
-              "kind": "Reference",
-              "text": "Base",
-              "canonicalReference": "@doonce/layout-engine!Base:class"
-            },
-            {
-              "kind": "Content",
-              "text": " implements "
-            },
-            {
-              "kind": "Reference",
-              "text": "IContent",
-              "canonicalReference": "@doonce/layout-engine!IContent:interface"
-            },
-            {
-              "kind": "Content",
-              "text": " "
-            }
-          ],
-          "fileUrlPath": "src/layout-item/img/GraphTitle.ts",
-          "releaseTag": "Public",
-          "name": "GraphTitle",
-          "preserveMemberOrder": false,
-          "members": [
-            {
-              "kind": "Constructor",
-              "canonicalReference": "@doonce/layout-engine!GraphTitle:constructor(1)",
-              "docComment": "/**\n * Constructs a new instance of the `GraphTitle` class\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "constructor(rawContent: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ", globalFontOptions: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "GlobalFontOptions",
-                  "canonicalReference": "@doonce/layout-engine!GlobalFontOptions:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": ");"
-                }
-              ],
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "rawContent",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                },
-                {
-                  "parameterName": "globalFontOptions",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 3,
-                    "endIndex": 4
-                  },
-                  "isOptional": false
-                }
-              ]
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!GraphTitle#canLineBreak:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "canLineBreak: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "boolean"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "canLineBreak",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!GraphTitle#content:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "content: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "content",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!GraphTitle#globalFontOptions:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "globalFontOptions: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "GlobalFontOptions",
-                  "canonicalReference": "@doonce/layout-engine!GlobalFontOptions:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "globalFontOptions",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!GraphTitle#layoutItemType:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "layoutItemType: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "LayoutItemTypeEnum",
-                  "canonicalReference": "@doonce/layout-engine!LayoutItemTypeEnum:enum"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "layoutItemType",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@doonce/layout-engine!GraphTitle#measureSize:member(1)",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "measureSize(): "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "ISize",
-                  "canonicalReference": "@doonce/layout-engine!ISize:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [],
-              "isOptional": false,
-              "name": "measureSize"
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!GraphTitle#rawContent:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "rawContent: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "rawContent",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false
-            }
-          ],
-          "extendsTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          },
-          "implementsTokenRanges": [
-            {
-              "startIndex": 3,
-              "endIndex": 4
-            }
-          ]
         },
         {
           "kind": "Enum",
@@ -3177,8 +3106,8 @@
             },
             {
               "kind": "Reference",
-              "text": "IChild",
-              "canonicalReference": "@doonce/layout-engine!IChild:interface"
+              "text": "IContent",
+              "canonicalReference": "@doonce/layout-engine!IContent:interface"
             },
             {
               "kind": "Content",
@@ -3186,8 +3115,8 @@
             },
             {
               "kind": "Reference",
-              "text": "IImgSurround",
-              "canonicalReference": "@doonce/layout-engine!IImgSurround:interface"
+              "text": "IRow",
+              "canonicalReference": "@doonce/layout-engine!IRow:interface"
             },
             {
               "kind": "Content",
@@ -3206,12 +3135,12 @@
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "constructor(childs: "
+                  "text": "constructor({ title, globalFontConfig, imgSurroundType, rawContent, rowNo }: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "ImgChildsTuple",
-                  "canonicalReference": "@doonce/layout-engine!ImgChildsTuple:type"
+                  "text": "ImgCtrOptions",
+                  "canonicalReference": "@doonce/layout-engine!ImgCtrOptions:type"
                 },
                 {
                   "kind": "Content",
@@ -3223,7 +3152,7 @@
               "overloadIndex": 1,
               "parameters": [
                 {
-                  "parameterName": "childs",
+                  "parameterName": "{ title, globalFontConfig, imgSurroundType, rawContent, rowNo }",
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
                     "endIndex": 2
@@ -3263,17 +3192,21 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!Img#childs:member",
+              "canonicalReference": "@doonce/layout-engine!Img#content:member",
               "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "childs: "
+                  "text": "content: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "ImgChildsTuple",
-                  "canonicalReference": "@doonce/layout-engine!ImgChildsTuple:type"
+                  "text": "IContent",
+                  "canonicalReference": "@doonce/layout-engine!IContent:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "['content']"
                 },
                 {
                   "kind": "Content",
@@ -3283,43 +3216,43 @@
               "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
-              "name": "childs",
+              "name": "content",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 2
+                "endIndex": 3
               },
               "isStatic": false,
               "isProtected": false
             },
             {
-              "kind": "Method",
-              "canonicalReference": "@doonce/layout-engine!Img#haveTitle:member(1)",
+              "kind": "Property",
+              "canonicalReference": "@doonce/layout-engine!Img#globalFontConfig:member",
               "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "haveTitle(): "
+                  "text": "globalFontConfig: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "boolean"
+                  "kind": "Reference",
+                  "text": "GlobalFontConfig",
+                  "canonicalReference": "@doonce/layout-engine!GlobalFontConfig:type"
                 },
                 {
                   "kind": "Content",
                   "text": ";"
                 }
               ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "globalFontConfig",
+              "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
               },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [],
-              "isOptional": false,
-              "name": "haveTitle"
+              "isStatic": false,
+              "isProtected": false
             },
             {
               "kind": "Property",
@@ -3350,6 +3283,58 @@
               },
               "isStatic": false,
               "isProtected": false
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@doonce/layout-engine!Img#init:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "init(force?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "force",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "name": "init"
             },
             {
               "kind": "Property",
@@ -3392,8 +3377,51 @@
                 },
                 {
                   "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
                   "text": "ISize",
                   "canonicalReference": "@doonce/layout-engine!ISize:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "name": "measureSize"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@doonce/layout-engine!Img#measureTitleSize:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "measureTitleSize(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "{\n        width: number;\n        height: number;\n    }"
                 },
                 {
                   "kind": "Content",
@@ -3410,7 +3438,104 @@
               "overloadIndex": 1,
               "parameters": [],
               "isOptional": false,
-              "name": "measureSize"
+              "name": "measureTitleSize"
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@doonce/layout-engine!Img#rawContent:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "rawContent: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "IContent",
+                  "canonicalReference": "@doonce/layout-engine!IContent:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "['rawContent']"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "rawContent",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isStatic": false,
+              "isProtected": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@doonce/layout-engine!Img#rowNo:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "rowNo: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "IRow",
+                  "canonicalReference": "@doonce/layout-engine!IRow:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "['rowNo']"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "rowNo",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isStatic": false,
+              "isProtected": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@doonce/layout-engine!Img#title:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "title: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "title",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false,
+              "isProtected": false
             }
           ],
           "extendsTokenRange": {
@@ -3430,43 +3555,52 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@doonce/layout-engine!ImgChildsTuple:type",
-          "docComment": "/**\n * 限制 Img 的 child 类型\n */\n",
+          "canonicalReference": "@doonce/layout-engine!ImgCtrOptions:type",
+          "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare type ImgChildsTuple = "
+              "text": "export declare type ImgCtrOptions = "
             },
             {
               "kind": "Content",
-              "text": "["
+              "text": "{\n    title?: string;\n    rowNo: "
             },
             {
               "kind": "Reference",
-              "text": "Graph",
-              "canonicalReference": "@doonce/layout-engine!Graph:class"
+              "text": "IRow",
+              "canonicalReference": "@doonce/layout-engine!IRow:interface"
             },
             {
               "kind": "Content",
-              "text": ", "
+              "text": "['rowNo'];\n    rawContent: "
             },
             {
               "kind": "Reference",
-              "text": "GraphTitle",
-              "canonicalReference": "@doonce/layout-engine!GraphTitle:class"
+              "text": "IContent",
+              "canonicalReference": "@doonce/layout-engine!IContent:interface"
             },
             {
               "kind": "Content",
-              "text": "] | ["
+              "text": "['rawContent'];\n    globalFontConfig: "
             },
             {
               "kind": "Reference",
-              "text": "Graph",
-              "canonicalReference": "@doonce/layout-engine!Graph:class"
+              "text": "GlobalFontConfig",
+              "canonicalReference": "@doonce/layout-engine!GlobalFontConfig:type"
             },
             {
               "kind": "Content",
-              "text": "]"
+              "text": ";\n    imgSurroundType: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ImgSurrounTypeEnum",
+              "canonicalReference": "@doonce/layout-engine!ImgSurrounTypeEnum:enum"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n}"
             },
             {
               "kind": "Content",
@@ -3475,10 +3609,10 @@
           ],
           "fileUrlPath": "src/layout-item/img/Img.ts",
           "releaseTag": "Public",
-          "name": "ImgChildsTuple",
+          "name": "ImgCtrOptions",
           "typeTokenRange": {
             "startIndex": 1,
-            "endIndex": 8
+            "endIndex": 10
           }
         },
         {
@@ -3506,6 +3640,15 @@
             },
             {
               "kind": "Content",
+              "text": ", "
+            },
+            {
+              "kind": "Reference",
+              "text": "IRow",
+              "canonicalReference": "@doonce/layout-engine!IRow:interface"
+            },
+            {
+              "kind": "Content",
               "text": " "
             }
           ],
@@ -3521,7 +3664,7 @@
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "constructor({ owner, height }: "
+                  "text": "constructor({ ownerImg, height, rowNo, y }: "
                 },
                 {
                   "kind": "Reference",
@@ -3538,7 +3681,7 @@
               "overloadIndex": 1,
               "parameters": [
                 {
-                  "parameterName": "{ owner, height }",
+                  "parameterName": "{ ownerImg, height, rowNo, y }",
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
                     "endIndex": 2
@@ -3586,8 +3729,13 @@
                   "text": "content: "
                 },
                 {
+                  "kind": "Reference",
+                  "text": "IContent",
+                  "canonicalReference": "@doonce/layout-engine!IContent:interface"
+                },
+                {
                   "kind": "Content",
-                  "text": "string"
+                  "text": "['content']"
                 },
                 {
                   "kind": "Content",
@@ -3600,7 +3748,7 @@
               "name": "content",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 2
+                "endIndex": 3
               },
               "isStatic": false,
               "isProtected": false
@@ -3633,6 +3781,53 @@
               },
               "isStatic": false,
               "isProtected": false
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@doonce/layout-engine!ImgPlaceholder#init:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "init(force?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "force",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "name": "init"
             },
             {
               "kind": "Property",
@@ -3697,12 +3892,12 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!ImgPlaceholder#owner:member",
+              "canonicalReference": "@doonce/layout-engine!ImgPlaceholder#ownerImg:member",
               "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "owner: "
+                  "text": "ownerImg: "
                 },
                 {
                   "kind": "Reference",
@@ -3717,7 +3912,7 @@
               "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
-              "name": "owner",
+              "name": "ownerImg",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -3735,8 +3930,13 @@
                   "text": "rawContent: "
                 },
                 {
+                  "kind": "Reference",
+                  "text": "IContent",
+                  "canonicalReference": "@doonce/layout-engine!IContent:interface"
+                },
+                {
                   "kind": "Content",
-                  "text": "string"
+                  "text": "['rawContent']"
                 },
                 {
                   "kind": "Content",
@@ -3749,7 +3949,41 @@
               "name": "rawContent",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 2
+                "endIndex": 3
+              },
+              "isStatic": false,
+              "isProtected": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@doonce/layout-engine!ImgPlaceholder#rowNo:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "rowNo: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "IRow",
+                  "canonicalReference": "@doonce/layout-engine!IRow:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "['rowNo']"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "rowNo",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
               },
               "isStatic": false,
               "isProtected": false
@@ -3763,6 +3997,10 @@
             {
               "startIndex": 3,
               "endIndex": 4
+            },
+            {
+              "startIndex": 5,
+              "endIndex": 6
             }
           ]
         },
@@ -3777,7 +4015,7 @@
             },
             {
               "kind": "Content",
-              "text": "{\n    owner: "
+              "text": "{\n    ownerImg: "
             },
             {
               "kind": "Reference",
@@ -3786,7 +4024,16 @@
             },
             {
               "kind": "Content",
-              "text": ";\n    height: number;\n}"
+              "text": ";\n    height: number;\n    y: number;\n    rowNo: "
+            },
+            {
+              "kind": "Reference",
+              "text": "IRow",
+              "canonicalReference": "@doonce/layout-engine!IRow:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "['rowNo'];\n}"
             },
             {
               "kind": "Content",
@@ -3798,7 +4045,7 @@
           "name": "ImgPlaceholderCtrOptions",
           "typeTokenRange": {
             "startIndex": 1,
-            "endIndex": 4
+            "endIndex": 6
           }
         },
         {
@@ -3883,52 +4130,17 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@doonce/layout-engine!InputLayoutItemDesc:type",
-          "docComment": "",
+          "canonicalReference": "@doonce/layout-engine!InputImgLayouItemInstance:type",
+          "docComment": "/**\n * 限制参与图片布局的实例\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare type InputLayoutItemDesc = "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    layoutItemType: "
+              "text": "export declare type InputImgLayouItemInstance = "
             },
             {
               "kind": "Reference",
-              "text": "LayoutItemTypeEnum.CHAR",
-              "canonicalReference": "@doonce/layout-engine!LayoutItemTypeEnum.CHAR:member"
-            },
-            {
-              "kind": "Content",
-              "text": " | "
-            },
-            {
-              "kind": "Reference",
-              "text": "LayoutItemTypeEnum.FORMULA",
-              "canonicalReference": "@doonce/layout-engine!LayoutItemTypeEnum.FORMULA:member"
-            },
-            {
-              "kind": "Content",
-              "text": " | "
-            },
-            {
-              "kind": "Reference",
-              "text": "LayoutItemTypeEnum.GRAPH",
-              "canonicalReference": "@doonce/layout-engine!LayoutItemTypeEnum.GRAPH:member"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    rawContent: string;\n    imgSurroundType?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ImgSurrounTypeEnum",
-              "canonicalReference": "@doonce/layout-engine!ImgSurrounTypeEnum:enum"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n}"
+              "text": "Img",
+              "canonicalReference": "@doonce/layout-engine!Img:class"
             },
             {
               "kind": "Content",
@@ -3937,7 +4149,70 @@
           ],
           "fileUrlPath": "src/DoonceLayoutEngine.ts",
           "releaseTag": "Public",
-          "name": "InputLayoutItemDesc",
+          "name": "InputImgLayouItemInstance",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@doonce/layout-engine!InputRowLayoutItemInstance:type",
+          "docComment": "/**\n * 限制参与行布局的实例\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type InputRowLayoutItemInstance = "
+            },
+            {
+              "kind": "Reference",
+              "text": "Char",
+              "canonicalReference": "@doonce/layout-engine!Char:class"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "Formula",
+              "canonicalReference": "@doonce/layout-engine!Formula:class"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "Img",
+              "canonicalReference": "@doonce/layout-engine!Img:class"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "RowLayoutItemGroup",
+              "canonicalReference": "@doonce/layout-engine!~RowLayoutItemGroup:class"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "CRLF",
+              "canonicalReference": "@doonce/layout-engine!CRLF:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "src/DoonceLayoutEngine.ts",
+          "releaseTag": "Public",
+          "name": "InputRowLayoutItemInstance",
           "typeTokenRange": {
             "startIndex": 1,
             "endIndex": 10
@@ -4074,33 +4349,6 @@
           "name": "IRow",
           "preserveMemberOrder": false,
           "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@doonce/layout-engine!IRow#indent:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "indent: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "indent",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
             {
               "kind": "PropertySignature",
               "canonicalReference": "@doonce/layout-engine!IRow#rowNo:member",
@@ -4241,6 +4489,27 @@
             },
             {
               "kind": "EnumMember",
+              "canonicalReference": "@doonce/layout-engine!LayoutItemTypeEnum.CRLF:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "CRLF = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "\"CRLF\""
+                }
+              ],
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "name": "CRLF"
+            },
+            {
+              "kind": "EnumMember",
               "canonicalReference": "@doonce/layout-engine!LayoutItemTypeEnum.FORMULA:member",
               "docComment": "",
               "excerptTokens": [
@@ -4283,16 +4552,16 @@
             },
             {
               "kind": "EnumMember",
-              "canonicalReference": "@doonce/layout-engine!LayoutItemTypeEnum.GRAPH_TITLE:member",
+              "canonicalReference": "@doonce/layout-engine!LayoutItemTypeEnum.GRAPH_WITH_TITLE:member",
               "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "GRAPH_TITLE = "
+                  "text": "GRAPH_WITH_TITLE = "
                 },
                 {
                   "kind": "Content",
-                  "text": "\"GRAPH_TITLE\""
+                  "text": "\"GRAPH_WITH_TITLE\""
                 }
               ],
               "initializerTokenRange": {
@@ -4300,7 +4569,7 @@
                 "endIndex": 2
               },
               "releaseTag": "Public",
-              "name": "GRAPH_TITLE"
+              "name": "GRAPH_WITH_TITLE"
             },
             {
               "kind": "EnumMember",
@@ -4367,16 +4636,16 @@
             },
             {
               "kind": "EnumMember",
-              "canonicalReference": "@doonce/layout-engine!LayoutItemTypeEnum.TEXT_GROUP:member",
+              "canonicalReference": "@doonce/layout-engine!LayoutItemTypeEnum.ROW_LAYOUT_ITEM_GROUP:member",
               "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "TEXT_GROUP = "
+                  "text": "ROW_LAYOUT_ITEM_GROUP = "
                 },
                 {
                   "kind": "Content",
-                  "text": "\"TEXT_GROUP\""
+                  "text": "\"ROW_LAYOUT_ITEM_GROUP\""
                 }
               ],
               "initializerTokenRange": {
@@ -4384,14 +4653,14 @@
                 "endIndex": 2
               },
               "releaseTag": "Public",
-              "name": "TEXT_GROUP"
+              "name": "ROW_LAYOUT_ITEM_GROUP"
             }
           ]
         },
         {
           "kind": "TypeAlias",
           "canonicalReference": "@doonce/layout-engine!LayoutMethodParams:type",
-          "docComment": "",
+          "docComment": "/**\n * 布局方法参数\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -4399,7 +4668,7 @@
             },
             {
               "kind": "Content",
-              "text": "{\n    maxWidth: number; /** 单位px */\n    padding?: [number, number, number, number]; /** 上右下左 padding */\n    letterSpacing?: number; /** 字符间距 */\n}"
+              "text": "{\n    maxWidth: number; /** 单位px */\n}"
             },
             {
               "kind": "Content",
@@ -4412,6 +4681,50 @@
           "typeTokenRange": {
             "startIndex": 1,
             "endIndex": 2
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@doonce/layout-engine!LayoutMethodRet:type",
+          "docComment": "/**\n * 布局方法返回值\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type LayoutMethodRet = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    rowList: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Row",
+              "canonicalReference": "@doonce/layout-engine!Row:class"
+            },
+            {
+              "kind": "Content",
+              "text": "[];\n    imgList: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Img",
+              "canonicalReference": "@doonce/layout-engine!Img:class"
+            },
+            {
+              "kind": "Content",
+              "text": "[];\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "src/DoonceLayoutEngine.ts",
+          "releaseTag": "Public",
+          "name": "LayoutMethodRet",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 6
           }
         },
         {
@@ -4430,15 +4743,6 @@
             },
             {
               "kind": "Content",
-              "text": " | "
-            },
-            {
-              "kind": "Reference",
-              "text": "Graph",
-              "canonicalReference": "@doonce/layout-engine!Graph:class"
-            },
-            {
-              "kind": "Content",
               "text": ";"
             }
           ],
@@ -4447,7 +4751,7 @@
           "name": "Owner",
           "typeTokenRange": {
             "startIndex": 1,
-            "endIndex": 4
+            "endIndex": 2
           }
         },
         {
@@ -4499,7 +4803,7 @@
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "constructor({ globalFontOptions, rowNo, indent }: "
+                  "text": "constructor({ globalFontConfig, rowNo }: "
                 },
                 {
                   "kind": "Reference",
@@ -4516,7 +4820,7 @@
               "overloadIndex": 1,
               "parameters": [
                 {
-                  "parameterName": "{ globalFontOptions, rowNo, indent }",
+                  "parameterName": "{ globalFontConfig, rowNo }",
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
                     "endIndex": 2
@@ -4638,17 +4942,17 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!Row#globalFontOptions:member",
+              "canonicalReference": "@doonce/layout-engine!Row#globalFontConfig:member",
               "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "globalFontOptions: "
+                  "text": "globalFontConfig: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "GlobalFontOptions",
-                  "canonicalReference": "@doonce/layout-engine!GlobalFontOptions:type"
+                  "text": "GlobalFontConfig",
+                  "canonicalReference": "@doonce/layout-engine!GlobalFontConfig:type"
                 },
                 {
                   "kind": "Content",
@@ -4658,7 +4962,7 @@
               "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
-              "name": "globalFontOptions",
+              "name": "globalFontConfig",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -4667,33 +4971,51 @@
               "isProtected": false
             },
             {
-              "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!Row#indent:member",
+              "kind": "Method",
+              "canonicalReference": "@doonce/layout-engine!Row#init:member(1)",
               "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "indent: "
+                  "text": "init(force: "
                 },
                 {
                   "kind": "Content",
-                  "text": "number"
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
                 },
                 {
                   "kind": "Content",
                   "text": ";"
                 }
               ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "indent",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
               "isStatic": false,
-              "isProtected": false
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "force",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ],
+              "isOptional": false,
+              "name": "init"
             },
             {
               "kind": "Property",
@@ -4766,8 +5088,13 @@
                   "text": "rowNo: "
                 },
                 {
+                  "kind": "Reference",
+                  "text": "IRow",
+                  "canonicalReference": "@doonce/layout-engine!IRow:interface"
+                },
+                {
                   "kind": "Content",
-                  "text": "number"
+                  "text": "['rowNo']"
                 },
                 {
                   "kind": "Content",
@@ -4780,7 +5107,7 @@
               "name": "rowNo",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 2
+                "endIndex": 3
               },
               "isStatic": false,
               "isProtected": false
@@ -4839,8 +5166,26 @@
             },
             {
               "kind": "Reference",
-              "text": "TextGroup",
-              "canonicalReference": "@doonce/layout-engine!TextGroup:class"
+              "text": "RowLayoutItemGroup",
+              "canonicalReference": "@doonce/layout-engine!~RowLayoutItemGroup:class"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "CRLF",
+              "canonicalReference": "@doonce/layout-engine!CRLF:class"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "Img",
+              "canonicalReference": "@doonce/layout-engine!Img:class"
             },
             {
               "kind": "Content",
@@ -4852,7 +5197,7 @@
           "name": "RowChild",
           "typeTokenRange": {
             "startIndex": 1,
-            "endIndex": 8
+            "endIndex": 12
           }
         },
         {
@@ -4866,16 +5211,25 @@
             },
             {
               "kind": "Content",
-              "text": "{\n    globalFontOptions: "
+              "text": "{\n    globalFontConfig: "
             },
             {
               "kind": "Reference",
-              "text": "GlobalFontOptions",
-              "canonicalReference": "@doonce/layout-engine!GlobalFontOptions:type"
+              "text": "GlobalFontConfig",
+              "canonicalReference": "@doonce/layout-engine!GlobalFontConfig:type"
             },
             {
               "kind": "Content",
-              "text": ";\n    rowNo: number;\n    indent?: number;\n}"
+              "text": ";\n    rowNo: "
+            },
+            {
+              "kind": "Reference",
+              "text": "IRow",
+              "canonicalReference": "@doonce/layout-engine!IRow:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "['rowNo'];\n}"
             },
             {
               "kind": "Content",
@@ -4887,283 +5241,7 @@
           "name": "RowCtrOptions",
           "typeTokenRange": {
             "startIndex": 1,
-            "endIndex": 4
-          }
-        },
-        {
-          "kind": "Class",
-          "canonicalReference": "@doonce/layout-engine!TextGroup:class",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare class TextGroup extends "
-            },
-            {
-              "kind": "Reference",
-              "text": "Base",
-              "canonicalReference": "@doonce/layout-engine!Base:class"
-            },
-            {
-              "kind": "Content",
-              "text": " implements "
-            },
-            {
-              "kind": "Reference",
-              "text": "IChild",
-              "canonicalReference": "@doonce/layout-engine!IChild:interface"
-            },
-            {
-              "kind": "Content",
-              "text": ", "
-            },
-            {
-              "kind": "Reference",
-              "text": "IContent",
-              "canonicalReference": "@doonce/layout-engine!IContent:interface"
-            },
-            {
-              "kind": "Content",
-              "text": " "
-            }
-          ],
-          "fileUrlPath": "src/layout-item/text/TextGroup.ts",
-          "releaseTag": "Public",
-          "name": "TextGroup",
-          "preserveMemberOrder": false,
-          "members": [
-            {
-              "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!TextGroup#canLineBreak:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "canLineBreak: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "boolean"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "canLineBreak",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!TextGroup#childs:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "childs: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "TextGroupChild",
-                  "canonicalReference": "@doonce/layout-engine!TextGroupChild:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "[]"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "childs",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              },
-              "isStatic": false,
-              "isProtected": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!TextGroup#content:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "content: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "content",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!TextGroup#layoutItemType:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "layoutItemType: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "LayoutItemTypeEnum",
-                  "canonicalReference": "@doonce/layout-engine!LayoutItemTypeEnum:enum"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "layoutItemType",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@doonce/layout-engine!TextGroup#measureSize:member(1)",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "measureSize(): "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "ISize",
-                  "canonicalReference": "@doonce/layout-engine!ISize:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [],
-              "isOptional": false,
-              "name": "measureSize"
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@doonce/layout-engine!TextGroup#rawContent:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "rawContent: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "rawContent",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false
-            }
-          ],
-          "extendsTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          },
-          "implementsTokenRanges": [
-            {
-              "startIndex": 3,
-              "endIndex": 4
-            },
-            {
-              "startIndex": 5,
-              "endIndex": 6
-            }
-          ]
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@doonce/layout-engine!TextGroupChild:type",
-          "docComment": "/**\n * 限制下TextGroup的child 类型\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare type TextGroupChild = "
-            },
-            {
-              "kind": "Reference",
-              "text": "Char",
-              "canonicalReference": "@doonce/layout-engine!Char:class"
-            },
-            {
-              "kind": "Content",
-              "text": " | "
-            },
-            {
-              "kind": "Reference",
-              "text": "Formula",
-              "canonicalReference": "@doonce/layout-engine!Formula:class"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "src/layout-item/text/TextGroup.ts",
-          "releaseTag": "Public",
-          "name": "TextGroupChild",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
+            "endIndex": 6
           }
         }
       ]

@@ -6,21 +6,27 @@ import { Base, LayoutItemTypeEnum } from '../base';
 export class ImgPlaceholder extends Base {
     layoutItemType = LayoutItemTypeEnum.IMG_PLACEHOLDER;
     canLineBreak = false;
-    owner; /** 拥有占位符的图形组件 */
+    ownerImg; /** 拥有占位符的图形组件 */
     rawContent = '';
     content = '';
     height;
-    constructor({ owner, height }) {
-        if (!owner)
-            throw new Error('owner is required');
+    rowNo;
+    constructor({ ownerImg, height, rowNo, y }) {
+        if (!ownerImg)
+            throw new Error('ownerImg is required');
         super();
-        this.owner = owner;
+        this.ownerImg = ownerImg;
+        this.x = ownerImg.x;
+        this.y = y;
+        this.width = ownerImg.width;
         this.height = height;
-        this.width = this.owner.width;
-        this.x = this.owner.x;
+        this.rowNo = rowNo;
+    }
+    init(force = false) {
+        /** 不需要 init */
+        console.log('ImgPlaceholder.inited');
     }
     measureSize() {
-        // TODO 似乎不需要实现
         return {
             width: this.width,
             height: this.height

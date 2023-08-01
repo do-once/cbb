@@ -12,11 +12,12 @@ var LayoutItemTypeEnum
   LayoutItemTypeEnum['ROW'] = 'ROW' /** 行 */
   LayoutItemTypeEnum['IMG'] = 'IMG' /** 图片(图形+图形标题) */
   LayoutItemTypeEnum['GRAPH'] = 'GRAPH' /** 图形 */
-  LayoutItemTypeEnum['GRAPH_TITLE'] = 'GRAPH_TITLE' /** 图形标题 */
+  LayoutItemTypeEnum['GRAPH_WITH_TITLE'] = 'GRAPH_WITH_TITLE' /** 带标题的图形 */
   LayoutItemTypeEnum['CHAR'] = 'CHAR' /** 单字符 */
   LayoutItemTypeEnum['FORMULA'] = 'FORMULA' /** 公式 */
   LayoutItemTypeEnum['IMG_PLACEHOLDER'] = 'IMG_PLACEHOLDER' /** 图片占位 */
-  LayoutItemTypeEnum['TEXT_GROUP'] = 'TEXT_GROUP' /** 文本组 */
+  LayoutItemTypeEnum['ROW_LAYOUT_ITEM_GROUP'] = 'ROW_LAYOUT_ITEM_GROUP' /** 行布局item组 */
+  LayoutItemTypeEnum['CRLF'] = 'CRLF' /** 人工插入的换行 */
 })((LayoutItemTypeEnum = exports.LayoutItemTypeEnum || (exports.LayoutItemTypeEnum = {})))
 /** 水平居中枚举 */
 var HorizontalAlignEnum
@@ -28,7 +29,7 @@ var HorizontalAlignEnum
 /** 图片环绕类型枚举 */
 var ImgSurrounTypeEnum
 ;(function (ImgSurrounTypeEnum) {
-  ImgSurrounTypeEnum['NONE'] = 'NONE'
+  ImgSurrounTypeEnum['NONE'] = 'NONE' /** 默认下挂到题干下方 */
   ImgSurrounTypeEnum['FLOAT'] = 'FLOAT'
   ImgSurrounTypeEnum['ABSOLUTE'] = 'ABSOLUTE'
 })((ImgSurrounTypeEnum = exports.ImgSurrounTypeEnum || (exports.ImgSurrounTypeEnum = {})))
@@ -46,6 +47,7 @@ class Base {
   y = 0
   width = 0
   height = 0
+  initialized = false
   setPos({ x, y }) {
     x != null && (this.x = x)
     y != null && (this.y = y)

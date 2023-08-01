@@ -9,16 +9,21 @@ const base_1 = require('./base')
 class Row extends base_1.Base {
   layoutItemType = base_1.LayoutItemTypeEnum.ROW
   canLineBreak = false
-  rowNo = -1
-  indent = 0
+  rowNo
   childs = []
-  globalFontOptions
-  constructor({ globalFontOptions, rowNo, indent }) {
+  globalFontConfig
+  constructor({ globalFontConfig, rowNo }) {
     super()
-    if (!globalFontOptions || !rowNo) throw new Error('globalFontOptions and rowNo is required')
-    this.globalFontOptions = globalFontOptions
+    if (!globalFontConfig || !rowNo) throw new Error('globalFontConfig and rowNo is required')
+    this.globalFontConfig = globalFontConfig
     this.rowNo = rowNo
-    this.indent = indent ?? 0
+  }
+  init(force) {
+    /** 已经初始化,并不是强制初始化,则跳过 */
+    if (this.initialized && !force) return
+    // TODO 需要优化实现
+    console.log('force :>> ', force)
+    this.initialized = true
   }
   addChild(child) {
     this.childs.push(child)
@@ -27,7 +32,7 @@ class Row extends base_1.Base {
     return this.childs.reduce(
       (acc, cur) => {
         acc.width += cur.width
-        acc.height = Math.max(this.globalFontOptions.lineHeight, cur.height)
+        acc.height = Math.max(this.globalFontConfig.lineHeight, cur.height)
         return acc
       },
       { width: 0, height: 0 }

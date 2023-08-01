@@ -1,23 +1,25 @@
 /**
  * @author GuangHui
- * @description 单字符
+ * @description 字符
  */
-import { GlobalFontOptions } from '../../DoonceLayoutEngine';
-import { Base, LayoutItemTypeEnum, IContent, ISize } from '../base';
-export declare type CharCtrParams = {
-    rawContent: string; /** 原始内容 */
-    globalFontOptions: GlobalFontOptions; /** 字体设置项 */
+import { GlobalFontConfig } from '../../DoonceLayoutEngine';
+import { Base, LayoutItemTypeEnum, IContent, ISize, IRow } from '../base';
+export declare type CharCtrOptions = {
+    rawContent: IContent['rawContent']; /** 原始内容 */
+    globalFontConfig: GlobalFontConfig; /** 字体设置项 */
     debug?: boolean; /** 调试 */
+    rowNo: IRow['rowNo'];
 };
-export declare class Char extends Base implements IContent {
+export declare class Char extends Base implements IContent, IRow {
     layoutItemType: LayoutItemTypeEnum;
     canLineBreak: boolean;
-    rawContent: string;
-    content: string;
-    globalFontOptions: GlobalFontOptions;
+    rawContent: IContent['rawContent'];
+    content: IContent['content'];
+    globalFontConfig: GlobalFontConfig;
     debug: boolean;
-    constructor({ rawContent, globalFontOptions, debug }: CharCtrParams);
-    init(): Promise<void>;
+    rowNo: IRow['rowNo'];
+    constructor({ rawContent, globalFontConfig, debug, rowNo }: CharCtrOptions);
+    init(force?: boolean): Promise<void>;
     measureSize(): ISize;
 }
 //# sourceMappingURL=Char.d.ts.map

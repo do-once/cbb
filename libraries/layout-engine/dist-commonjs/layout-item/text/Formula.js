@@ -20,19 +20,23 @@ class Formula extends base_1.Base {
   content = ''
   /** 公式转换成的 svg 用什么方式渲染,svg 节点插入还是图片展示 */
   formulaRenderType
-  globalFontOptions
+  globalFontConfig
   debug
   svgEl = null
-  constructor({ rawContent, globalFontOptions, formulaRenderType, debug }) {
+  rowNo
+  constructor({ rawContent, globalFontConfig, formulaRenderType, debug, rowNo }) {
     super()
-    if (!rawContent || !globalFontOptions || !formulaRenderType)
-      throw new Error('rawContent globalFontOptions and formulaRenderType is required')
+    if (!rawContent || !globalFontConfig || !formulaRenderType)
+      throw new Error('rawContent globalFontConfig and formulaRenderType is required')
     this.rawContent = rawContent
-    this.globalFontOptions = globalFontOptions
+    this.globalFontConfig = globalFontConfig
     this.formulaRenderType = formulaRenderType
     this.debug = debug ?? false
+    this.rowNo = rowNo
   }
-  async init() {
+  async init(force = false) {
+    /** 已经初始化,并不是强制初始化,则跳过 */
+    if (this.initialized && !force) return
     const { svgStr, dataUrl } = await this.getSvgStrAndDataUrl()
     if (this.debug) {
       console.group(`rawContent: ${this.rawContent}`)
@@ -60,6 +64,7 @@ class Formula extends base_1.Base {
     const { width, height } = await this.measureSize()
     this.width = width
     this.height = height
+    this.initialized = true
   }
   async getSvgStrAndDataUrl() {
     return await (0, latex_svg_dataurl_1.transformLatexToSVGStrAndDataUrl)({ latex: this.rawContent })
@@ -71,18 +76,18 @@ class Formula extends base_1.Base {
   async measureSize() {
     const { width, height } =
       this.formulaRenderType === FormulaRenderTypeEnum.SVG
-        ? this.measureSizeWithSvgEl(this.svgEl, this.globalFontOptions)
+        ? this.measureSizeWithSvgEl(this.svgEl, this.globalFontConfig)
         : await this.measureSizeWithSvgDataUrl(this.content)
     return { width, height }
   }
-  measureSizeWithSvgEl(svgEl, globalFontOptions) {
+  measureSizeWithSvgEl(svgEl, globalFontConfig) {
     if (!svgEl) throw new Error('svgEl is required')
     let frag = document.createDocumentFragment()
     let div = document.createElement('div')
     /** 设置字体 */
     div.style.cssText = `font:${(0, utils_1.getCssFontDesc)({
-      ...globalFontOptions,
-      lineHeight: globalFontOptions.lineHeight + 'px'
+      ...globalFontConfig,
+      lineHeight: globalFontConfig.lineHeight + 'px'
     })};visibility: hidden;position: absolute;left: -100vw;`
     div.appendChild(svgEl)
     frag.appendChild(div)

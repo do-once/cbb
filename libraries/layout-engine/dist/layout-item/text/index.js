@@ -5,5 +5,5 @@
 export * from './Char';
 export * from './Formula';
 export * from './ImgPlaceholder';
-export * from './TextGroup';
+export * from './CRLF';
 //# sourceMappingURL=index.js.map
