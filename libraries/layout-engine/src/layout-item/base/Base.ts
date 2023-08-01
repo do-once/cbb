@@ -85,6 +85,8 @@ export abstract class Base implements IRect {
   width = 0
   height = 0
 
+  initialized: boolean = false
+
   setPos({ x, y }: Partial<IPos>) {
     x != null && (this.x = x)
     y != null && (this.y = y)
@@ -112,5 +114,6 @@ export abstract class Base implements IRect {
   abstract layoutItemType: LayoutItemTypeEnum
   abstract canLineBreak: boolean
 
+  abstract init(force: boolean): void
   abstract measureSize(): ISize | Promise<ISize>
 }

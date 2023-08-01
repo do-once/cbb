@@ -3,25 +3,39 @@
  * @description 手动换行
  */
 
-import { Base, ISize, LayoutItemTypeEnum } from '../base'
+import { Base, IRow, ISize, LayoutItemTypeEnum } from '../base'
 
 export type CRLFCtrOptions = {
   debug?: boolean
+  because: string /** 手动换行原因 */
+  rowNo: IRow['rowNo']
 }
 
-export class CRLF extends Base {
+export class CRLF extends Base implements IRow {
   layoutItemType: LayoutItemTypeEnum = LayoutItemTypeEnum.CRLF
   canLineBreak: boolean = false
 
   debug = false
 
-  constructor({ debug } = {} as CRLFCtrOptions) {
+  because: string
+
+  rowNo: IRow['rowNo']
+
+  constructor({ debug, because, rowNo }: CRLFCtrOptions) {
     super()
 
     this.debug = !!debug
+    this.because = because
+
+    this.rowNo = rowNo
   }
 
-  async init() {}
+  async init(force = false) {
+    /** 已经初始化,并不是强制初始化,则跳过 */
+    if (this.initialized && !force) return
+
+    this.initialized = true
+  }
 
   measureSize(): ISize {
     return {

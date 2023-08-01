@@ -8,12 +8,16 @@ import {
   DoonceLayoutEngine,
   FormulaRenderTypeEnum,
   LayoutItemTypeEnum,
+  InputImgLayouItemInstance,
+  InputRowLayoutItemInstance,
+  CRLF,
+  Char,
+  Formula,
   ImgSurrounTypeEnum,
-  ImgLayoutItemDesc,
-  RowLayoutItemDesc
+  Img
 } from './src/'
-import { DoonceHtmlParser, IToken } from '@doonce/html-parser'
-import { measureImgSize } from '@doonce/utils'
+import { DoonceHtmlParser } from '@doonce/html-parser'
+import { RowLayoutItemGroup } from './src/layout-item/RowLayoutItemGroup'
 
 const tempForHtml = `<div>
 <div style="position:relative;width: 500px; height: 800px; outline: 1px solid blue; font-size:16px;font-family:'syst';">
@@ -25,16 +29,16 @@ const tempForHtml = `<div>
       <span v-if="c.layoutItemType === 'IMG_PLACEHOLDER'" :style="{width:c.width+'px',height:c.height+'px'}"></span>
     </template>
   </div>
-  <img v-for="img in imgList" :src="img.src" :style="{position:'absolute',left:img.x+'px',top:img.y+'px',outline: '1px solid green'}"/>
+  <img v-for="img in imgList" :src="img.content" :style="{position:'absolute',left:img.x+'px',top:img.y+'px',outline: '1px solid green'}"/>
 </div>
 <button type="button" @click="start" style="position:fixed;left:50vw;top:50vh;">start</button>
 </div>`
 
-const tempForAbsolute = `<div style="width: 500px; height: 800px; outline: 1px solid blue; position: relative;font-size:16px;line-height:20px;font-family:'syst'">
+const tempForAbsolute = `<div style="width: 500px; height: 800px; outline: 1px solid blue; position: relative;font-size:16px;line-height:24px;font-family:'syst'">
 <div
   v-for="row in rowList"
   class="row"
-  :style="{position: 'absolute',left:row.x+'px',top:row.y+'px',outline:'1px solid pink',width:row.width+'px',height:row.height+'px',lineHeight:row.height+'px',width:row.width+'px'}"
+  :style="{position: 'absolute',left:row.x+'px',top:row.y+'px',outline:'1px solid pink',width:row.width+'px',height:row.height+'px',width:row.width+'px'}"
 >
   <template v-for="c in row.childs">
     <span
@@ -42,45 +46,110 @@ const tempForAbsolute = `<div style="width: 500px; height: 800px; outline: 1px s
       v-text="c.content"
       :style="{position: 'absolute',left:c.x+'px',top:c.y+'px'}"
     ></span>
+    <span
+      v-if="c.layoutItemType === 'IMG_PLACEHOLDER'"
+      :style="{position: 'absolute',left:c.x+'px',top:c.y+'px',width:c.width+'px',height:c.height+'px','background-color':'red'}"
+    ></span>
     <img
       v-if="c.layoutItemType === 'FORMULA'"
       :style="{position: 'absolute',left:c.x+'px',top:c.y+'px'}"
       :src="c.content"
     />
     <img
-    v-if="c.layoutItemType === 'GRAPH'"
+    v-if="c.layoutItemType === 'IMG'"
     :style="{position: 'absolute',left:c.x+'px',top:c.y+'px'}"
-    :src="c.src"
+    :src="c.content"
     />
 
     <template v-if="c.layoutItemType === 'ROW_LAYOUT_ITEM_GROUP'">
-      <span :style="{position: 'absolute',left:c.x+'px',top:c.y+'px',display: 'inline-flex',
-      'align-items': 'center'}">
+      <span :style="{position: 'absolute',left:c.x+'px',top:c.y+'px'}">
         <template v-for="groupChild in  c.childs">
-          <span v-if="groupChild.layoutItemType === 'CHAR'" v-text="groupChild.content"></span>
-          <img  v-if="groupChild.layoutItemType === 'FORMULA'" :src="groupChild.content" />
-          <img  v-if="groupChild.layoutItemType === 'GRAPH'" :src="groupChild.src" />
+          <span v-if="groupChild.layoutItemType === 'CHAR'" v-text="groupChild.content" :style="{position:'absolute',top:groupChild.y+'px',left:groupChild.x+'px'}"></span>
+          <img  v-if="groupChild.layoutItemType === 'FORMULA'" :src="groupChild.content" :style="{position:'absolute',top:groupChild.y+'px',left:groupChild.x+'px'}"/>
+          <img  v-if="groupChild.layoutItemType === 'IMG'" :src="groupChild.content" :style="{position:'absolute',top:groupChild.y+'px',left:groupChild.x+'px'}"/>
         </template>
       </span>
     </template>
   </template>
 </div>
 
-<template v-for="img in imgList">
-  <img v-if="img.layoutItemType === 'GRAPH'" :src="img.src" :style="{position:'absolute',left:img.x+'px',top:img.y+'px',outline: '1px solid green'}"/>
-  <div v-else :style="{position:'absolute',left:img.x+'px',top:img.y+'px',outline: '1px solid green',width:img.width+'px',height:img.height+'px'}">
-    <img :src="img.graphInstance.src" style="display:block;"/>
-    <p v-text="img.title" style="margin:0;text-align:center"></p>
+ 
+  <div v-for="img in imgList" :style="{position:'absolute',left:img.x+'px',top:img.y+'px',outline: '1px solid green',width:img.width+'px',height:img.height+'px'}">
+    <img :src="img.content" style="display:block;"/>
+    <p v-if="img.title" v-text="img.title" style="margin:0;text-align:center"></p>
   </div>
-</template>
+ 
+  <div style="position:fixed;left:50vw;top:50vh;">
+    <button type="button" @click="init" >init</button>
+    <button type="button" @click="dragImg.x+=10">img.x+10</button>
+    <button type="button" @click="dragImg.x-=10">img.x-10</button>
+    <button type="button" @click="dragImg.y+=10">img.y+10</button>
+    <button type="button" @click="dragImg.y-=10">img.y-10</button>
+    <button type="button" @click="layout()">layout</button>
+  </div>
 
-<button type="button" @click="start" style="position:fixed;left:50vw;top:50vh;">start</button>
 </div>`
+
+const htmlStrArr = [
+  `<span>计算\\(1\\times 3\\times\\dfrac{1}{3}\\times(-2)\\)的结果是\\((\\quad)\\)</span>`,
+  `<span>已知一个数的绝对值为\\(5\\)，另一个数的绝对值为\\(3\\)，且两数之积为负，则两数之差为 __________.</span>`,
+  `<span>已知\\(A\\)，\\(B\\)，\\(C\\)是数轴上的三个点，点\\(A\\)，\\(B\\)表示的数分别是\\(1\\)，\\(3\\)，如图所示\\(.\\)<p>此文本前需要换行;</p>若\\(BC=2AB\\)，则点\\(C\\)表示的数是__________.</span>\n`,
+  `<span>如图，在点\\(M\\)，\\(N\\)，\\(P\\)，\\(Q\\)中，一次函数\\(y=kx+2\\left(k < 0\\right)\\)的图象不可能经过的点是\\((\\quad)\\)</span>
+<p><img src="/assets/big2.png"/>我这需要换行 这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本</p>`,
+  `<span>计算\\(-2 \\times (-3)\\)的结果是\\((\\quad)\\)</span>`,
+  `<span>小明积极配合小区进行垃圾分类，并把可回收物拿到废品收购站回收换钱，这样既保护了环境，又可以为自己积攒一些零花钱．如表是他\\(12\\)月份的部分收支情况\\((\\)单位：元\\().\\)</span>
+  <table border="1px solid" style="max-width: 98%;">
+   <tbody>
+    <tr>
+     <td width="65">日期</td>
+     <td width="65">收入\\((+)\\)或支出\\((-)\\)</td>
+     <td width="65">结余</td>
+     <td width="163">备注</td>
+    </tr>
+    <tr>
+     <td>\\(1\\)日</td>
+     <td>\\(4.5\\)</td>
+     <td>\\(17.5\\)</td>
+     <td>卖可回收物</td>
+    </tr>
+    <tr>
+     <td>\\(5\\)日</td>
+     <td>\\(-20\\)</td>
+     <td>\\(-2.5\\)</td>
+     <td>买书，不足部分由妈妈代付</td>
+    </tr>
+   </tbody>
+  </table>
+  <p>其中表格中“\\(-2.5\\)”表示的是\\((\\quad)\\)</p>`,
+  `<span class="head">下列说法正确的有\\((\\quad)\\)</span>
+  <p>①正有理数是正整数和正分数的统称；<img src="/assets/small.png" />②整数是正整数和负整数的统称；③有理数是正整数、负整数、正分数、负分数的统称；④\\(0\\)是偶数，但不是自然数；⑤偶数包括正偶数、负偶数和零．</p><img src="/assets/big2.png" />`,
+  `<span>规定“\\(*\\)”表示一种运算，且\\(a*b=3a-2ab\\)，则\\(3*\\left(4*\\dfrac{1}{2}\\right)=\\)__________.</span><img src="/assets/big2.png" />`
+]
+
+const GLOBAL_FONT_CONFIG = {
+  fontSize: 16,
+  fontFamily: 'syst',
+  lineHeight: 24,
+  fontStyle: 'normal',
+  fontWeight: 'normal',
+  fontVariant: 'normal',
+  /** 字体加载地址,和@font-face 中的声明格式一样 */
+  source: 'url(/fonts/SourceHanSerif-VF.ttf.ttc)'
+}
+
+const IMG_MAX_WIDTH = 50
+
+const SYMBOL_HANGE = ['，', '；', '．', '、']
+
+// TODO 公式中的&lt;等特殊字符需要处理
+const REG_FORMULA = /(\\\(.+?\\\))/
+
 const app = {
   template: tempForAbsolute,
   data() {
     return {
-      layoutObj: {}
+      layoutObj: {},
+      dragImg: null
     }
   },
   computed: {
@@ -92,47 +161,9 @@ const app = {
     }
   },
   methods: {
-    async start() {
-      const htmlStrArr = [
-        `<span>计算\\(1\\times 3\\times\\dfrac{1}{3}\\times(-2)\\)的结果是\\((\\quad)\\)</span>`,
-        `<span>已知一个数的绝对值为\\(5\\)，另一个数的绝对值为\\(3\\)，且两数之积为负，则两数之差为 __________.</span>`,
-        `<span>已知\\(A\\)，\\(B\\)，\\(C\\)是数轴上的三个点，点\\(A\\)，\\(B\\)表示的数分别是\\(1\\)，\\(3\\)，如图所示\\(.\\)<p>此文本前需要换行;</p>若\\(BC=2AB\\)，则点\\(C\\)表示的数是__________.</span>\n`,
-        `<span>如图，在点\\(M\\)，\\(N\\)，\\(P\\)，\\(Q\\)中，一次函数\\(y=kx+2\\left(k < 0\\right)\\)的图象不可能经过的点是\\((\\quad)\\)</span>
-    <p><img bigger="https://bj.download.cycore.cn/question/2018/6/29/11/56/75af1d99-789f-4813-b444-df783dbe6bc4.png" h="126pxpx" src="https://static.zhixue.com/zhixue.png" w="121pxpx" style="width: 120px; height: 126px;;max-width:100%;display:inline-block;vertical-align:middle;" height="126" data-cke-saved-src="http://bj.download.cycore.cn/question/2018/6/29/11/56/d160b798-ff47-4ae9-b25d-6a7284dc7de6.png"/>我这需要换行 这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本这是一个测试文本</p>`,
-        `<span>计算\\(-2 \\times (-3)\\)的结果是\\((\\quad)\\)</span>`,
-        `<span>小明积极配合小区进行垃圾分类，并把可回收物拿到废品收购站回收换钱，这样既保护了环境，又可以为自己积攒一些零花钱．如表是他\\(12\\)月份的部分收支情况\\((\\)单位：元\\().\\)</span>
-        <table border="1px solid" style="max-width: 98%;">
-         <tbody>
-          <tr>
-           <td width="65">日期</td>
-           <td width="65">收入\\((+)\\)或支出\\((-)\\)</td>
-           <td width="65">结余</td>
-           <td width="163">备注</td>
-          </tr>
-          <tr>
-           <td>\\(1\\)日</td>
-           <td>\\(4.5\\)</td>
-           <td>\\(17.5\\)</td>
-           <td>卖可回收物</td>
-          </tr>
-          <tr>
-           <td>\\(5\\)日</td>
-           <td>\\(-20\\)</td>
-           <td>\\(-2.5\\)</td>
-           <td>买书，不足部分由妈妈代付</td>
-          </tr>
-         </tbody>
-        </table>
-        <p>其中表格中“\\(-2.5\\)”表示的是\\((\\quad)\\)</p>`,
-        `<span class="head">下列说法正确的有\\((\\quad)\\)</span>
-        <p>①正有理数是正整数和正分数的统称；<img src="/assets/small.png" />②整数是正整数和负整数的统称；③有理数是正整数、负整数、正分数、负分数的统称；④\\(0\\)是偶数，但不是自然数；⑤偶数包括正偶数、负偶数和零．</p><img src="/assets/big2.png" />这是测试文本这是测试文本这是测试文本这是测试文本这是测试文本这是测试文本这是测试文本这是测试文本`
-      ]
-
-      // TODO 公式中的&lt;等特殊字符需要处理
-      const REG_FORMULA = /(\\\(.+?\\\))/
-
+    async init() {
       /** 解析html */
-      const input = htmlStrArr[3]
+      const input = htmlStrArr[7]
       console.log('input :>> ', input)
 
       const hp = new DoonceHtmlParser()
@@ -161,144 +192,129 @@ const app = {
       console.log('filteredTokenList :>> ', filteredTokenList)
       /** 过滤文本&换行标签&图片src end */
 
-      /** 创建 layoutItemDesc */
-      const getCharDescObj = (content: string) => {
-        return { layoutItemType: LayoutItemTypeEnum.CHAR, rawContent: content } as RowLayoutItemDesc
-      }
-      const getFormulaDescObj = (content: string) => {
-        return {
-          layoutItemType: LayoutItemTypeEnum.FORMULA,
-          rawContent: content
-        } as RowLayoutItemDesc
-      }
-      const getCRLFDescObj = () => {
-        return {
-          layoutItemType: 'CRLF',
-          rawContent: ''
-        } as RowLayoutItemDesc
-      }
-      const getGraphDescObj = (content: string) => {
+      /** 创建 instance */
+      const getCharInstance = (content: string) =>
+        new Char({ rawContent: content, globalFontConfig: GLOBAL_FONT_CONFIG, rowNo: -1 })
+
+      const getFormulaInstance = (content: string) =>
+        new Formula({
+          rawContent: content,
+          globalFontConfig: GLOBAL_FONT_CONFIG,
+          formulaRenderType: FormulaRenderTypeEnum.IMG,
+          rowNo: -1
+        })
+
+      const getImgInstance = (content: string) => {
         const matched = content.match(/src="(.+?)"/)
-        return {
-          layoutItemType: LayoutItemTypeEnum.GRAPH,
-          rawContent: matched ? matched[1] : ''
-        } as RowLayoutItemDesc
+
+        return new Img({
+          rawContent: matched ? matched[1] : '',
+          globalFontConfig: GLOBAL_FONT_CONFIG,
+          imgSurroundType: ImgSurrounTypeEnum.NONE,
+          rowNo: -1
+        })
       }
 
-      let descList: (RowLayoutItemDesc | Pick<ImgLayoutItemDesc, 'layoutItemType' | 'rawContent'>)[] = []
+      let inputInstanceList: (InputImgLayouItemInstance | InputRowLayoutItemInstance)[] = []
+
       filteredTokenList.forEach(token => {
         if (token.type === 'TAG_ATTR_TEXT') {
-          descList.push(getGraphDescObj(token.content))
+          inputInstanceList.push(getImgInstance(token.content))
         } else if (token.type === 'TAG_NAME') {
-          descList.push(getCRLFDescObj())
+          inputInstanceList.push(new CRLF({ because: token.content, rowNo: -1 }))
         } else {
           /** 切分公式 */
           /** 按公式标识\\\(.+?\\\)拆分并保留分隔符正则中的捕获组 */
           /** 参考:developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/split#使用_regexp_来分割使结果中包含分割符 */
           const splitedTextListByFormulaReg = token.content.split(REG_FORMULA)
 
-          const charAndFormulaDescList = splitedTextListByFormulaReg.reduce<RowLayoutItemDesc[]>(
+          const charAndFormulaInstanceList = splitedTextListByFormulaReg.reduce<(Char | Formula)[]>(
             (acc, cur) => {
               const matched = cur.match(/^\\\((.+?)\\\)$/)
 
-              let tempList: RowLayoutItemDesc[] =
+              let tempList: (Char | Formula)[] =
                 matched && matched.length
                   ? /** 创建 formula desc 对象 */
-                    [getFormulaDescObj(matched[1])]
+                    [getFormulaInstance(matched[1])]
                   : /** 将字符串切分为字符,创建char desc对象 */
-                    cur.split('').map(getCharDescObj)
+                    cur.split('').map(getCharInstance)
 
               return acc.concat(tempList)
             },
             []
           )
-          descList = descList.concat(charAndFormulaDescList)
+          inputInstanceList = inputInstanceList.concat(charAndFormulaInstanceList)
         }
       })
 
-      console.log('descList :>> ', descList)
-      /**  创建layoutItemDesc end */
+      console.log('inputInstanceList :>> ', inputInstanceList)
+      /**  创建instance end */
 
-      /** 通过图片尺寸,判断哪些是题干中的图片(width<=50),哪些非题干图片 */
-      const maybeGraphDescList = descList.filter(desc => desc.layoutItemType === 'GRAPH')
-      const graphDescWithSize = await Promise.all(
-        maybeGraphDescList.map(async desc => {
-          const { width, height } = await measureImgSize(desc.rawContent)
-          return {
-            ...desc,
-            width,
-            height
-          }
-        })
+      /** 过滤出图片并获取尺寸 */
+      const graphAndGraphWithTitleInstanceList = inputInstanceList.filter(
+        (instance): instance is InputImgLayouItemInstance =>
+          instance.layoutItemType === LayoutItemTypeEnum.IMG
       )
 
-      const widthOver50Graph = graphDescWithSize.filter(desc => desc.width >= 50)
-      /** 过滤宽度<50的图片 */
-      const rowLayoutItemDescList = descList.filter((desc): desc is RowLayoutItemDesc => {
-        return !widthOver50Graph.map(g => g.rawContent).includes(desc.rawContent)
-      })
+      await Promise.all(graphAndGraphWithTitleInstanceList.map(instance => instance.init()))
 
-      /** 过滤宽度>=50的图片 */
-      const tempImgLayoutItemDescList = descList.filter((desc): desc is ImgLayoutItemDesc => {
-        return widthOver50Graph.map(g => g.rawContent).includes(desc.rawContent)
-      })
-      const imgLayoutItemDescList = tempImgLayoutItemDescList.map<ImgLayoutItemDesc>(desc => {
-        return {
-          ...desc,
-          /** 追加额外信息 */
-          imgSurroundType: ImgSurrounTypeEnum.FLOAT,
-          layoutItemType: LayoutItemTypeEnum.GRAPH_WITH_TITLE,
-          title: '这是标题'
-        }
-      })
+      /** 通过图片尺寸,判断哪些是题干中的图片(width<=50),哪些非题干图片 */
+      const inputImgLayoutItemInstanceList = graphAndGraphWithTitleInstanceList.filter(
+        instance => instance.getSize().width > IMG_MAX_WIDTH
+      )
+
+      /** 筛选出所有参与行排版的实例 */
+      const rowLayoutItemInstanceList = inputInstanceList.filter(
+        (instance): instance is InputRowLayoutItemInstance =>
+          ![LayoutItemTypeEnum.IMG].includes(instance.layoutItemType) ||
+          instance.getSize().width <= IMG_MAX_WIDTH
+      )
 
       /** 将逗号和前一个 item 绑定,实现类似标点悬挂效果 */
-      const newRowLayoutItemDescList: RowLayoutItemDesc[] = []
-      for (let i = 0, curDesc, nextDesc; i < rowLayoutItemDescList.length; i++) {
-        curDesc = rowLayoutItemDescList[i]
-        nextDesc = rowLayoutItemDescList[i + 1]
+      const inputRowLayoutItemInstanceList: InputRowLayoutItemInstance[] = []
+      for (let i = 0, curInstance, nextInstance; i < rowLayoutItemInstanceList.length; i++) {
+        curInstance = rowLayoutItemInstanceList[i]
+        nextInstance = rowLayoutItemInstanceList[i + 1]
 
-        if (nextDesc && nextDesc.rawContent === '，') {
-          newRowLayoutItemDescList.push({
-            layoutItemType: LayoutItemTypeEnum.ROW_LAYOUT_ITEM_GROUP,
-            rawContent: '',
-            childs: [curDesc, nextDesc]
-          })
+        if (nextInstance && SYMBOL_HANGE.includes(nextInstance.rawContent)) {
+          inputRowLayoutItemInstanceList.push(
+            new RowLayoutItemGroup({ childs: [curInstance, nextInstance], rowNo: -1 })
+          )
           i++
         } else {
-          newRowLayoutItemDescList.push(curDesc)
+          inputRowLayoutItemInstanceList.push(curInstance)
           continue
         }
       }
-      console.log('newRowLayoutItemDescList :>> ', newRowLayoutItemDescList)
 
-      console.log('rowLayoutItemDescList :>> ', rowLayoutItemDescList)
-      console.log('imgLayoutItemDescList :>> ', imgLayoutItemDescList)
+      console.log('inputRowLayoutItemInstanceList :>> ', inputRowLayoutItemInstanceList)
+      console.log('inputImgLayoutItemInstanceList :>> ', inputImgLayoutItemInstanceList)
 
-      const le = new DoonceLayoutEngine({
-        globalFontConfig: {
-          fontSize: 16,
-          fontFamily: 'syst',
-          lineHeight: 24,
-          fontStyle: 'normal',
-          fontWeight: 'normal',
-          fontVariant: 'normal',
-          /** 字体加载地址,和@font-face 中的声明格式一样 */
-          source: 'url(/fonts/SourceHanSerif-VF.ttf.ttc)'
-        },
-        rowLayoutItemDescList: newRowLayoutItemDescList,
-        imgLayoutItemDescList,
-        formulaRenderType: FormulaRenderTypeEnum.IMG,
-        debug: true
+      this.inputRowLayoutItemInstanceList = inputRowLayoutItemInstanceList
+      this.inputImgLayoutItemInstanceList = inputImgLayoutItemInstanceList
+
+      /** 调试图片,添加标题,调整位置*/
+      const img = this.inputImgLayoutItemInstanceList[0]
+      this.dragImg = img
+      if (img) {
+        img.title = '测试标题'
+        img.imgSurroundType = ImgSurrounTypeEnum.FLOAT
+        // img.setPos({ x: 160, y: 0 })
+        /** 因为前面为了判断哪些是非题干的图片,已经调过 init 获取过尺寸,所以此处需要重新强制初始化一次 */
+        await img.init(true)
+      }
+
+      this.le = new DoonceLayoutEngine({
+        globalFontConfig: GLOBAL_FONT_CONFIG,
+        debug: true,
+        inputImgLayoutItemInstanceList: this.inputImgLayoutItemInstanceList,
+        inputRowLayoutItemInstanceList: this.inputRowLayoutItemInstanceList
       })
 
-      await le.init()
-
-      const layoutObj = le.layout({
-        maxWidth: 500,
-        padding: [10, 10, 10, 10],
-        letterSpacing: 2
-      })
+      await this.le.init()
+    },
+    async layout() {
+      const layoutObj = this.le.layout({ maxWidth: 500 })
       console.log('layoutObj :>> ', layoutObj)
 
       this.layoutObj = layoutObj

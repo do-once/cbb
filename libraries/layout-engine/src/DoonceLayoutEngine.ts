@@ -7,18 +7,17 @@ import { loadFont, checkCollision } from '@doonce/utils'
 import {
   Char,
   Formula,
-  FormulaRenderTypeEnum,
-  Graph,
   ImgPlaceholder,
   ImgSurrounTypeEnum,
   LayoutItemTypeEnum,
   Row,
   RowChild,
   CRLF,
-  GraphWithTitle
+  Img
 } from './layout-item'
-import { RowLayoutItemGroup, RowLayoutItemGroupChild } from './layout-item/RowLayoutItemGroup'
+import { RowLayoutItemGroup } from './layout-item/RowLayoutItemGroup'
 
+/** 参考https://developer.mozilla.org/zh-CN/docs/Web/CSS/font */
 export type GlobalFontConfig = {
   fontSize: number /** 单位px */
   fontFamily: string
@@ -29,84 +28,59 @@ export type GlobalFontConfig = {
   source: string
 }
 
-export type RowLayoutItemDesc = {
-  layoutItemType:
-    | LayoutItemTypeEnum.CHAR
-    | LayoutItemTypeEnum.FORMULA
-    | LayoutItemTypeEnum.GRAPH
-    | LayoutItemTypeEnum.CRLF
-    | LayoutItemTypeEnum.ROW_LAYOUT_ITEM_GROUP
-  rawContent: string
-  childs?: {
-    layoutItemType: LayoutItemTypeEnum.CHAR | LayoutItemTypeEnum.FORMULA | LayoutItemTypeEnum.GRAPH
-    rawContent: string
-  }[]
-}
+/** 限制参与行布局的实例 */
+export type InputRowLayoutItemInstance = Char | Formula | Img | RowLayoutItemGroup | CRLF
 
-export type ImgLayoutItemDesc = {
-  layoutItemType: LayoutItemTypeEnum.GRAPH | LayoutItemTypeEnum.GRAPH_WITH_TITLE
-  rawContent: string
-  title?: string
-  imgSurroundType?: ImgSurrounTypeEnum
-  width?: number
-  height?: number
-}
+/** 限制参与图片布局的实例 */
+export type InputImgLayouItemInstance = Img
 
 export type DoonceLayoutEngineCtrOptions = {
   globalFontConfig: GlobalFontConfig /** 字体 */
-  rowLayoutItemDescList: RowLayoutItemDesc[] /** 用户传入的参与行布局的描述对象 */
-  imgLayoutItemDescList: ImgLayoutItemDesc[] /** 用户传入不参与行布局的图片描述对象 */
-  formulaRenderType: FormulaRenderTypeEnum /** 公式渲染类型 */
+  inputRowLayoutItemInstanceList: InputRowLayoutItemInstance[] /** 用户传入的参与行布局的实例 */
+  inputImgLayoutItemInstanceList: InputImgLayouItemInstance[] /** 用户传入的参与图片布局的实例 */
   debug?: boolean
 }
 
+/** 布局方法参数 */
 export type LayoutMethodParams = {
   maxWidth: number /** 单位px */
-  padding?: [number, number, number, number] /** 上右下左 padding */
-  letterSpacing?: number /** 字符间距 */
 }
 
+/** 布局方法返回值 */
 export type LayoutMethodRet = {
   rowList: Row[]
-  imgList: (Graph | GraphWithTitle)[]
+  imgList: Img[]
 }
 
 export class DoonceLayoutEngine {
   globalFontConfig: GlobalFontConfig
   font: FontFace = null as unknown as FontFace
 
-  rowLayoutItemDescList: RowLayoutItemDesc[]
-  imgLayoutItemDescList: ImgLayoutItemDesc[]
-
-  /** 实例化后的参与行布局的描述对象 */
-  rowLayoutItemInstanceList: RowChild[] = []
-  /** 实例化后的不参与行布局的图片描述对象 */
-  imgLayoutItemInstanceList: (Graph | GraphWithTitle)[] = []
-
-  formulaRenderType: FormulaRenderTypeEnum
+  inputRowLayoutItemInstanceList: InputRowLayoutItemInstance[]
+  inputImgLayoutItemInstanceList: InputImgLayouItemInstance[]
 
   debug: boolean
 
   constructor({
     globalFontConfig,
-    rowLayoutItemDescList,
-    imgLayoutItemDescList,
-    formulaRenderType,
+    inputRowLayoutItemInstanceList,
+    inputImgLayoutItemInstanceList,
     debug
   }: DoonceLayoutEngineCtrOptions) {
     if (!globalFontConfig) throw new Error('globalFontConfig is required')
     if (
-      (!imgLayoutItemDescList || !imgLayoutItemDescList.length) &&
-      (!rowLayoutItemDescList || !rowLayoutItemDescList.length)
+      (!inputRowLayoutItemInstanceList || !inputRowLayoutItemInstanceList.length) &&
+      (!inputImgLayoutItemInstanceList || !inputImgLayoutItemInstanceList.length)
     )
-      throw new Error('imgLayoutItemDescList and rowLayoutItemDescList is required at least one')
+      throw new Error(
+        'inputRowLayoutItemInstanceList and inputImgLayoutItemInstanceList is required at least one'
+      )
 
     this.globalFontConfig = globalFontConfig
 
-    this.rowLayoutItemDescList = rowLayoutItemDescList
-    this.imgLayoutItemDescList = imgLayoutItemDescList
+    this.inputRowLayoutItemInstanceList = inputRowLayoutItemInstanceList
+    this.inputImgLayoutItemInstanceList = inputImgLayoutItemInstanceList
 
-    this.formulaRenderType = formulaRenderType ?? FormulaRenderTypeEnum.IMG
     this.debug = !!debug
   }
 
@@ -117,351 +91,268 @@ export class DoonceLayoutEngine {
     /** 字体加载失败,阻塞流程 */
     if (!this.isFontLoaded()) throw new Error(`font ${this.globalFontConfig.fontFamily} load faild`)
 
-    /** 实例化描述对象 */
-    this.rowLayoutItemInstanceList = this.instantiateRowLayoutItemDescList()
-    this.imgLayoutItemInstanceList = this.instantiateImgLayoutItemDescList()
-
     /** 等待实例初始化尺寸和 content 结束 */
     await Promise.all([
-      ...this.rowLayoutItemInstanceList.map(instance => instance.init()),
-      ...this.imgLayoutItemInstanceList.map(instance => instance.init())
+      ...this.inputRowLayoutItemInstanceList.map(instance => instance.init()),
+      ...this.inputImgLayoutItemInstanceList.map(instance => instance.init())
     ])
 
-    this.debug && console.log('this.rowLayoutItemInstanceList :>> ', this.rowLayoutItemInstanceList)
-    this.debug && console.log('this.imgLayoutItemInstanceList :>> ', this.imgLayoutItemInstanceList)
+    this.debug &&
+      console.log('this.inputRowLayoutItemInstanceList after init :>> ', this.inputRowLayoutItemInstanceList)
+    this.debug &&
+      console.log('this.inputImgLayoutItemInstanceList after init :>> ', this.inputImgLayoutItemInstanceList)
   }
 
-  private instantiateRowLayoutItemDescList(): RowChild[] {
-    return this.rowLayoutItemDescList.map(({ layoutItemType, rawContent, childs = [] }) => {
-      if (layoutItemType === LayoutItemTypeEnum.FORMULA) {
-        return new Formula({
-          rawContent,
-          globalFontConfig: this.globalFontConfig,
-          formulaRenderType: this.formulaRenderType
-        })
-      } else if (layoutItemType === LayoutItemTypeEnum.GRAPH) {
-        return new Graph({ src: rawContent })
-      } else if (layoutItemType === LayoutItemTypeEnum.CRLF) {
-        return new CRLF()
-      } else if (layoutItemType === LayoutItemTypeEnum.ROW_LAYOUT_ITEM_GROUP) {
-        const childsInstance = childs.map(({ layoutItemType, rawContent }) => {
-          if (layoutItemType === LayoutItemTypeEnum.FORMULA) {
-            return new Formula({
-              rawContent,
-              globalFontConfig: this.globalFontConfig,
-              formulaRenderType: this.formulaRenderType
-            })
-          } else if (layoutItemType === LayoutItemTypeEnum.GRAPH) {
-            return new Graph({ src: rawContent })
-          } else {
-            return new Char({ rawContent, globalFontConfig: this.globalFontConfig })
-          }
-        })
-        return new RowLayoutItemGroup({
-          childs: childsInstance
-        })
-      } else {
-        return new Char({ rawContent, globalFontConfig: this.globalFontConfig })
-      }
-    })
-  }
-
-  private instantiateImgLayoutItemDescList() {
-    return this.imgLayoutItemDescList.map(({ rawContent, imgSurroundType, title }) => {
-      const graphInstance = new Graph({
-        src: rawContent,
-        imgSurroundType: imgSurroundType ?? ImgSurrounTypeEnum.NONE
-      })
-      return title
-        ? new GraphWithTitle({
-            title,
-            globalFontConfig: this.globalFontConfig,
-            graphInstance,
-            imgSurroundType: imgSurroundType ?? ImgSurrounTypeEnum.NONE
-          })
-        : graphInstance
-    })
-  }
-
-  public layout({
-    maxWidth,
-    padding = [0, 0, 0, 0],
-    letterSpacing = 0
-  }: LayoutMethodParams): LayoutMethodRet {
+  /**
+   * 布局
+   *
+   * @date 2023-08-01 10:40:15
+   * @param { maxWidth } 容器宽度
+   * @returns {LayoutMethodRet} 布局对象
+   * @memberof DoonceLayoutEngine
+   */
+  public layout({ maxWidth }: LayoutMethodParams): LayoutMethodRet {
     if (!maxWidth) throw new Error('maxWidth is required')
 
     /** 存在图片 */
-    if (this.imgLayoutItemInstanceList && this.imgLayoutItemInstanceList.length) {
-      return this.layoutWithImg({
-        graph: this.imgLayoutItemInstanceList[0] /** 暂只考虑只有一张图的场景 */,
-        maxWidth,
-        padding,
-        letterSpacing
+    if (this.inputImgLayoutItemInstanceList && this.inputImgLayoutItemInstanceList.length) {
+      return this._layoutWithImg({
+        img: this.inputImgLayoutItemInstanceList[0] /** 暂只考虑只有一张图的场景 */,
+        maxWidth
       })
     } else {
-      return this.layoutWithNoneImg({
-        maxWidth,
-        padding,
-        letterSpacing
-      })
+      return this._layoutWithNoneImg({ maxWidth })
     }
   }
 
-  private layoutWithImg({
-    graph,
-    maxWidth,
-    padding,
-    letterSpacing
-  }: { graph: GraphWithTitle | Graph } & LayoutMethodParams): LayoutMethodRet {
+  /**
+   * 包含图片的图文混排方法
+   *
+   * @date 2023-08-01 16:57:18
+   * @private
+   * @param { img, maxWidth } Img实例,容器宽度
+   * @returns {LayoutMethodRet} 布局对象
+   * @memberof DoonceLayoutEngine
+   */
+  private _layoutWithImg({ img, maxWidth }: { img: Img } & LayoutMethodParams): LayoutMethodRet {
     let rowList: Row[] = []
 
     /** 环绕 */
-    if (graph.imgSurroundType === ImgSurrounTypeEnum.FLOAT) {
-      /** 调试用,模拟图片位置 */
-      this.debug && graph.setPos({ x: 174, y: 14 })
-
+    if (img.imgSurroundType === ImgSurrounTypeEnum.FLOAT) {
       /** 首行 */
-      let curRow = new Row({
-        globalFontConfig: this.globalFontConfig,
-        rowNo: 1
-      })
-      /** 所有行全部按固定行高计算 */
-      curRow.setSize({ width: 0, height: this.globalFontConfig.lineHeight })
-      curRow.setPos({ x: 0, y: 0 })
+      let curRow = this._createANewRowAndSetInitialSizeAndPos({ rowNo: 1, prevRow: null })
 
       /** 记录之前行,用来计算当前行 y 坐标 */
       let prevRow: Row | null = null
 
-      for (let i = 0, curItem; i < this.rowLayoutItemInstanceList.length; i++) {
-        curItem = this.rowLayoutItemInstanceList[i]
-        if (curItem.layoutItemType === LayoutItemTypeEnum.CRLF) {
-          let rowNo = curRow.rowNo
+      for (let i = 0, curInstance; i < this.inputRowLayoutItemInstanceList.length; i++) {
+        curInstance = this.inputRowLayoutItemInstanceList[i]
 
+        /** 手动换行 */
+        if (curInstance.layoutItemType === LayoutItemTypeEnum.CRLF) {
+          curRow.addChild(curInstance)
           /** 加入行数组前更新当前行信息 */
-          this.updateCurRowInfo(curRow, prevRow)
+          this._updateCurRowInfo(curRow, prevRow)
           prevRow = curRow
           rowList.push(curRow)
 
           /** 创建新行 */
-          curRow = new Row({
-            rowNo: rowNo + 1,
-            globalFontConfig: this.globalFontConfig
-          })
-          curRow.setSize({ width: 0, height: this.globalFontConfig.lineHeight })
-          curRow.setPos({ x: 0, y: prevRow ? prevRow.y + prevRow.height : 0 })
-        }
+          curRow = this._createANewRowAndSetInitialSizeAndPos({ rowNo: curRow.rowNo + 1, prevRow: curRow })
+        } else {
+          /** 超宽,需要将 curInstance 放在下行 */
+          if (curRow.width + curInstance.width > maxWidth) {
+            /** 加入行数组前更新当前行信息 */
+            this._updateCurRowInfo(curRow, prevRow)
+            prevRow = curRow
+            rowList.push(curRow)
 
-        /** 传入字符位置尺寸信息 同图片做碰撞检测 */
-        const isCollision = checkCollision(
-          {
-            width: curItem.width,
-            height: curItem.height,
-            x: curRow.width + curItem.x,
-            y: prevRow ? prevRow.y + prevRow.height : 0 /** 首行,prevRow 为空 */
-          },
-          graph
-        )
-        this.debug && isCollision && console.log('collision curItem is :>> ', curItem)
+            /** 创建新行 */
+            curRow = this._createANewRowAndSetInitialSizeAndPos({ rowNo: curRow.rowNo + 1, prevRow })
+          }
 
-        /** 碰撞则添加图片占位,并更新当前行宽度 */
-        if (isCollision) {
-          curRow.addChild(new ImgPlaceholder({ owner: graph, height: this.globalFontConfig.lineHeight }))
-          /** 宽度到图片右侧 */
-          curRow.setSize({ width: graph.x + graph.width })
-        }
-
-        /** 超宽,需要将 curItem 放在下行 */
-        if (curRow.width + curItem.width > maxWidth) {
-          let rowNo = curRow.rowNo
-
-          /** 加入行数组前更新当前行信息 */
-          this.updateCurRowInfo(curRow, prevRow)
-          prevRow = curRow
-          rowList.push(curRow)
-
-          /** 创建新行 */
-          curRow = new Row({
-            rowNo: rowNo + 1,
-            globalFontConfig: this.globalFontConfig
-          })
-          curRow.setSize({ width: 0, height: this.globalFontConfig.lineHeight })
-          curRow.setPos({ x: 0, y: prevRow ? prevRow.y + prevRow.height : 0 })
-
-          /** 循环检测碰撞,直到找到图片左侧可以放下 curItem 的行 */
+          /** 循环检测碰撞,直到找到图片左侧可以放下 curInstance 的行 */
           while (
             /** 左侧碰撞,代表左侧无空间, */
             checkCollision(
               {
+                width: curInstance.width,
+                height: curInstance.height,
                 x: curRow.width,
-                y: rowNo * this.globalFontConfig.lineHeight /** 下行 y 坐标 */,
-                width: curItem.width,
-                height: curItem.height
+                y: prevRow ? prevRow.y + prevRow.height : 0
               },
-              graph
+              img
             )
           ) {
+            console.log('checkCollision curInstance :>> ', curInstance)
             /** 添加图片占位 */
-            const ip = new ImgPlaceholder({
-              owner: graph,
-              height: this.globalFontConfig.lineHeight
-            })
-            ip.setPos({ x: graph.x, y: curRow.y })
+            curRow.addChild(
+              new ImgPlaceholder({
+                ownerImg: img,
+                height: curRow.height,
+                y: 0 /** 图片占位是相对行定位,所以 y 固定为0 */,
+                rowNo: curRow.rowNo
+              })
+            )
+            curRow.setSize({ width: img.x + img.width })
 
-            curRow.addChild(ip)
-            curRow.setSize({ width: graph.x + graph.width })
-
-            /** 右侧剩余空间不够,需放到下行 */
-            if (curItem.width >= maxWidth - curRow.width) {
-              rowNo++
-
+            /** 超宽,代表右侧无空间,需要将 curInstance 放在下行 */
+            if (curRow.width + curInstance.width > maxWidth) {
               /** 加入行数组前更新当前行信息 */
-              this.updateCurRowInfo(curRow, prevRow)
+              this._updateCurRowInfo(curRow, prevRow)
               prevRow = curRow
               rowList.push(curRow)
+
               /** 创建新行 */
-              curRow = new Row({
-                rowNo: rowNo,
-                globalFontConfig: this.globalFontConfig
-              })
-              curRow.setSize({ width: 0, height: this.globalFontConfig.lineHeight })
-              curRow.setPos({ x: 0, y: prevRow ? prevRow.y + prevRow.height : 0 })
+              curRow = this._createANewRowAndSetInitialSizeAndPos({ rowNo: curRow.rowNo + 1, prevRow })
             }
           }
 
-          /** 图片左侧可放下 */
-          curItem.x = curRow.width
-
-          curRow.addChild(curItem)
-          curRow.setSize({ width: curRow.width + curItem.width })
-        } else {
-          /** 未超宽 */
-          curItem.x = curRow.width
-
-          curRow.addChild(curItem)
-          curRow.setSize({ width: curRow.width + curItem.width })
+          /** 更新当前 layoutItemInstance 的 x 坐标和行号 */
+          curInstance.x = curRow.width
+          curInstance.rowNo = curRow.rowNo
+          /** 将当前 layoutItemInstance 塞入当前行 */
+          curRow.addChild(curInstance)
+          /** 更新当前行宽度 */
+          curRow.setSize({ width: curRow.width + curInstance.width })
         }
       }
 
       /** 最后行 */
       /** 加入行数组前更新当前行信息 */
-      this.updateCurRowInfo(curRow, prevRow)
+      this._updateCurRowInfo(curRow, prevRow)
       /** 记录prevRow */
       prevRow = curRow
       /** 换行,将当前行塞入数组 */
       rowList.push(curRow)
-    } else if (graph.imgSurroundType === ImgSurrounTypeEnum.ABSOLUTE) {
+    } else if (img.imgSurroundType === ImgSurrounTypeEnum.ABSOLUTE) {
       /** 绝对定位 */
-      const layoutWithNoneImgRet = this.layoutWithNoneImg({ maxWidth, padding, letterSpacing })
+
+      /** 对文本进行行排版即可,图片不影响文字排版,图片位置应提前设置好 */
+      const layoutWithNoneImgRet = this._layoutWithNoneImg({ maxWidth })
       rowList = layoutWithNoneImgRet.rowList
-
-      /** 绝对定位,首次进入时,也按下挂坐标处理 */
-      graph.x = maxWidth - graph.width
-
-      const lastRow = rowList[rowList.length - 1]
-      graph.y = lastRow.width + graph.width <= maxWidth ? lastRow.y : lastRow.y + lastRow.height
     } else {
-      /** 默认下挂(图片渲染在题干的右下) */
-      const layoutWithNoneImgRet = this.layoutWithNoneImg({ maxWidth, padding, letterSpacing })
+      /** 默认下挂 */
+      const layoutWithNoneImgRet = this._layoutWithNoneImg({ maxWidth })
       rowList = layoutWithNoneImgRet.rowList
-      graph.x = maxWidth - graph.width
 
+      /** 图片渲染在题干的右下 */
+      img.x = maxWidth - img.width
       const lastRow = rowList[rowList.length - 1]
-      graph.y = lastRow.width + graph.width <= maxWidth ? lastRow.y : lastRow.y + lastRow.height
+      img.y = lastRow.width + img.width <= maxWidth ? lastRow.y : lastRow.y + lastRow.height
     }
 
-    return { rowList, imgList: [graph] }
+    return { rowList, imgList: [img] }
   }
 
-  private layoutWithNoneImg({ maxWidth, padding, letterSpacing }: LayoutMethodParams): LayoutMethodRet {
-    const textLayoutItemList = this.rowLayoutItemInstanceList.filter(
-      (instance): instance is Char | Formula =>
-        ![LayoutItemTypeEnum.GRAPH, LayoutItemTypeEnum.IMG].includes(instance.layoutItemType)
-    )
-
+  /**
+   * 无图片时用的布局方法
+   *
+   * @date 2023-08-01 10:38:26
+   * @private
+   * @param { maxWidth } 最大宽度
+   * @returns {LayoutMethodRet} 布局对象
+   * @memberof DoonceLayoutEngine
+   */
+  private _layoutWithNoneImg({ maxWidth }: LayoutMethodParams): LayoutMethodRet {
     const rowList: Row[] = []
-
-    /** 首行 */
-    let curRow = new Row({
-      globalFontConfig: this.globalFontConfig,
-      rowNo: 1
-    })
-    curRow.x = 0
 
     let prevRow: Row | null = null
 
-    for (let i = 0, curItem: Char | Formula; i < textLayoutItemList.length; i++) {
-      curItem = textLayoutItemList[i]
+    /** 首行 */
+    let curRow = this._createANewRowAndSetInitialSizeAndPos({ rowNo: 1, prevRow: null })
 
-      if (curItem.layoutItemType === LayoutItemTypeEnum.CRLF) {
-        let rowNo = curRow.rowNo
+    for (
+      let i = 0, curInstance: InputRowLayoutItemInstance;
+      i < this.inputRowLayoutItemInstanceList.length;
+      i++
+    ) {
+      curInstance = this.inputRowLayoutItemInstanceList[i]
 
-        /** 加入行数组前更新当前行信息 */
-        this.updateCurRowInfo(curRow, prevRow)
+      if (
+        /** 手动换行 */
+        curInstance.layoutItemType === LayoutItemTypeEnum.CRLF ||
+        /** 超宽 */
+        curRow.width + curInstance.width > maxWidth
+      ) {
+        /** 加入rowList前更新当前行信息 */
+        this._updateCurRowInfo(curRow, prevRow)
         prevRow = curRow
         rowList.push(curRow)
 
         /** 创建新行 */
-        curRow = new Row({
-          rowNo: rowNo + 1,
-          globalFontConfig: this.globalFontConfig
-        })
-        curRow.setSize({ width: 0, height: this.globalFontConfig.lineHeight })
-        curRow.setPos({ x: 0, y: prevRow ? prevRow.y + prevRow.height : 0 })
+        curRow = this._createANewRowAndSetInitialSizeAndPos({ rowNo: curRow.rowNo + 1, prevRow })
       }
 
-      /** 超宽 */
-      if (curRow.width + curItem.width > maxWidth) {
-        /** 加入行数组前更新当前行信息 */
-        this.updateCurRowInfo(curRow, prevRow)
-        /** 记录prevRow */
-        prevRow = curRow
-        /** 换行,将当前行塞入数组 */
-        rowList.push(curRow)
-
-        /** 创建新行 */
-        curRow = new Row({
-          globalFontConfig: this.globalFontConfig,
-          rowNo: curRow.rowNo + 1
-        })
-        curRow.setSize({ width: 0, height: this.globalFontConfig.lineHeight })
-        curRow.setPos({ x: 0, y: prevRow ? prevRow.y + prevRow.height : 0 })
-      }
-
-      /** 更新当前 item 的 x 坐标 ,其为塞入当前 item 前的行宽 */
-      curItem.x = curRow.width // TODO 可能还需要加上 letterSpacing
-      /** 将当前 item 塞入当前行 */
-      curRow.addChild(curItem)
+      /** 更新当前 layoutItemInstance 的 x 坐标和行号 */
+      curInstance.x = curRow.width
+      curInstance.rowNo = curRow.rowNo
+      /** 将当前 layoutItemInstance 塞入当前行 */
+      curRow.addChild(curInstance)
       /** 更新当前行宽度 */
-      curRow.width += curItem.width
+      curRow.setSize({ width: curRow.width + curInstance.width })
     }
 
     /** 最后行 */
-    this.updateCurRowInfo(curRow, prevRow)
+    this._updateCurRowInfo(curRow, prevRow)
     prevRow = curRow
     rowList.push(curRow)
 
     return { rowList, imgList: [] }
   }
 
-  private updateCurRowInfo(curRow: Row, prevRow: Row | null) {
+  /**
+   * 创建新行并设置初始尺寸和位置
+   *
+   * @date 2023-08-01 10:35:04
+   * @private
+   * @param { rowNo, prevRow } 行号,前一行实例
+   * @returns {Row} 设置好初始尺寸和位置的新行
+   * @memberof DoonceLayoutEngine
+   */
+  private _createANewRowAndSetInitialSizeAndPos({ rowNo, prevRow }: { rowNo: number; prevRow: Row | null }) {
+    const row = new Row({
+      globalFontConfig: this.globalFontConfig,
+      rowNo
+    })
+
+    row.setSize({ width: 0, height: 0 })
+    row.setPos({ x: 0, y: prevRow ? prevRow.y + prevRow.height : 0 })
+
+    return row
+  }
+
+  private _updateCurRowInfo(curRow: Row, prevRow: Row | null) {
     /** 更新当前行行高 */
     curRow.height = Math.max(this.globalFontConfig.lineHeight, this.getHighestRowChildHeight(curRow.childs))
 
     /** 计算当前行 y 坐标,其依赖上一个行高计算后才能计算 */
     curRow.y = prevRow ? prevRow.y + prevRow.height : 0
 
-    /** 水平居中行内item */
+    /** 水平对齐行内item */
     curRow.childs.forEach(child => {
-      child.y = Math.abs(curRow.height - child.height) / 2
+      /** placeholder 不需水平对齐 */
+      if (child.layoutItemType !== LayoutItemTypeEnum.IMG_PLACEHOLDER) {
+        child.y = Math.abs(curRow.height - child.height) / 2
+      }
     })
 
-    /** 居中RowLayoutItemGroup中的元素 */
+    /** 水平对齐RowLayoutItemGroup中的元素 */
     curRow.childs
       .filter((c): c is RowLayoutItemGroup => c.layoutItemType === LayoutItemTypeEnum.ROW_LAYOUT_ITEM_GROUP)
       .forEach(group => {
-        group.childs.forEach((groupChild: RowLayoutItemGroupChild) => {
-          groupChild.y = Math.abs(group.height - groupChild.height) / 2
-        })
+        const [prevInstance, symbolInstance] = group.childs
+
+        /** 挂靠的前字符 */
+        prevInstance.rowNo = group.rowNo
+        /** 坐标相对 gorup */
+        prevInstance.x = 0
+        prevInstance.y = Math.abs(group.height - prevInstance.height) / 2
+
+        /** 悬挂的标点 */
+        symbolInstance.rowNo = group.rowNo
+        /** 坐标相对 gorup */
+        symbolInstance.x = prevInstance.width
+        symbolInstance.y = Math.abs(group.height - symbolInstance.height) / 2
       })
 
     return curRow

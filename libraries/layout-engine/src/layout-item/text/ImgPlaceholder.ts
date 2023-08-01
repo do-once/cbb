@@ -3,39 +3,49 @@
  * @description 图片占位,用于图片环绕时,底层文字占位用
  */
 
-import { Base, IContent, ISize, LayoutItemTypeEnum } from '../base'
-import { Graph, GraphWithTitle } from '../img'
+import { Base, IContent, IRow, ISize, LayoutItemTypeEnum } from '../base'
+import { Img } from '../img'
 
 /** 限制占位的owner类型 */
-export type Owner = Graph | GraphWithTitle
+export type Owner = Img
 
 export type ImgPlaceholderCtrOptions = {
-  owner: Owner
+  ownerImg: Owner
   height: number
+  y: number
+  rowNo: IRow['rowNo']
 }
 
-export class ImgPlaceholder extends Base implements IContent {
+export class ImgPlaceholder extends Base implements IContent, IRow {
   layoutItemType: LayoutItemTypeEnum = LayoutItemTypeEnum.IMG_PLACEHOLDER
   canLineBreak: boolean = false
 
-  owner: Owner /** 拥有占位符的图形组件 */
+  ownerImg: Owner /** 拥有占位符的图形组件 */
 
-  rawContent: string = ''
-  content: string = ''
+  rawContent: IContent['rawContent'] = ''
+  content: IContent['content'] = ''
   height: number
 
-  constructor({ owner, height }: ImgPlaceholderCtrOptions) {
-    if (!owner) throw new Error('owner is required')
+  rowNo: IRow['rowNo']
+
+  constructor({ ownerImg, height, rowNo, y }: ImgPlaceholderCtrOptions) {
+    if (!ownerImg) throw new Error('ownerImg is required')
 
     super()
 
-    this.owner = owner
+    this.ownerImg = ownerImg
+
+    this.x = ownerImg.x
+    this.y = y
+    this.width = ownerImg.width
     this.height = height
+
+    this.rowNo = rowNo
   }
 
-  async init() {
-    this.width = this.owner.width
-    this.x = this.owner.x
+  init(force = false) {
+    /** 不需要 init */
+    console.log('ImgPlaceholder.inited')
   }
 
   measureSize(): ISize {

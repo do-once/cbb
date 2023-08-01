@@ -7,7 +7,7 @@ import { transformLatexToSVGStrAndDataUrl } from '@doonce/latex-svg-dataurl'
 import { getCssFontDesc, measureImgSize } from '@doonce/utils'
 
 import { GlobalFontConfig } from '../../DoonceLayoutEngine'
-import { Base, IContent, ISize, LayoutItemTypeEnum } from '../base'
+import { Base, IContent, IRow, ISize, LayoutItemTypeEnum } from '../base'
 
 export enum FormulaRenderTypeEnum {
   SVG = 'SVG',
@@ -19,14 +19,15 @@ export type FormulaCtrOptions = {
   globalFontConfig: GlobalFontConfig /** 字体设置项 */
   formulaRenderType: FormulaRenderTypeEnum /** 公式渲染类型,SVG(dom 节点) 或 IMG */
   debug?: boolean /** 调试 */
+  rowNo: IRow['rowNo']
 }
 
-export class Formula extends Base implements IContent {
+export class Formula extends Base implements IContent, IRow {
   layoutItemType: LayoutItemTypeEnum = LayoutItemTypeEnum.FORMULA
   canLineBreak: boolean = false
 
-  rawContent: string
-  content: string = ''
+  rawContent: IContent['rawContent']
+  content: IContent['content'] = ''
 
   /** 公式转换成的 svg 用什么方式渲染,svg 节点插入还是图片展示 */
   formulaRenderType: FormulaRenderTypeEnum
@@ -35,7 +36,9 @@ export class Formula extends Base implements IContent {
 
   svgEl: SVGSVGElement = null as unknown as SVGSVGElement
 
-  constructor({ rawContent, globalFontConfig, formulaRenderType, debug }: FormulaCtrOptions) {
+  rowNo: IRow['rowNo']
+
+  constructor({ rawContent, globalFontConfig, formulaRenderType, debug, rowNo }: FormulaCtrOptions) {
     super()
 
     if (!rawContent || !globalFontConfig || !formulaRenderType)
@@ -45,9 +48,14 @@ export class Formula extends Base implements IContent {
     this.globalFontConfig = globalFontConfig
     this.formulaRenderType = formulaRenderType
     this.debug = debug ?? false
+
+    this.rowNo = rowNo
   }
 
-  async init() {
+  async init(force = false) {
+    /** 已经初始化,并不是强制初始化,则跳过 */
+    if (this.initialized && !force) return
+
     const { svgStr, dataUrl } = await this.getSvgStrAndDataUrl()
     if (this.debug) {
       console.group(`rawContent: ${this.rawContent}`)
@@ -78,6 +86,8 @@ export class Formula extends Base implements IContent {
     const { width, height } = await this.measureSize()
     this.width = width
     this.height = height
+
+    this.initialized = true
   }
 
   async getSvgStrAndDataUrl() {
