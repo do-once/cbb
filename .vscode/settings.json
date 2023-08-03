@@ -1,4 +1,11 @@
 {
   "fileheader.Author": "GuangHui",
-  "fileheader.LastModifiedBy": "GuangHui"
+  "fileheader.LastModifiedBy": "GuangHui",
+
+  /** Unnecessary emmet.includeLanguages.vue */
+  /** https://github.com/vuejs/language-tools/blob/master/packages/vscode-vue/src/features/doctor.ts#L200 */
+  "emmet.includeLanguages.vue": null,
+
+  /** vscode 使用项目中的 ts 版本 */
+  "typescript.tsdk": "run-control/web-rig/node_modules/typescript/lib"
 }
