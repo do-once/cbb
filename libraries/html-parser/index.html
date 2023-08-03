@@ -13,7 +13,7 @@
       import { createApp } from 'vue'
       import { DoonceHtmlParser } from './src/index.ts'
 
-      const dhp = new DoonceHtmlParser({ debug: false })
+      const dhp = new DoonceHtmlParser({ debug: true })
       const input = [
         `hello<div><!-- 这是注释 --><input type="checkbox" class="container" id="app" disabled mash=""/><span>我是内容</span> 我是另外的文本内容<img src="http://path.to.img.com/a/img/path.png"/></div>`,
         `<span>如表他\\(12\\)月份的部分收支情况\\((\\)单位：元\\().\\)</span><table border="1px solid" style="max-width: 98%;"> <tbody>  <tr>   <td width="65">日期</td>   <td width="65">收入\\((+)\\)或支出\\((-)\\)</td><td width="65">结余</td><td width="163">备注</td></tr></tbody></table>
