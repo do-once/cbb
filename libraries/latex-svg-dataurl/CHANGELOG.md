@@ -1,6 +1,13 @@
 # Change Log - @doonce/latex-svg-dataurl
 
-This log was last generated on Tue, 25 Jul 2023 12:14:28 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Aug 2023 09:56:03 GMT and should not be manually modified.
+
+## 7.0.0
+Thu, 03 Aug 2023 09:56:03 GMT
+
+### Breaking changes
+
+- replace mathjax process api to queue
 
 ## 6.0.0
 Tue, 25 Jul 2023 12:14:28 GMT

@@ -1,6 +1,6 @@
 {
   "name": "@doonce/layout-engine",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "A layout engine which can layout graphics and text ",
   "keywords": [
     "library"

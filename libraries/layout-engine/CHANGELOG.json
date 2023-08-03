@@ -2,6 +2,44 @@
   "name": "@doonce/layout-engine",
   "entries": [
     {
+      "version": "1.0.0",
+      "tag": "@doonce/layout-engine_v1.0.0",
+      "date": "Thu, 03 Aug 2023 09:56:03 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "adjust example"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "impl topic desc layout with small png"
+          },
+          {
+            "comment": "refactor some impl"
+          }
+        ],
+        "minor": [
+          {
+            "comment": "impl symbol hange"
+          }
+        ],
+        "major": [
+          {
+            "comment": "refactor impl"
+          }
+        ],
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@doonce/html-parser\" to `4.0.0`"
+          },
+          {
+            "comment": "Updating dependency \"@doonce/latex-svg-dataurl\" to `7.0.0`"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.0.2",
       "tag": "@doonce/layout-engine_v0.0.2",
       "date": "Tue, 25 Jul 2023 12:14:28 GMT",

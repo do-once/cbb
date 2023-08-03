@@ -2,6 +2,31 @@
   "name": "@doonce/html-parser",
   "entries": [
     {
+      "version": "4.0.0",
+      "tag": "@doonce/html-parser_v4.0.0",
+      "date": "Thu, 03 Aug 2023 09:56:03 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "make debug optional"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "fix params err"
+          },
+          {
+            "comment": "impl attrText to attrObj"
+          }
+        ],
+        "major": [
+          {
+            "comment": "optimize logic"
+          }
+        ]
+      }
+    },
+    {
       "version": "3.0.0",
       "tag": "@doonce/html-parser_v3.0.0",
       "date": "Tue, 25 Jul 2023 12:14:28 GMT",

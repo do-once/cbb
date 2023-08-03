@@ -2,6 +2,18 @@
   "name": "@doonce/latex-svg-dataurl",
   "entries": [
     {
+      "version": "7.0.0",
+      "tag": "@doonce/latex-svg-dataurl_v7.0.0",
+      "date": "Thu, 03 Aug 2023 09:56:03 GMT",
+      "comments": {
+        "major": [
+          {
+            "comment": "replace mathjax process api to queue"
+          }
+        ]
+      }
+    },
+    {
       "version": "6.0.0",
       "tag": "@doonce/latex-svg-dataurl_v6.0.0",
       "date": "Tue, 25 Jul 2023 12:14:28 GMT",
