@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/html-parser",
+      "comment": "optimize logic",
+      "type": "major"
+    }
+  ],
+  "packageName": "@doonce/html-parser"
+}
