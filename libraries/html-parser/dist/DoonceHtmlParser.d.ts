@@ -4,22 +4,32 @@
  */
 /** <         div       id="app"      >           hello   <           /                   div             >           */
 /** TAG_OPEN  TAG_NAME  TAG_ATTR_TEXT TAG_CLOSE   TEXT    TAG_OPEN    TAG_SELF_CLOSEING   POST_TAG_NAME   TAG_CLOSE   */
-export declare type State = 'START' /** 初始状态 */ | 'TAG_OPEN' /** 标签开头< */ | 'TAG_NAME' /** 标签名 */ | 'TAG_ATTR_TEXT' /** 属性文本 */ | 'TAG_SELF_CLOSEING' /** 结束标签中的/ */ | 'POST_TAG_NAME' /** 结束标签名 */ | 'TAG_CLOSE' /** 标签结尾> */ | 'TEXT' /** 标签内容 */ | 'COMMENT'; /** 注释信息 */
-export interface IToken {
-    type: State;
+export declare enum StateEnum {
+    START = "START" /** 初始状态 */,
+    TAG_OPEN = "TAG_OPEN" /** 标签开头< */,
+    TAG_NAME = "TAG_NAME" /** 标签名 */,
+    TAG_ATTR_TEXT = "TAG_ATTR_TEXT" /** 属性文本 */,
+    TAG_SELF_CLOSEING = "TAG_SELF_CLOSEING" /** 结束标签中的/ */,
+    POST_TAG_NAME = "POST_TAG_NAME" /** 结束标签名 */,
+    TAG_CLOSE = "TAG_CLOSE" /** 标签结尾> */,
+    TEXT = "TEXT" /** 标签内容 */,
+    COMMENT = "COMMENT" /** 注释信息 */
+}
+export declare type Token = {
+    type: StateEnum;
     startIndex: number; /** 相对输入字符串的开始索引位置 */
     content: string; /** 内容 */
-}
-export interface IAstNode {
+};
+export declare type AstNode = {
     nodeType: 'ELEMENT' | 'COMMENT' | 'TEXT' | 'ROOT';
     nodeName: string;
     content: string;
     attrText: string;
     attrObj: Record<string, unknown>;
-    children: IAstNode[];
-}
+    children: AstNode[];
+};
 export declare class DoonceHtmlParser {
-    static State: Record<State, State>;
+    static State: typeof StateEnum;
     debug: boolean;
     constructor({ debug }?: {
         debug?: boolean | undefined;
@@ -28,28 +38,28 @@ export declare class DoonceHtmlParser {
      * 解析输入的 html 字符串,返回 tokenList
      *
      * @date 2023-07-25 19:46:40
-     * @param input
-     * @returns {IToken[]} tokenList
+     * @param input 输入字符串
+     * @returns {Token[]} tokenList
      * @memberof DoonceHtmlParser
      */
-    parse(input: string): IToken[];
+    parse(input: string): Token[];
     /**
      * 将 tokenList 解析为 ast
      *
      * @date 2023-07-25 19:45:49
      * @private
      * @param tokenList
-     * @returns {IAstNode} ast对象
+     * @returns {AstNode} ast对象
      * @memberof DoonceHtmlParser
      */
-    parseTokenListToAst(tokenList: IToken[]): IAstNode;
+    parseTokenListToAst(tokenList: Token[]): AstNode;
     /**
      * 找到 tokenList 中最后一个 TAG_NAME 对象
      *
      * @date 2023-07-25 19:40:18
      * @private
      * @param tokenList
-     * @returns {IToken} TAG_NAME 对象
+     * @returns {Token} TAG_NAME 对象
      * @memberof DoonceHtmlParser
      */
     private _findLastMatchedTagNameObj;

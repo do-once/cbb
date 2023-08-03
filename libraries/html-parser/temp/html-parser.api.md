@@ -5,36 +5,30 @@
 ```ts
 
 // @public (undocumented)
+export type AstNode = {
+    nodeType: 'ELEMENT' | 'COMMENT' | 'TEXT' | 'ROOT';
+    nodeName: string;
+    content: string;
+    attrText: string;
+    attrObj: Record<string, unknown>;
+    children: AstNode[];
+};
+
+// @public (undocumented)
 export class DoonceHtmlParser {
     constructor({ debug }?: {
         debug?: boolean | undefined;
     });
     // (undocumented)
     debug: boolean;
-    parse(input: string): IToken[];
-    parseTokenListToAst(tokenList: IToken[]): IAstNode;
+    parse(input: string): Token[];
+    parseTokenListToAst(tokenList: Token[]): AstNode;
     // (undocumented)
-    static State: Record<State, State>;
+    static State: typeof StateEnum;
 }
 
 // @public
 export function extractHtmlCommentContent(htmlComment: string): string;
-
-// @public (undocumented)
-export interface IAstNode {
-    // (undocumented)
-    attrObj: Record<string, unknown>;
-    // (undocumented)
-    attrText: string;
-    // (undocumented)
-    children: IAstNode[];
-    // (undocumented)
-    content: string;
-    // (undocumented)
-    nodeName: string;
-    // (undocumented)
-    nodeType: 'ELEMENT' | 'COMMENT' | 'TEXT' | 'ROOT';
-}
 
 // @public
 export function isLetter(char: string): boolean;
@@ -42,21 +36,37 @@ export function isLetter(char: string): boolean;
 // @public
 export function isWhiteSpace(char: string): boolean;
 
-// @public (undocumented)
-export interface IToken {
-    // (undocumented)
-    content: string;
-    // (undocumented)
-    startIndex: number;
-    // (undocumented)
-    type: State; /** 内容 */
-}
-
 // @public
 export function parseAttrTextToObj(attrText: string): Record<string, string>;
 
 // @public
-export type State = 'START' /** 初始状态 */ | 'TAG_OPEN' /** 标签开头< */ | 'TAG_NAME' /** 标签名 */ | 'TAG_ATTR_TEXT' /** 属性文本 */ | 'TAG_SELF_CLOSEING' /** 结束标签中的/ */ | 'POST_TAG_NAME' /** 结束标签名 */ | 'TAG_CLOSE' /** 标签结尾> */ | 'TEXT' /** 标签内容 */ | 'COMMENT';
+export enum StateEnum {
+    // (undocumented)
+    COMMENT = "COMMENT" /** 初始状态 */,
+    // (undocumented)
+    POST_TAG_NAME = "POST_TAG_NAME" /** 初始状态 */,
+    // (undocumented)
+    START = "START" /** 初始状态 */,
+    // (undocumented)
+    TAG_ATTR_TEXT = "TAG_ATTR_TEXT" /** 初始状态 */,
+    // (undocumented)
+    TAG_CLOSE = "TAG_CLOSE" /** 初始状态 */,
+    // (undocumented)
+    TAG_NAME = "TAG_NAME" /** 初始状态 */,
+    // (undocumented)
+    TAG_OPEN = "TAG_OPEN" /** 初始状态 */,
+    // (undocumented)
+    TAG_SELF_CLOSEING = "TAG_SELF_CLOSEING" /** 初始状态 */,
+    // (undocumented)
+    TEXT = "TEXT" /** 注释信息 */
+}
+
+// @public (undocumented)
+export type Token = {
+    type: StateEnum;
+    startIndex: number; /** 相对输入字符串的开始索引位置 */
+    content: string; /** 内容 */
+};
 
 // (No @packageDocumentation comment for this package)
 

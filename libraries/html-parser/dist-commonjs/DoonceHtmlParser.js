@@ -9,19 +9,24 @@ exports.isWhiteSpace =
   exports.extractHtmlCommentContent =
   exports.parseAttrTextToObj =
   exports.DoonceHtmlParser =
+  exports.StateEnum =
     void 0
+/** <         div       id="app"      >           hello   <           /                   div             >           */
+/** TAG_OPEN  TAG_NAME  TAG_ATTR_TEXT TAG_CLOSE   TEXT    TAG_OPEN    TAG_SELF_CLOSEING   POST_TAG_NAME   TAG_CLOSE   */
+var StateEnum
+;(function (StateEnum) {
+  StateEnum['START'] = 'START' /** 初始状态 */
+  StateEnum['TAG_OPEN'] = 'TAG_OPEN' /** 标签开头< */
+  StateEnum['TAG_NAME'] = 'TAG_NAME' /** 标签名 */
+  StateEnum['TAG_ATTR_TEXT'] = 'TAG_ATTR_TEXT' /** 属性文本 */
+  StateEnum['TAG_SELF_CLOSEING'] = 'TAG_SELF_CLOSEING' /** 结束标签中的/ */
+  StateEnum['POST_TAG_NAME'] = 'POST_TAG_NAME' /** 结束标签名 */
+  StateEnum['TAG_CLOSE'] = 'TAG_CLOSE' /** 标签结尾> */
+  StateEnum['TEXT'] = 'TEXT' /** 标签内容 */
+  StateEnum['COMMENT'] = 'COMMENT' /** 注释信息 */
+})((StateEnum = exports.StateEnum || (exports.StateEnum = {})))
 class DoonceHtmlParser {
-  static State = {
-    START: 'START',
-    TAG_OPEN: 'TAG_OPEN',
-    TAG_NAME: 'TAG_NAME',
-    TAG_ATTR_TEXT: 'TAG_ATTR_TEXT',
-    TAG_SELF_CLOSEING: 'TAG_SELF_CLOSEING',
-    POST_TAG_NAME: 'POST_TAG_NAME',
-    TAG_CLOSE: 'TAG_CLOSE',
-    TEXT: 'TEXT',
-    COMMENT: 'COMMENT'
-  }
+  static State = StateEnum
   debug
   constructor({ debug } = {}) {
     this.debug = !!debug
@@ -30,25 +35,25 @@ class DoonceHtmlParser {
    * 解析输入的 html 字符串,返回 tokenList
    *
    * @date 2023-07-25 19:46:40
-   * @param input
-   * @returns {IToken[]} tokenList
+   * @param input 输入字符串
+   * @returns {Token[]} tokenList
    * @memberof DoonceHtmlParser
    */
   parse(input) {
     if (!input || typeof input !== 'string') throw new Error('Input string is need provided')
     const tokenList = []
-    let curState = DoonceHtmlParser.State.START
+    let curState = StateEnum.START
     let curChar = ''
     let curCharIndex = 0
     while ((curChar = input[curCharIndex])) {
       this.debug && console.log('-------------------------')
       this.debug && console.log('before :>> ', curState, curCharIndex, curChar)
       switch (curState) {
-        case DoonceHtmlParser.State.START:
+        case StateEnum.START:
           if (curChar === '<') {
-            curState = DoonceHtmlParser.State.TAG_OPEN
+            curState = StateEnum.TAG_OPEN
           } else {
-            curState = DoonceHtmlParser.State.TEXT
+            curState = StateEnum.TEXT
             /** 初始化 text Token,开始收集 text */
             tokenList.push({
               type: curState,
@@ -57,9 +62,9 @@ class DoonceHtmlParser {
             })
           }
           break
-        case DoonceHtmlParser.State.TAG_OPEN:
+        case StateEnum.TAG_OPEN:
           if (isLetter(curChar)) {
-            curState = DoonceHtmlParser.State.TAG_NAME
+            curState = StateEnum.TAG_NAME
             /** 初始化 tagName Token,开始收集 tagName */
             tokenList.push({
               type: curState,
@@ -67,9 +72,9 @@ class DoonceHtmlParser {
               content: curChar
             })
           } else if (curChar === '/') {
-            curState = DoonceHtmlParser.State.TAG_SELF_CLOSEING
+            curState = StateEnum.TAG_SELF_CLOSEING
           } else if (curChar === '!') {
-            curState = DoonceHtmlParser.State.COMMENT
+            curState = StateEnum.COMMENT
             /** 初始化 comment Token,开始收集 comment */
             tokenList.push({
               type: curState,
@@ -78,14 +83,14 @@ class DoonceHtmlParser {
             })
           } else {
             //! should never access
-            this.debug && console.warn(`Unrecognized char:${curChar} on DoonceHtmlParser.State.${curState}`)
+            this.debug && console.warn(`Unrecognized char:${curChar} on StateEnum.${curState}`)
           }
           break
-        case DoonceHtmlParser.State.TAG_NAME:
+        case StateEnum.TAG_NAME:
           if (curChar === '>') {
-            curState = DoonceHtmlParser.State.TAG_CLOSE
+            curState = StateEnum.TAG_CLOSE
           } else if (isWhiteSpace(curChar) && input[curCharIndex + 1] !== '/') {
-            curState = DoonceHtmlParser.State.TAG_ATTR_TEXT
+            curState = StateEnum.TAG_ATTR_TEXT
             /** 初始化 tagAttrText Token,开始收集 tagAttrText */
             tokenList.push({
               type: curState,
@@ -98,40 +103,40 @@ class DoonceHtmlParser {
             /** 兼容类似<br />情况 */
             (isWhiteSpace(curChar) && input[curCharIndex + 1] === '/')
           ) {
-            curState = DoonceHtmlParser.State.TAG_SELF_CLOSEING
+            curState = StateEnum.TAG_SELF_CLOSEING
           } else {
             /** 收集 tagName */
             tokenList[tokenList.length - 1].content += curChar
           }
           break
-        case DoonceHtmlParser.State.TAG_ATTR_TEXT:
+        case StateEnum.TAG_ATTR_TEXT:
           if (curChar === '>') {
-            curState = DoonceHtmlParser.State.TAG_CLOSE
+            curState = StateEnum.TAG_CLOSE
           } else if (
             /** 当前为/后面为>或空格*/
             curChar === '/' &&
             (input[curCharIndex + 1] === '>' || isWhiteSpace(input[curCharIndex + 1]))
           ) {
-            curState = DoonceHtmlParser.State.TAG_SELF_CLOSEING
+            curState = StateEnum.TAG_SELF_CLOSEING
           } else {
             /** 收集 tagAttrText */
             tokenList[tokenList.length - 1].content += curChar
           }
           break
-        case DoonceHtmlParser.State.TAG_SELF_CLOSEING:
+        case StateEnum.TAG_SELF_CLOSEING:
           if (curChar === '>') {
-            curState = DoonceHtmlParser.State.TAG_CLOSE
+            curState = StateEnum.TAG_CLOSE
             /** 兼容自闭合标签场景,添加一个与最后 tagName 对应的selfCloseing 对象 */
             const lastMatchedTagNameObj = this._findLastMatchedTagNameObj(tokenList)
             if (lastMatchedTagNameObj && lastMatchedTagNameObj.content) {
               tokenList.push({
-                type: DoonceHtmlParser.State.TAG_SELF_CLOSEING,
+                type: StateEnum.TAG_SELF_CLOSEING,
                 content: lastMatchedTagNameObj.content,
                 startIndex: curCharIndex
               })
             }
           } else if (isLetter(curChar)) {
-            curState = DoonceHtmlParser.State.POST_TAG_NAME
+            curState = StateEnum.POST_TAG_NAME
             /** 初始化 postTagName Token,开始收集 postTagName */
             tokenList.push({
               type: curState,
@@ -140,22 +145,22 @@ class DoonceHtmlParser {
             })
           } else {
             //! should never access
-            this.debug && console.warn(`Unrecognized char:${curChar} on DoonceHtmlParser.State.${curState}`)
+            this.debug && console.warn(`Unrecognized char:${curChar} on StateEnum.${curState}`)
           }
           break
-        case DoonceHtmlParser.State.POST_TAG_NAME:
+        case StateEnum.POST_TAG_NAME:
           if (curChar === '>') {
-            curState = DoonceHtmlParser.State.TAG_CLOSE
+            curState = StateEnum.TAG_CLOSE
           } else {
             /** 收集postTagName */
             tokenList[tokenList.length - 1].content += curChar
           }
           break
-        case DoonceHtmlParser.State.TAG_CLOSE:
+        case StateEnum.TAG_CLOSE:
           if (curChar === '<') {
-            curState = DoonceHtmlParser.State.TAG_OPEN
+            curState = StateEnum.TAG_OPEN
           } else if (curChar) {
-            curState = DoonceHtmlParser.State.TEXT
+            curState = StateEnum.TEXT
             /** 初始化 text Token,开始收集 text */
             tokenList.push({
               type: curState,
@@ -164,35 +169,38 @@ class DoonceHtmlParser {
             })
           } else {
             //! should never access
-            this.debug && console.warn(`Unrecognized char:${curChar} on DoonceHtmlParser.State.${curState}`)
+            this.debug && console.warn(`Unrecognized char:${curChar} on StateEnum.${curState}`)
           }
           break
-        case DoonceHtmlParser.State.COMMENT:
+        case StateEnum.COMMENT:
           if (curChar === '>') {
-            curState = DoonceHtmlParser.State.TAG_CLOSE
+            curState = StateEnum.TAG_CLOSE
           } else {
             /** 收集 comment */
             tokenList[tokenList.length - 1].content += curChar
           }
           break
-        case DoonceHtmlParser.State.TEXT:
+        case StateEnum.TEXT:
           if (
             /** 当前为< && 后续字符中有 > && <到首个>之间无其它<,则进入 TAG_OPEN 状态 */
             curChar === '<' &&
             this._hasLessThanSymbolBetweenStartIndexAndFirstGreatThanSymbolIndex(input, curCharIndex)
           ) {
-            curState = DoonceHtmlParser.State.TAG_OPEN
+            curState = StateEnum.TAG_OPEN
           } else {
             /** 收集 text */
             tokenList[tokenList.length - 1].content += curChar
           }
           break
+        default:
+          const _ec = curState
+          throw new Error(`${_ec} should not reach here`)
       }
       this.debug && console.log('after :>> ', curState)
       curCharIndex++
     }
-    this.debug && console.log('normalize before input :>> ', input)
-    this.debug && console.log('normalize after tokenList :>> ', tokenList)
+    this.debug && console.log('parse before input :>> ', input)
+    this.debug && console.log('parse after tokenList :>> ', tokenList)
     return tokenList
   }
   /**
@@ -201,7 +209,7 @@ class DoonceHtmlParser {
    * @date 2023-07-25 19:45:49
    * @private
    * @param tokenList
-   * @returns {IAstNode} ast对象
+   * @returns {AstNode} ast对象
    * @memberof DoonceHtmlParser
    */
   parseTokenListToAst(tokenList) {
@@ -217,7 +225,7 @@ class DoonceHtmlParser {
     ]
     for (let i = 0; i < tokenList.length; i++) {
       const { type, content } = tokenList[i]
-      if (type === DoonceHtmlParser.State.TAG_NAME) {
+      if (type === StateEnum.TAG_NAME) {
         nodeStack.push({
           nodeType: 'ELEMENT',
           nodeName: content,
@@ -226,7 +234,7 @@ class DoonceHtmlParser {
           attrObj: {},
           children: []
         })
-      } else if (type === DoonceHtmlParser.State.TEXT) {
+      } else if (type === StateEnum.TEXT) {
         nodeStack[nodeStack.length - 1].children.push({
           nodeType: 'TEXT',
           nodeName: '',
@@ -235,11 +243,11 @@ class DoonceHtmlParser {
           attrObj: {},
           children: []
         })
-      } else if (type === DoonceHtmlParser.State.TAG_ATTR_TEXT) {
+      } else if (type === StateEnum.TAG_ATTR_TEXT) {
         const node = nodeStack[nodeStack.length - 1]
         node.attrText = content
         node.attrObj = parseAttrTextToObj(content)
-      } else if (type === DoonceHtmlParser.State.COMMENT) {
+      } else if (type === StateEnum.COMMENT) {
         nodeStack[nodeStack.length - 1].children.push({
           nodeType: 'COMMENT',
           nodeName: '',
@@ -248,10 +256,7 @@ class DoonceHtmlParser {
           attrObj: {},
           children: []
         })
-      } else if (
-        type === DoonceHtmlParser.State.POST_TAG_NAME ||
-        type === DoonceHtmlParser.State.TAG_SELF_CLOSEING
-      ) {
+      } else if (type === StateEnum.POST_TAG_NAME || type === StateEnum.TAG_SELF_CLOSEING) {
         if (content === nodeStack[nodeStack.length - 1].nodeName) {
           const obj = nodeStack.pop()
           obj && nodeStack[nodeStack.length - 1].children.push(obj)
@@ -270,14 +275,14 @@ class DoonceHtmlParser {
    * @date 2023-07-25 19:40:18
    * @private
    * @param tokenList
-   * @returns {IToken} TAG_NAME 对象
+   * @returns {Token} TAG_NAME 对象
    * @memberof DoonceHtmlParser
    */
   _findLastMatchedTagNameObj(tokenList) {
     return tokenList
       .slice()
       .reverse()
-      .find(token => token.type === DoonceHtmlParser.State.TAG_NAME)
+      .find(token => token.type === StateEnum.TAG_NAME)
   }
   /**
    * 给定字符串,从给定位置到首个>符号之前,是否存在<符号
