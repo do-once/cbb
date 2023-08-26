@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/theme-service",
+      "comment": "add a new pkg",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@doonce/theme-service"
+}
