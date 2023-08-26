@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DoonceThemeService Example</title>
+    <style>
+      .cont {
+        color: var(--theme-color, red);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script type="module">
+      import { createApp } from 'vue'
+      import { DoonceThemeService } from './src/index.ts'
+
+      const dts = new DoonceThemeService()
+
+      const app = {
+        template: `<div>
+          <h1>DoonceThemeService Example</h1>
+          <p class="cont">color is red</p>
+          <button type="button" @click="change">chang blue</button>
+          </div>`,
+        methods: {
+          change() {
+            dts.applyTheme([['--theme-color', 'blue']])
+          }
+        }
+      }
+
+      createApp(app).mount('#app')
+    </script>
+  </body>
+</html>

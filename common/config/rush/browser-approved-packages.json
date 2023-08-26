@@ -240,7 +240,7 @@
     },
     {
       "name": "css-vars-ponyfill",
-      "allowedCategories": [ "internal" ]
+      "allowedCategories": [ "internal", "published" ]
     },
     {
       "name": "cz-conventional-changelog",
@@ -336,7 +336,7 @@
     },
     {
       "name": "mutationobserver-shim",
-      "allowedCategories": [ "internal" ]
+      "allowedCategories": [ "internal", "published" ]
     },
     {
       "name": "param-case",

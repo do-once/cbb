@@ -598,6 +598,13 @@
       "reviewCategory": "published",
       "shouldPublish": true,
       "tags": ["lib"]
+    },
+    {
+      "packageName": "@doonce/theme-service",
+      "projectFolder": "libraries/theme-service",
+      "reviewCategory": "published",
+      "shouldPublish": true,
+      "tags": ["lib"]
     }
   ]
 }
