@@ -1,6 +1,6 @@
 # @doonce/katex-wrapper
 
-> A wrapper for katex
+> A package that wraps Katex with lazy load feature
 
 ```bash
 .
