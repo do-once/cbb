@@ -201,6 +201,25 @@ importers:
       vite: registry.npmmirror.com/vite/3.1.8
       vue: registry.npmmirror.com/vue/3.2.45
 
+  ../../libraries/katex-wrapper:
+    specifiers:
+      '@doonce/utils': workspace:*
+      '@doonce/web-rig': workspace:*
+      '@rushstack/eslint-config': 3.1.0
+      '@rushstack/heft': 0.48.0
+      '@types/heft-jest': 1.0.3
+      vite: 3.1.8
+      vue: 3.2.45
+    dependencies:
+      '@doonce/utils': link:../utils
+    devDependencies:
+      '@doonce/web-rig': link:../../run-control/web-rig
+      '@rushstack/eslint-config': registry.npmmirror.com/@rushstack/eslint-config/3.1.0_esueefhpt5ql6xiqdj4wcgwfzi
+      '@rushstack/heft': registry.npmmirror.com/@rushstack/heft/0.48.0
+      '@types/heft-jest': registry.npmmirror.com/@types/heft-jest/1.0.3
+      vite: registry.npmmirror.com/vite/3.1.8
+      vue: registry.npmmirror.com/vue/3.2.45
+
   ../../libraries/latex-svg-dataurl:
     specifiers:
       '@doonce/utils': workspace:*

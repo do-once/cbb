@@ -605,6 +605,13 @@
       "reviewCategory": "published",
       "shouldPublish": true,
       "tags": ["lib"]
+    },
+    {
+      "packageName": "@doonce/katex-wrapper",
+      "projectFolder": "libraries/katex-wrapper",
+      "reviewCategory": "published",
+      "shouldPublish": true,
+      "tags": ["lib"]
     }
   ]
 }

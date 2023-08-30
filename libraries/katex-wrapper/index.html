@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DoonceKatexWrapper Example</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script type="module">
+      import { createApp } from 'vue'
+      import { DoonceKatexWrapper } from './src/index.ts'
+      const dokw = new DoonceKatexWrapper()
+
+      const app = {
+        template: `<div>
+          <h1>DoonceKatexWrapper Example</h1>
+          <pre>\\frac{AC}{DF}</pre>
+          <hr>
+          <p v-html="katexedStr"></p>
+          <button type="button" @click="renderLatex">click</button>
+          </div>`,
+        data() {
+          return {
+            katexedStr: ''
+          }
+        },
+        methods: {
+          renderLatex() {
+            dokw.render(String.raw`\frac{AC}{DF}`).then(katexedStr => {
+              console.log(katexedStr)
+              this.katexedStr = katexedStr
+            })
+          }
+        }
+      }
+
+      createApp(app).mount('#app')
+    </script>
+  </body>
+</html>
