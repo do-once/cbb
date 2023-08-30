@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/katex-wrapper",
+      "comment": "add katex-wrapper",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@doonce/katex-wrapper"
+}
