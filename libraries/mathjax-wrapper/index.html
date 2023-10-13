@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DoonceMathJaxWrapper Example</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script type="module">
+      import { createApp } from 'vue'
+      import { DoonceMathJaxWrapper } from './src/index.ts'
+      const domjwp = new DoonceMathJaxWrapper()
+
+      const app = {
+        template: `<div>
+             <h1>DoonceMathJaxWrapper Example</h1>
+             <p id="mathjax-wp"></p>
+             <button type="button" @click="renderLatex">click</button>
+             </div>`,
+        mounted() {
+          const wp = document.querySelector('#mathjax-wp')
+          wp.innerHTML = `\\frac{AC}{DF}`
+        },
+        methods: {
+          renderLatex() {
+            domjwp.render('mathjax-wp').then(() => {
+              console.log('渲染成功')
+            })
+          }
+        }
+      }
+
+      createApp(app).mount('#app')
+    </script>
+  </body>
+</html>
