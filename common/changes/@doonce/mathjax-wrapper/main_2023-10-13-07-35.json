@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@doonce/mathjax-wrapper",
+      "comment": "add mathjax-wrapper",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@doonce/mathjax-wrapper"
+}
