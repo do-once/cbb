@@ -619,6 +619,13 @@
       "reviewCategory": "published",
       "shouldPublish": true,
       "tags": ["lib"]
+    },
+    {
+      "packageName": "@doonce/cache",
+      "projectFolder": "./libraries/cache",
+      "reviewCategory": "published",
+      "shouldPublish": true,
+      "tags": ["lib"]
     }
   ]
 }
