@@ -51,7 +51,7 @@ export class DoonceLRUCache<K, V> extends Map<K, V> {
     key?: (...args: Parameters<T>) => string,
     capacity: number = 10
   ) => {
-    const _cache = new LRUCache<string, ReturnType<T>>(capacity)
+    const _cache = new DoonceLRUCache<string, ReturnType<T>>(capacity)
 
     const wrappedFn = (...args: Parameters<T>): ReturnType<T> => {
       const _key = typeof key === 'function' ? key(...args) : `${JSON.stringify(args)}`

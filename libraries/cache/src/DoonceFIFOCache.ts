@@ -26,7 +26,7 @@ export class DoonceFIFOCache<K, V> extends Map<K, V> {
     key?: (...args: Parameters<T>) => string,
     size: number = 10
   ) => {
-    const _cache = new FIFOCache<string, ReturnType<T>>(size)
+    const _cache = new DoonceFIFOCache<string, ReturnType<T>>(size)
 
     const wrappedFn = (...args: Parameters<T>): ReturnType<T> => {
       const _key = typeof key === 'function' ? key(...args) : `${JSON.stringify(args)}`
