@@ -622,14 +622,14 @@
     },
     {
       "packageName": "@doonce/cache",
-      "projectFolder": "./libraries/cache",
+      "projectFolder": "libraries/cache",
       "reviewCategory": "published",
       "shouldPublish": true,
       "tags": ["lib"]
     },
     {
       "packageName": "@doonce/serializer",
-      "projectFolder": "./libraries/serializer",
+      "projectFolder": "libraries/serializer",
       "reviewCategory": "published",
       "shouldPublish": true,
       "tags": ["lib"]
