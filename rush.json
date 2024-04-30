@@ -626,6 +626,13 @@
       "reviewCategory": "published",
       "shouldPublish": true,
       "tags": ["lib"]
+    },
+    {
+      "packageName": "@doonce/serializer",
+      "projectFolder": "./libraries/serializer",
+      "reviewCategory": "published",
+      "shouldPublish": true,
+      "tags": ["lib"]
     }
   ]
 }
