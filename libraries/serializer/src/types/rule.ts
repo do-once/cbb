@@ -22,8 +22,6 @@ export abstract class TextRule<P extends IProps = {}> {
   abstract run(str: string, parents: Node[]): IElement<P> | IText<P>
 
   abstract split(str: string): string[]
-
-  default = false
 }
 
 export type Rule = ElementRule | TextRule

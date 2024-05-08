@@ -1,3 +1,4 @@
+export * from './extracter'
 export * from './parser'
 export * from './processor'
 export * from './props'

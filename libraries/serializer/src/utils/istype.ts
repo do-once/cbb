@@ -1,4 +1,4 @@
 import { ElementRule, Rule, RuleTypeEnum, TextRule } from '../types'
 
 export const isElementRule = (rule: Rule): rule is ElementRule => rule.type === RuleTypeEnum.ELEMENT
-export const isTextRule = (rule: Rule): rule is TextRule => rule.type === RuleTypeEnum.TEXT
+export const isTextRule = (r: Rule): r is TextRule => r.type === RuleTypeEnum.TEXT

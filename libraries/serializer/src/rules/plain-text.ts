@@ -1,8 +1,5 @@
-import { IElement, IText, RuleTypeEnum, TextRule } from '../types'
-
-export type PlainTextProps = {
-  bold?: 0 | 1
-}
+import { IElement, IText, PlainTextProps, RuleTypeEnum, TextRule } from '../types'
+import { PlainTextExtracter } from './extracter'
 
 const NAME = 'PlainTextRule'
 const TYPE = 'text'
@@ -14,10 +11,10 @@ export class PlainTextRule extends TextRule<PlainTextProps> {
   test(text: string): boolean {
     return /.+?/g.test(text)
   }
-  run(str: string, parents: Node[]): IElement<PlainTextProps> | IText<PlainTextProps> {
+  run(str: string, parents: Node[]): IText<PlainTextProps> {
     return {
       type: TYPE,
-      props: {},
+      props: new PlainTextExtracter().extract(str, parents),
       text: str
     }
   }

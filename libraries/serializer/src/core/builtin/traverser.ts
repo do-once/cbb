@@ -1,4 +1,4 @@
-import { ITraverser, IElement, IRunner, IText } from '../../types'
+import { ITraverser, IElement, IRunner, IText, TextRule } from '../../types'
 import { Runner } from './runner'
 import * as BuiltRules from '../../rules'
 import { isElementRule, isTextRule } from '../../utils'
@@ -27,7 +27,7 @@ export class Traverser implements ITraverser {
         rets = [...rets, ...this.processElement(node, parents)]
         break
       case Node.TEXT_NODE:
-        rets = [...rets, ...this.processText(node.textContent ?? '', [...parents, node])]
+        rets = [...rets, ...this.processText(node.textContent ?? '', parents)]
         break
       default:
         Array.from(node.childNodes).forEach(n => {
@@ -57,8 +57,7 @@ const instantiateBuiltInRules = () => {
   const rules = Object.values(BuiltRules).map(RuleCtr => new RuleCtr())
 
   const elementRules = rules.filter(isElementRule)
-  const textRules = rules.filter(isTextRule).filter(rule => rule.name !== 'PlainTextRule')
-
+  const textRules = rules.filter(rule => rule.name !== 'PlainTextRule').filter(isTextRule) as TextRule[]
   return {
     elementRules,
     textRules,
