@@ -1,4 +1,4 @@
-import { IParser, INode, ITraverser, IElement } from '../types'
+import { IParser, ITraverser, IElement } from '../types'
 import { Parser, Traverser } from './builtin'
 
 type CreateOptions = {
@@ -7,11 +7,11 @@ type CreateOptions = {
 }
 
 export class DoonceDeserializer {
-  constructor(private _parser: IParser, private _traverser: ITraverser) {}
+  constructor(private readonly _parser: IParser, private readonly _traverser: ITraverser) {}
 
   static create = (opts?: CreateOptions) => {
-    const parser = opts.parser ?? Parser.create()
-    const traverser = opts.traverser ?? Traverser.create()
+    const parser = opts?.parser ?? Parser.create()
+    const traverser = opts?.traverser ?? Traverser.create()
 
     const instance = new DoonceDeserializer(parser, traverser)
     return instance

@@ -1,7 +1,7 @@
 import { IParser } from '../../types'
 
 export class Parser implements IParser {
-  constructor(private _parser: DOMParser) {}
+  constructor(private readonly _parser: DOMParser) {}
 
   static create = () => new Parser(new DOMParser())
 

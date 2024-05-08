@@ -1,8 +1,23 @@
-import { ElementRule, Rule, RuleTypeEnum } from '../types'
+import { ElementRule, IElement, IText, Rule, RuleTypeEnum } from '../types'
 
-const NAME = 'ParagraphRule'
+export type ParagraphProps = {
+  indent?: number
+}
 
-export class ParagraphRule extends ElementRule {
-  name = NAME
+const RULE_NAME = 'ParagraphRule'
+const TYPE = 'paragraph'
+
+export class ParagraphRule extends ElementRule<ParagraphProps> {
+  name = RULE_NAME
   type = RuleTypeEnum.ELEMENT
+  test = (node: Node) => {
+    return ['P', 'DIV', 'SECTION'].includes(node.nodeName)
+  }
+  run = (node: Node, parents: Node[], children: (IElement | IText)[]) => {
+    return {
+      type: TYPE,
+      props: {},
+      children
+    }
+  }
 }

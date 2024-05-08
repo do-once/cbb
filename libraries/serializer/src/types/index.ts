@@ -1,5 +1,6 @@
 export * from './parser'
 export * from './processor'
+export * from './props'
 export * from './rule'
 export * from './runner'
 export * from './traverser'
