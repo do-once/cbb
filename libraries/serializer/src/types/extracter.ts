@@ -1,5 +1,5 @@
 import { IProps } from './props'
 
-export interface IExtracter<R extends IProps> {
-  extract(nodeOrText: Node | string, parents: Node[]): R
+export interface IPropsExtracter<R extends IProps> {
+  extract(nodeOrText: Node | string, parents: Node[]): R | void
 }

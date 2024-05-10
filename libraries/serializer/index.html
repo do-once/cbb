@@ -9,6 +9,8 @@
   <body>
     <div id="app"></div>
 
+    <div id="example"></div>
+
     <script type="module">
       import { createApp } from 'vue'
       import { DoonceDeserializer } from './src/index.ts'
@@ -16,9 +18,12 @@
       const ser = DoonceDeserializer.create()
       console.log('ser :>> ', ser)
 
-      const output = ser.run(
-        '<div><strong>hello\\(world\\)</strong></div><table><tbody><tr><td>td</td></tr></tbody></table>'
-      )
+      const html =
+        '<div><strong>hello\\(world\\)</strong></div><table style="table-layout:fixed;width:100;border:1px solid red;"><tbody><tr><td rowspan="4" colspan="5">td</td></tr></tbody></table>'
+
+      document.querySelector('#example').innerHTML = html
+
+      const output = ser.run(html)
       console.log('output :>> ', output)
 
       const app = {

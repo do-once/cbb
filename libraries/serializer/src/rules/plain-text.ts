@@ -1,5 +1,5 @@
-import { IElement, IText, PlainTextProps, RuleTypeEnum, TextRule } from '../types'
-import { PlainTextExtracter } from './extracter'
+import { IText, PlainTextProps, RuleTypeEnum, TextRule } from '../types'
+import { PlainTextPropsExtracter } from './extracter'
 
 const NAME = 'PlainTextRule'
 const TYPE = 'text'
@@ -7,14 +7,13 @@ const TYPE = 'text'
 export class PlainTextRule extends TextRule<PlainTextProps> {
   name: string = NAME
   type: RuleTypeEnum = RuleTypeEnum.TEXT
-  default = true
   test(text: string): boolean {
     return /.+?/g.test(text)
   }
   run(str: string, parents: Node[]): IText<PlainTextProps> {
     return {
       type: TYPE,
-      props: new PlainTextExtracter().extract(str, parents),
+      props: new PlainTextPropsExtracter().extract(str, parents),
       text: str
     }
   }

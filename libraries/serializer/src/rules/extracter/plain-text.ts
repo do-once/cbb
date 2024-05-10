@@ -1,5 +1,6 @@
-import { IExtracter, PlainTextProps } from '../../types'
+import { IPropsExtracter, IPlainTextProps } from '../../types'
 import { removeNullishProperties } from '../../utils'
+
 const _set = new Set([
   (parents: Node[]) => {
     if (['STRONG', 'B'].includes(parents.at(-1)?.nodeName || '')) return { bold: 1 }
@@ -18,12 +19,12 @@ const _set = new Set([
   }
 ])
 
-export class PlainTextExtracter implements IExtracter<PlainTextProps> {
-  extract(nodeOrText: string | Node, parents: Node[]): PlainTextProps {
+export class PlainTextPropsExtracter implements IPropsExtracter<IPlainTextProps> {
+  extract(nodeOrText: string | Node, parents: Node[]): IPlainTextProps {
     return removeNullishProperties(
       Array.from(_set.values())
         .map(fn => fn(parents))
-        .reduce<PlainTextProps>((props, cur) => Object.assign(props, cur), {})
+        .reduce<IPlainTextProps>((props, cur) => Object.assign(props, cur), {})
     )
   }
 }

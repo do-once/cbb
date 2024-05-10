@@ -1,37 +1,36 @@
-import { ElementRule, IElement, IText, RuleTypeEnum } from '../types'
+import { ElementRule, IElement, IText, RuleTypeEnum, ITableProps, ITableTrProps } from '../types'
+import { TablePropsExtracter, TableTcPropsExtracter, TableTrPropsExtracter } from './extracter'
 
-export type TableProps = {}
 const NAME = 'TableRule'
 const TYPE = 'table'
-export class TableRule extends ElementRule<TableProps> {
+export class TableRule extends ElementRule<ITableProps> {
   name: string = NAME
   type: RuleTypeEnum = RuleTypeEnum.ELEMENT
 
   test(node: Node): boolean {
     return ['TABLE'].includes(node.nodeName)
   }
-  run(node: Node, parents: Node[], children: IElement<TableTrProps>[]): IElement<TableProps> {
+  run(node: Node, parents: Node[], children: IElement<ITableTrProps>[]): IElement<ITableProps> {
     return {
       type: TYPE,
-      props: {},
+      props: new TablePropsExtracter().extract(node, parents),
       children
     }
   }
 }
 
-export type TableTrProps = {}
 const NAME_ROW = 'TableRowRule'
 const TYPE_ROW = 'table-row'
-export class TableRowRule extends ElementRule<TableTrProps> {
+export class TableRowRule extends ElementRule<ITableTrProps> {
   name: string = NAME_ROW
   type: RuleTypeEnum = RuleTypeEnum.ELEMENT
   test(node: Node): boolean {
     return ['TR'].includes(node.nodeName)
   }
-  run(node: Node, parents: Node[], children: IElement<TableTcProps>[]): IElement<TableTrProps> {
+  run(node: Node, parents: Node[], children: IElement<TableTcProps>[]): IElement<ITableTrProps> {
     return {
       type: TYPE_ROW,
-      props: {},
+      props: new TableTrPropsExtracter().extract(node, parents),
       children
     }
   }
@@ -47,10 +46,10 @@ export class TableCellRule extends ElementRule<TableTcProps> {
   test(node: Node): boolean {
     return ['TD', 'TH'].includes(node.nodeName)
   }
-  run(node: Node, parents: Node[], children: (IElement<{}> | IText<{}>)[]): IElement<TableTrProps> {
+  run(node: Node, parents: Node[], children: (IElement<{}> | IText<{}>)[]): IElement<ITableTrProps> {
     return {
       type: TYPE_CELL,
-      props: {},
+      props: new TableTcPropsExtracter().extract(node, parents),
       children
     }
   }
