@@ -54,6 +54,6 @@
     "vitest": "0.24.3"
   },
   "peerDependencies": {
-    "vue": "3.2.45"
+    "vue": "3.4.31"
   }
 }
