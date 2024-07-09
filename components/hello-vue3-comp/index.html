@@ -11,10 +11,22 @@
 
     <script type="module">
       import { createApp, h } from 'vue'
-      import InstallObj from './src/index.ts'
+      import InstallObj, { useHello } from './src/index.ts'
 
       createApp({
-        template: `<DoonceHelloVue3Comp/>`
+        template: `<DoonceHelloVue3Comp :first-name="'bryan'" :last-name="'adamss'">
+          <template #title>hello</template>
+          <template #box-foo>box-foo</template>
+          <template #list-bar>list-bar</template>
+          </DoonceHelloVue3Comp>`,
+
+        setup(props) {
+          const { onNameChange } = useHello()
+
+          onNameChange(name => {
+            console.log('name :>> ', name)
+          })
+        }
       })
         .use(InstallObj)
         .mount('#app')

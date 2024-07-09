@@ -187,6 +187,10 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "@vueuse/core",
+      "allowedCategories": [ "published" ]
+    },
+    {
       "name": "all-contributors-cli",
       "allowedCategories": [ "internal" ]
     },
