@@ -1,6 +1,6 @@
 # cbb
 
-Common building block(CBB) powered by [`RushStack`](https://rushstack.io/)
+Common building block(CBB) monorepo powered by [`RushStack`](https://rushstack.io/)
 
 
 ## Monorepo principle with RushStack
