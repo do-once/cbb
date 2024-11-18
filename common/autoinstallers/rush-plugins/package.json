@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "rush-sort-package-json": "0.0.4",
-    "rush-init-project-plugin": "0.3.1",
+    "rush-sort-package-json": "0.1.1",
+    "rush-init-project-plugin": "0.11.1",
     "typescript": "5.4.5",
     "change-case": "4.1.2"
   }
