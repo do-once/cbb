@@ -640,6 +640,13 @@
       "reviewCategory": "published",
       "shouldPublish": true,
       "tags": ["lib"]
+    },
+    {
+      "packageName": "@doonce/typewriter",
+      "projectFolder": "libraries/typewriter",
+      "reviewCategory": "published",
+      "shouldPublish": true,
+      "tags": ["lib"]
     }
   ]
 }
