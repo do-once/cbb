@@ -24,7 +24,8 @@
     "types": [],
 
     "module": "esnext",
-    "moduleResolution": "node",
+    /** 使用默认值 */
+    // "moduleResolution": "node",
     /* 调整target为ESNext，仅兼容最新浏览器，需要自行处理低版本兼容性 */
     "target": "ESNext"
     /* target:ESNext 包含了所有 lib，此处 lib 冗余 */
