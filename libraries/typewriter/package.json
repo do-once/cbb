@@ -1,7 +1,7 @@
 {
   "name": "@doonce/typewriter",
   "version": "0.0.1",
-  "description": "A typewriter class that mimics GPT&#x27;s result output effect and outputs characters at a specific speed",
+  "description": "A typewriter class that mimics GPTs result output effect and outputs characters at a specific speed",
   "keywords": [
     "library"
   ],
