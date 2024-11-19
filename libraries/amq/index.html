@@ -2,21 +2,66 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>DoonceAmq Example</title>
   </head>
   <body>
     <div id="app"></div>
 
     <script type="module">
-      import { createApp } from 'vue'
-      import * as DoonceAmq from './src/index.ts'
+      import { createApp, ref } from 'vue'
+      import { DoonceAmq } from './src/index.ts'
 
       const app = {
-        template: `<div>
-          <h1>DoonceAmq Example</h1>
-          </div>`
+        template: `
+          <div>
+            <h1>DoonceAmq Example</h1>
+            {{ counts }}
+            /
+            isAllDone:{{ isAllDone }}
+          </div>`,
+        setup() {
+          let isAllDone = ref(false)
+          const counts = ref([])
+
+          const pushCount = count => {
+            return new Promise(resolve => {
+              setTimeout(() => {
+                counts.value.push(count)
+                resolve()
+              }, 500)
+            })
+          }
+
+          const handleMessage = async count => {
+            console.log('handleMessage', count)
+            await pushCount(count)
+          }
+
+          const onAllDone = () => {
+            console.log('All done')
+            isAllDone.value = true
+          }
+
+          const amq = DoonceAmq.create({
+            handleMessage,
+            onAllDone
+          })
+          let count = 0
+          let timerId = setInterval(() => {
+            amq.addMessage(count++)
+
+            if (count === 10) {
+              clearInterval(timerId)
+              amq.allMessagesAdded()
+            }
+          }, 1000)
+          return {
+            counts,
+            isAllDone
+          }
+        }
       }
 
       createApp(app).mount('#app')
